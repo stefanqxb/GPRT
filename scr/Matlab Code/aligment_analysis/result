@@ -1,0 +1,15 @@
+blosum 50 3-grams words
+
+>> gamma                      
+
+gamma =
+
+    1.0000    0.9129
+    0.9129    1.0000
+
+>> time_interval
+
+time_interval =
+
+   71.1246
+

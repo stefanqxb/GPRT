@@ -1,0 +1,35 @@
+rtindex2
+optimization finished, #iter = 1147
+nu = 0.997778
+obj = -6716993.523185, rho = -203.511900
+nSV = 1796, nBSV = 1796
+Mean squared error = 3551.8 (regression)
+Squared correlation coefficient = 0.505514 (regression)
+Elapsed time is 10489.733756 seconds.
+>> gamma
+
+gamma =
+
+    1.0000    0.7110
+    0.7110    1.0000
+
+>> time_interval
+
+time_interval =
+
+  158.3513
+
+
+optimization finished, #iter = 1150
+nu = 0.997778
+obj = -6716820.222085, rho = -203.503001
+nSV = 1796, nBSV = 1796
+Mean squared error = 3551.01 (regression)
+Squared correlation coefficient = 0.494351 (regression)
+Elapsed time is 2359.170785 seconds.
+>> gamma
+
+gamma =
+
+    1.0000    0.7031
+    0.7031    1.0000

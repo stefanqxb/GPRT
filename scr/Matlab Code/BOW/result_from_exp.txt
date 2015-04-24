@@ -1,0 +1,204 @@
+bag of word
+
+>> retention_time_prediction
+...........................*
+optimization finished, #iter = 27965
+nu = 0.059760
+obj = -10784374.628427, rho = -121.356297
+nSV = 12715, nBSV = 0
+Mean squared error = 1085.74 (regression)
+Squared correlation coefficient = 0.671298 (regression)
+Elapsed time is 170.578028 seconds.
+
+
+hydophobicity
+
+>> retention_time_prediction
+....................................................................................................................................................................................................*
+optimization finished, #iter = 196198
+nu = 0.971677
+obj = -108909809.072256, rho = -155.553006
+nSV = 12703, nBSV = 12068
+Mean squared error = 705.381 (regression)
+Squared correlation coefficient = 0.808152 (regression)
+Elapsed time is 136.353802 seconds.
+
+combine
+
+>> retention_time_prediction
+.............................................................................................................................................................*
+optimization finished, #iter = 157611
+nu = 0.210759
+obj = -14184511.246573, rho = -0.229549
+nSV = 12674, nBSV = 242
+Mean squared error = 348.264 (regression)
+Squared correlation coefficient = 0.925307 (regression)
+Elapsed time is 819.285641 seconds.
+
+weight =0.4  gamma =0.9634
+
+>> retention_time_prediction
+.................................................................................................................................................................*
+optimization finished, #iter = 161991
+nu = 0.475506
+obj = -20493893.683545, rho = 10.373820
+nSV = 12657, nBSV = 2612
+Mean squared error = 319.764 (regression)
+Squared correlation coefficient = 0.928092 (regression)
+Elapsed time is 812.852195 seconds.
+>> 
+
+weight = 0.2 gamma = 0.9518
+
+>> retention_time_prediction
+..................................................................................*
+optimization finished, #iter = 82283
+nu = 0.897945
+obj = -52167330.101867, rho = 129.576582
+nSV = 12695, nBSV = 10427
+Mean squared error = 349.599 (regression)
+Squared correlation coefficient = 0.906014 (regression)
+Elapsed time is 127.502820 seconds.
+
+weight =0.6 gamma = 0.9579
+
+>> retention_time_prediction
+...........................................................................*
+optimization finished, #iter = 75010
+nu = 0.125287
+obj = -5908526.259902, rho = -19.269214
+nSV = 12685, nBSV = 4
+Mean squared error = 358.222 (regression)
+Squared correlation coefficient = 0.917527 (regression)
+Elapsed time is 431.189985 seconds.
+
+weight1 = 0.3 weight2 = 0.5 weight3 =0.2 gamma =0.97 g=40
+
+>> retention_time_prediction
+...................................................................................................................................................................*
+optimization finished, #iter = 163177
+nu = 0.632371
+obj = -24041348.519911, rho = -99.537914
+nSV = 12648, nBSV = 4983
+Mean squared error = 261.017 (regression)
+Squared correlation coefficient = 0.943484 (regression)
+Elapsed time is 763.850756 seconds.
+
+weight1 = 0.3 weight2 = 0.5 weight3 =0.2 gamma =0.9684 c=100
+
+>> retention_time_prediction
+......................................................................*
+optimization finished, #iter = 70934
+nu = 0.809625
+obj = -12153213.615004, rho = -61.492485
+nSV = 12661, nBSV = 8408
+Mean squared error = 263.866 (regression)
+Squared correlation coefficient = 0.93775 (regression)
+Elapsed time is 294.661646 seconds.
+
+weight1 = 0.3 weight2 = 0.5 weight3 =0.2 gamma =0.9684 c=100 g=20
+
+>> retention_time_prediction
+......................................*
+optimization finished, #iter = 38409
+nu = 0.931116
+obj = -16355879.799344, rho = -8.329610
+nSV = 12503, nBSV = 11262
+Mean squared error = 283.774 (regression)
+Squared correlation coefficient = 0.92668 (regression)
+Elapsed time is 91.253332 seconds.
+
+
+'-s 3 -t 2 -g 40 -p 0.1 -c 300 -h 0' 
+weight1 = 0.3;
+weight2 = 0.5;
+weight3 = 0.2;
+
+
+>> retention_time_prediction
+..............................................................................................................................................*
+optimization finished, #iter = 142214
+nu = 0.760766
+obj = -30419751.664113, rho = -98.982299
+nSV = 12649, nBSV = 7466
+Mean squared error = 258.291 (regression)
+Squared correlation coefficient = 0.942711 (regression)
+Elapsed time is 534.891988 seconds.
+>> gamma
+
+gamma =
+
+    1.0000    0.9709
+    0.9709    1.0000
+
+>> time_interval
+
+time_interval =
+
+   47.4164
+
+
+
+'-s 3 -t 2 -g 40 -p 0.1 -c 100 -h 0' 
+weight1 = 0.3;
+weight2 = 0.2;
+weight3 = 0.5;
+
+
+>> retention_time_prediction
+..........................................................................*
+optimization finished, #iter = 74353
+nu = 0.834879
+obj = -11513084.050760, rho = -114.385714
+nSV = 12656, nBSV = 8780
+Mean squared error = 249.209 (regression)
+Squared correlation coefficient = 0.943561 (regression)
+Elapsed time is 277.561850 seconds.
+>> gamma
+
+gamma =
+
+    1.0000    0.9714
+    0.9714    1.0000
+
+>> time_interval
+
+time_interval =
+
+   47.4164
+
+
+weight1 = 0.4;
+weight2 = 0.1;
+weight3 = 0.5;
+
+'-s 3 -t 2 -g 40 -p 0.1 -c 100 -h 0'
+
+time_inteval =45.0456 gamma = 0.9745
+
+>> retention_time_prediction
+.....................................................................................................*
+optimization finished, #iter = 101671
+nu = 0.623635
+obj = -7563461.565243, rho = -135.422799
+nSV = 12652, nBSV = 4410
+Mean squared error = 242.08 (regression)
+Squared correlation coefficient = 0.949576 (regression)
+Elapsed time is 533.416602 seconds.
+
+
+
+weight1 = 0.2;
+weight2 = 0.3;
+weight3 = 0.5;
+
+
+>> retention_time_prediction
+...........................................*
+optimization finished, #iter = 43355
+nu = 0.936341
+obj = -15377382.952458, rho = -74.884663
+nSV = 12672, nBSV = 11190
+Mean squared error = 286.105 (regression)
+Squared correlation coefficient = 0.92711 (regression)
+Elapsed time is 95.121037 seconds.
