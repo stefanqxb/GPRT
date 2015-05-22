@@ -68,7 +68,9 @@ def loadPeptides(fileName):
     aaAlphabet = aaAlphabet.union(getAminoAcids(psmd.peptide))
     
     psmDescriptions.append(psmd)
-    
+  
+  aaAlphabet = sorted(list(aaAlphabet))
+  
   return psmDescriptions, aaAlphabet
 
 def loadPeptidesUnitTest():
