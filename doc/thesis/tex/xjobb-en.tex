@@ -596,7 +596,7 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
 %\begin{tabular}{m{3cm}|m{3cm}|m{3cm}}
 \begin{tabular}{l|cc|cc}
          & \multicolumn{2}{c|}{RBF kernel} & \multicolumn{2}{c}{RBF + Poly kernel}\\
-         & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\      
+         & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
         \hline
          BOW feature & 0.8508 & 0.4191 &  0.9724 &  0.1822\\
         \hline
@@ -631,13 +631,14 @@ The fig.\ref{fig:Fig12} gives us the visual performance of SVR model. Although t
 \begin{table}[h]
 \normalsize
 \centering
-\begin{tabular}{m{2.5cm}|m{5cm}|m{5cm}}
+\begin{tabular}{l|cc|cc}
         \hline
-                & Gaussian Process ( RBF+Poly ) & Support Vector Regression\\
+                & \multicolumn{2}{c|}{Gaussian Process ( RBF+Poly )} & \multicolumn{2}{c}{Support Vector Regression}\\
+                & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
         \hline
-         BOW feature & 0.9724 \quad 0.1822 &  0.9655 \quad 0.2095\\
+         BOW feature & 0.9724 & 0.1822 &  0.9655 & 0.2095\\
         \hline
-         Elude feature  & 0.9683 \quad 0.1718 &  0.9701 \quad 0.1809\\
+         Elude feature  & 0.9683 & 0.1718 &  0.9701 & 0.1809\\
         \hline
 \end{tabular}
 \caption{Comparison of performance between GP (multi-kernel) and SVR model}
@@ -880,7 +881,7 @@ Another interesting thing is about finding some more proper optimization method 
 \noindent
 As one of the newest machine learning method, the Gaussian Process has many strengths when dealing with the problem. However, the theory of Gaussian Process is not complete yet and there are still a lot of aspects need to be fixed and improved. What's more, the application of Gaussian Process method in biotechnological field is still not as common as it is in the other field, such as artificial intelligence or computer vision. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory as well as the rapidly development of computing techniques, more sophisticated and practical Gaussian Process Regression methods will continually broaden their application fields in biotechnology and new applications, new requirements will lead to continue to the improvement of GP method as well.
 
- 
+
 
 \begin{thebibliography}{99}
 
@@ -925,10 +926,10 @@ As one of the newest machine learning method, the Gaussian Process has many stre
     \bibitem{foo20}Chang CC and Lin CJ (2011). LIBSVM: A library for support vector machines. ACM Transactions on Intelligent Systems and Technology, 2:27:1¨C27:27. Software available at http://www.csie.ntu.edu.tw/~cjlin/libsvm.
 
     \bibitem{foo21}S Zhang, J liu, J.W Tian(2004) An SVM-based small target segmentation and clustering approach [C].In: Proceedings of the Third International Conference on Machine Learning and Cvbernetics.Shanghai:IEEE,2004,6(8):3318-3323.
-    
+
     \bibitem{foo22} Tresp V. A Bayesian committee machine[J]. Neural
         Computation, 2000, 12: 2719-2741.
-     
+
     \bibitem{foo23}Snelson E, Ghahramani Z. Sparse Gaussian processes
         using pseudo-inputs[C]. Proc of the NIPS 18. Vancouver, 2006: 1257-1264
 

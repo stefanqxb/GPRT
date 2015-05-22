@@ -1,4 +1,6 @@
+\RequirePackage{ifpdf}
 \documentclass[a4paper,11pt,openany]{kth-mag}
+%\let\ifpdf\relax
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
 \usepackage{lmodern}
@@ -16,11 +18,13 @@
 \title{Prediction of peptide retention time based on Gaussian Process}
 
 
-\foreigntitle{Lorem ipsum dolor sit amet, sed diam nonummy nibh eui
-              mod tincidunt ut laoreet dol}
+\foreigntitle{}
 \author{XuanBin Qiu}
 \date{March 2015}
-\blurb{Master's Thesis at NADA\\Supervisor: Patric Jensfelt\\Examiner: Stefan Carlsson}
+\blurb{Master's Thesis at NADA\\
+External Supervisor: Lukas K\"{a}ll\\
+Internal Supervisor: Patric Jensfelt\\
+Examiner: Stefan Carlsson}
 \trita{TRITA 2015-3-19}
 
 \begin{document}
@@ -51,7 +55,7 @@ Before introducing the background, we will briefly describe a few concepts that 
   \item Peptide: Short sequence(chain) of amino acid connected by peptide bonds as Fig. \ref{fig:Fig3} It's distinguished from proteins on the basis of size which only contain approximately 50 or fewer amino acid.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=6cm]{peptide.png}\\
+  \includegraphics[width=6cm]{./peptide.png}\\
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
   \item Amino acid: Biologically important organic compounds composed of amine (-NH2) and carboxylic acid (-COOH) functional groups, along with a side-chain specific to each amino acid. There are approximately 20 basic types and Fig. \ref{fig:Fig4} is an example of one of them. They are the basic unit composed of protein, giving protein their specific structural form so that they could have biological activity.
@@ -589,13 +593,14 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
 \begin{table}[h]
 \normalsize
 \centering
-\begin{tabular}{m{3cm}|m{3cm}|m{3cm}}
+%\begin{tabular}{m{3cm}|m{3cm}|m{3cm}}
+\begin{tabular}{l|cc|cc}
+         & \multicolumn{2}{c|}{RBF kernel} & \multicolumn{2}{c}{RBF + Poly kernel}\\
+         & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\      
         \hline
-                & RBF kernel & RBF + Poly kernel\\
+         BOW feature & 0.8508 & 0.4191 &  0.9724 &  0.1822\\
         \hline
-         BOW feature & 0.8508 \quad 0.4191 &  0.9724 \quad 0.1822\\
-        \hline
-         Elude feature  & 0.9213 \quad 0.3346 &  0.9683 \quad 0.1718\\
+         Elude feature  & 0.9213 & 0.3346 &  0.9683 & 0.1718\\
         \hline
 \end{tabular}
 \caption{Comparison between Single kernel and multi-kernel}
@@ -776,7 +781,7 @@ Following this, we will now try to find out the influence of the number of gener
 \end{figure}
 
 \noindent
-The fig.\ref{fig:Fig18} above shows that the number of generation actually haves slightly influence on the prediction. The top one traces the changing trend of correlation coefficient and minimal time window during 5 generation and in the bottom one, we increase the number of generation to 30 to make a comparison.
+The fig.\ref{fig:Fig18} above shows that the number of generation actually haves slightly influence on the prediction. The top one traces the changing trend of correlation coefficient and minimal time window during 5 generation and in the bottom one, we increase the number of generation to 30 to make a comparison. Each dot in the plots represent the prediction result of that generation.
 
 \begin{figure}[h!]
 \centering
@@ -807,13 +812,13 @@ In the end, we will take a look at the effect of different number of particles a
 \end{figure}
 
 \noindent
-As the Fig.\ref{Fig.sub.2} and Fig.\ref{Fig.sub.3} showed, the trend of all the particles in both cases are going towards the better situation and have influenced each other which totally follows the principle of PSO method.
+As the Fig.\ref{Fig.sub.2} and Fig.\ref{Fig.sub.3} showed, the trend of all the particles in both cases are going towards the better situation and have influenced each other which totally follows the principle of PSO method. One interesting thing is that we could also see the trend becomes more flat and stable after the third generation. This is also support evidence for the conclusion we draw form Fig.\ref{fig:Fig1} about the proper number of generation.
 
 
 \chapter{Limitation and Discussion}
 \fontsize{12pt}{16pt}\selectfont
 
-As we could see from the previous section, the GP model has a better performance in general. However, there are still some limitations of the model that needs to be improved. In this section, we will discuss the limitations in terms of model,feature and optimization methods.\\
+As we could see from the previous section, the GP model has a better performance in general. However, there are still some limitations of the model that needs to be improved. In this section, we will discuss the limitations in terms of model,feature and optimization methods.
 
 \section{Model limitation}
 
