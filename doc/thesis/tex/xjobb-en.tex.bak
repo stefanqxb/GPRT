@@ -575,7 +575,7 @@ For each subplot, the top plot shows the correlation between the predicted reten
 \noindent
 As benchmark, we also test the model by using $Elude feature$. The fig.\ref{fig:Fig10} gives us the performance of the model based on this feature set.\\
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \subfigure[Elude feature with RBF kernel]{
 \label{fig:sub1}
@@ -593,10 +593,9 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
 \begin{table}[h]
 \normalsize
 \centering
-%\begin{tabular}{m{3cm}|m{3cm}|m{3cm}}
 \begin{tabular}{l|cc|cc}
          & \multicolumn{2}{c|}{RBF kernel} & \multicolumn{2}{c}{RBF + Poly kernel}\\
-         & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\      
+         & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
         \hline
          BOW feature & 0.8508 & 0.4191 &  0.9724 &  0.1822\\
         \hline
@@ -611,7 +610,7 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
 As we can see from the figures, the multi-kernel gives better performance than a single kernel in general. The multi-kernel function helps GP model to improve the correlation coefficient as well as reduce the minimal time window dramatically, from 0.4191 to 0.1822 and 0.3346 to 0.1718 for $BOW feature$ and $Elude feature$ respectively. \\
 
 \noindent
-After comparing the Gaussian Process with single kernel and multi-kernel, we would like to compare the Gaussian Process model with the traditional Support Vector Regression model and investigate the performance. Since we already known the multi-kernel gives better performance, we will only use the Gaussian Process model with multi-kernel for all the GP model later.\\
+After comparing the Gaussian Process with single kernel and multi-kernel, we would like to compare the Gaussian Process model with the traditional Support Vector Regression model and investigate the performance. Since we already known the multi-kernel gives better performance, we will only use the Gaussian Process model with multi-kernel for all the GP model later.
 
 \begin{figure}[h!]
 \centering
@@ -631,13 +630,13 @@ The fig.\ref{fig:Fig12} gives us the visual performance of SVR model. Although t
 \begin{table}[h]
 \normalsize
 \centering
-\begin{tabular}{m{2.5cm}|m{5cm}|m{5cm}}
+\begin{tabular}{l|cc|cc}
+         & \multicolumn{2}{c|}{Gaussian Process ( RBF+Poly )} & \multicolumn{2}{c}{Support Vector Regression}\\
+         & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
         \hline
-                & Gaussian Process ( RBF+Poly ) & Support Vector Regression\\
+         BOW feature & 0.9724 & 0.1822 &  0.9655 & 0.2095\\
         \hline
-         BOW feature & 0.9724 \quad 0.1822 &  0.9655 \quad 0.2095\\
-        \hline
-         Elude feature  & 0.9683 \quad 0.1718 &  0.9701 \quad 0.1809\\
+         Elude feature  & 0.9683 & 0.1718 &  0.9701 & 0.1809\\
         \hline
 \end{tabular}
 \caption{Comparison of performance between GP (multi-kernel) and SVR model}
@@ -678,7 +677,6 @@ After comparing the GP and SVR model without optimization, we will now investiga
 \normalsize
 \centering
 \begin{tabular}{p{1cm}|p{2cm}|p{3.5cm}|p{3.5cm}}
-\hline
 \multicolumn{2}{c|}{} & Before Optimization & After Optimization \\
 \hline
 \multirow{2}{*}{GP} & BOW  & 0.9734 \quad 0.1822 & 0.9751 \quad 0.1731 \\
@@ -729,18 +727,18 @@ Now we will try to make a comparison of different optimization methods, PSO and 
 
 
 \noindent
-The details of the comparison of these two optimization method are summarized in Table.\ref{table4} below. As we can see, these two methods have similar performance in this case. However, this is not always the case and the reasons why this happen will be explained and discussed in the next chapter.\\
+The details of the comparison of these two optimization method are summarized in Table.\ref{table4} below. As we can see, these two methods have similar performance in this case. However, this is not always the case and the reasons why this happen will be explained and discussed in the next chapter.
 
 \begin{table}[h!]
 \normalsize
 \centering
-\begin{tabular}{p{1cm}|p{4.5cm}|p{3.5cm}}
+\begin{tabular}{l|cc|cc}
+   & \multicolumn{2}{c|}{Particle Swarm Optimization} & \multicolumn{2}{c}{Conjugate Gradient}\\
+   & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
 \hline
-   & Particle Swarm Optimization & Conjugate Gradient \\
+ BOW  & 0.9751 & 0.1731 & 0.9744 & 0.1731 \\
 \hline
- BOW  & 0.9751 \quad 0.1731 & 0.9744 \quad 0.1731 \\
-\hline
- Elude & 0.9744 \quad 0.1537 & 0.9757 \quad 0.1537 \\
+ Elude & 0.9744 & 0.1537 & 0.9757 & 0.1537 \\
 \hline
 \end{tabular}
 \caption{Comparison of performance before and after PSO for GP and SVR model}
@@ -748,7 +746,7 @@ The details of the comparison of these two optimization method are summarized in
 \end{table}
 
 \noindent
-About the optimization method, apart from having a impression of the general performance, we would also like to investigate the influence of some parameters for the prediction, such as the number of evaluating function, the number of generation, the number of particles and the changing trend of each particle during the evolution.\\
+About the optimization method, apart from having a impression of the general performance, we would also like to investigate the influence of some parameters for the prediction, such as the number of evaluating function, the number of generation, the number of particles and the changing trend of each particle during the evolution.
 
 \begin{figure}[h!]
 \centering
@@ -766,7 +764,7 @@ About the optimization method, apart from having a impression of the general per
 The fig.\ref{fig:Fig17} show the effect of different number of evaluating function in CG method based on different features. As we can see, increasing the number of evaluating function results in better performance in terms of correlation coefficient and minimal time window. However, when the number of evaluating function reaches to the level of 30 and above, the difference becomes small and can be ignored. These plots implies that we could set the number of evaluating function around 30 and no need to worry about not getting better prediction result. \\
 
 \noindent
-Following this, we will now try to find out the influence of the number of generation in PSO methods.\\
+Following this, we will now try to find out the influence of the number of generation in PSO methods.
 
 \begin{figure}[h!]
 \centering
@@ -794,26 +792,50 @@ The fig.\ref{fig:Fig18} above shows that the number of generation actually haves
 The detail could be seen from fig.\ref{fig:Fig19} that the optimization has reduced the minimal time window from 22\% to around 17\% in the second generation of evolution. Due to the fact that the initial prediction is already really good, the impact of increasing the number of generation seems to be ignorable. Therefore, we could simply set the default number of generation around 5.\\
 
 \noindent
-In the end, we will take a look at the effect of different number of particles and each particle's changing trend in terms of correlation coefficient and minimal time window during each generation.\\
+In the end, we will take a look at the effect of different number of particles and each particle's evolution trend in terms of correlation coefficient and minimal time window during each generation.\\
 
 \begin{figure}[h!]
 \centering
-\subfigure[Effect of different number of particle]{
-\label{fig:sub1}
-\includegraphics[width=0.5\textwidth]{CG_fig2_bow_cp.jpg}}
 \subfigure[Trend of correlation coefficient of each particle]{
-\label{Fig.sub.2}
-\includegraphics[width=0.5\textwidth]{changing_trend_of_coef.jpg}}
+\label{Fig.sub.201}
+\includegraphics[width=0.4\textwidth]{changing_trend_of_coef.jpg}}
 \subfigure[Trend of minimal time window of each particle ]{
-\label{Fig.sub.3}
-\includegraphics[width=0.5\textwidth]{changing_trend_of_minimal_time_window.jpg}}
-\caption{Effect of different number of particles and their changing trend in 5 generations }
+\label{Fig.sub.202}
+\includegraphics[width=0.4\textwidth]{changing_trend_of_minimal_time_window.jpg}}
+\caption{The evolution trend of each particle during 5 generations with 5 particles}
 \label{fig:Fig20}
 \end{figure}
 
-\noindent
-As the Fig.\ref{Fig.sub.2} and Fig.\ref{Fig.sub.3} showed, the trend of all the particles in both cases are going towards the better situation and have influenced each other which totally follows the principle of PSO method. One interesting thing is that we could also see the trend becomes more flat and stable after the third generation. This is also support evidence for the conclusion we draw form Fig.\ref{fig:Fig1} about the proper number of generation.
+\begin{figure}[h!]
+\centering
+\subfigure[Trend of correlation coefficient of each particle]{
+\label{Fig.sub.211}
+\includegraphics[width=0.4\textwidth]{changing_trend_of_coef_30par.jpg}}
+\subfigure[Trend of minimal time window of each particle ]{
+\label{Fig.sub.212}
+\includegraphics[width=0.4\textwidth]{changing_trend_of_mtw_30par.jpg}}
+\caption{The evolution trend of each particle during 5 generations with 30 particles}
+\label{fig:Fig21}
+\end{figure}
 
+\noindent
+As the Fig.\ref{Fig.sub.201} and Fig.\ref{Fig.sub.202} showed, the trend of all the particles in both cases are going towards the better situation and have influenced each other which totally follows the principle of PSO method. As comparison, we also display the results of using 30 particles instead of 5 particles. These plots show clearer that each individual particle's evolution is basically random but most of the particles are going towards the same direction when seeing the main trend from a bigger picture. Besides, it can be seen from Table.\ref{table5}that increasing the number of particles do not contribute much to the improvement of both accuracy and minimal time window. One interesting thing is that we could also see the trend becomes more flat and stable after the third generation. This is also support evidence for the conclusion we draw form Fig.\ref{fig:Fig19} about the proper number of generation.
+
+\begin{table}[h!]
+\normalsize
+\centering
+\begin{tabular}{l|cc|cc}
+   & \multicolumn{2}{c|}{5 particles of PSO} & \multicolumn{2}{c}{30 particles of PSO}\\
+   & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
+\hline
+ BOW  & 0.9741 & 0.1731 & 0.9747 & 0.1731 \\
+\hline
+ Elude & 0.9753 & 0.1537 & 0.9757 & 0.1537 \\
+\hline
+\end{tabular}
+\caption{Comparison of performance based on different number of particles}
+\label{table5}
+\end{table}
 
 \chapter{Limitation and Discussion}
 \fontsize{12pt}{16pt}\selectfont
@@ -861,13 +883,19 @@ To overcome this, there are many other CG methods have been carried out. They co
 \fontsize{12pt}{16pt}\selectfont
 
 \section{Conclusion}
-In this thesis, a Gaussian Process Regression Model for the prediction of peptide retention time has been proposed and tested in different datasets. Compared with the SVR and ANN methods, the Gaussian Process has better performance in terms of the minimal time window and  computational efficient. By that I mean when having the similar prediction accuracy, the GP model has stronger capacity than SVR and ANN in terms of parallelized processing.\\
+The retention time of peptide is a piece of important and useful information for many biochemical problems. For example, the retention time can be used in in some quality control experiments as the control parameter. It can also be used for the identification of a new peptide which is alternative way to identify it instead of calculating the peptide¡¯s spectrum. Therefore, the successful prediction of retention time could be really useful in many aspects.\\
 
 \noindent
-In addition, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is as good as the biological features. Although the performance of these features are still slightly worse than the biological features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique advantages of these features.\\
+In this thesis, a Gaussian Process Regression Model for the prediction of peptide retention time has been proposed and tested in different datasets. Compared with the SVR and ANN methods, the Gaussian Process has better performance in terms of the minimal time window and computational efficiency.\\
 
 \noindent
-In the end, two optimization methods have been implemented and compared with each other. Their properties and the some potential solution of their drawbacks have been discussed too. Besides, the effect of some default parameters of these methods have also been investigated and analyzed .
+The Gaussian process has stronger capacity than SVR and ANN in terms of parallelized processing since the minimal time window of GP model is smaller than the one of SVR when having similar prediction accuracy. Besides, from the experimental results we could tell, the computational efficiency of the GP model is faster than the SVR model when dealing with big data. This is a significant and useful quality since a lot of biochemical experiments contain large amount of data that need to be processed.\\
+
+\noindent
+In addition, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is almost as good as the biochemical features. Although the performance of these features are still slightly worse than the biochemical features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique and powerful advantages.\\
+
+\noindent
+In the end, two optimization methods have been implemented and compared with each other. Although, we only utilize the original version of them, they still make a significant difference on the experimental results. In addition, their properties in terms of default parameters and the potential solutions of their drawbacks have been discussed too.
 
 
 \section{Future Work}
@@ -878,9 +906,9 @@ As we have been analyzing before, one of the most important limitation of GP mod
 Another interesting thing is about finding some more proper optimization method to overcome the shortages of current ones. Since we know that the original CG method has the weakness in terms of its dependency of the initial value and the Particle Swarm Optimization could not ensure the convergence to the minimal value of the entire search space, we could try to investigate some new optimization methods which could overcome these drawbacks.\\
 
 \noindent
-As one of the newest machine learning method, the Gaussian Process has many strengths when dealing with the problem. However, the theory of Gaussian Process is not complete yet and there are still a lot of aspects need to be fixed and improved. What's more, the application of Gaussian Process method in biotechnological field is still not as common as it is in the other field, such as artificial intelligence or computer vision. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory as well as the rapidly development of computing techniques, more sophisticated and practical Gaussian Process Regression methods will continually broaden their application fields in biotechnology and new applications, new requirements will lead to continue to the improvement of GP method as well.
+However, the theory of Gaussian Process is not complete yet and there are still a lot of aspects need to be fixed and improved. What's more, the application of Gaussian Process method in biotechnological field is still not as common as it is in the other field, such as artificial intelligence or computer vision. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory as well as the rapidly development of computing techniques, more sophisticated and practical Gaussian Process Regression methods will continually broaden their application fields in biotechnology and new applications, new requirements will lead to continue to the improvement of GP method as well.
 
- 
+
 
 \begin{thebibliography}{99}
 
@@ -925,10 +953,10 @@ As one of the newest machine learning method, the Gaussian Process has many stre
     \bibitem{foo20}Chang CC and Lin CJ (2011). LIBSVM: A library for support vector machines. ACM Transactions on Intelligent Systems and Technology, 2:27:1¨C27:27. Software available at http://www.csie.ntu.edu.tw/~cjlin/libsvm.
 
     \bibitem{foo21}S Zhang, J liu, J.W Tian(2004) An SVM-based small target segmentation and clustering approach [C].In: Proceedings of the Third International Conference on Machine Learning and Cvbernetics.Shanghai:IEEE,2004,6(8):3318-3323.
-    
+
     \bibitem{foo22} Tresp V. A Bayesian committee machine[J]. Neural
         Computation, 2000, 12: 2719-2741.
-     
+
     \bibitem{foo23}Snelson E, Ghahramani Z. Sparse Gaussian processes
         using pseudo-inputs[C]. Proc of the NIPS 18. Vancouver, 2006: 1257-1264
 
