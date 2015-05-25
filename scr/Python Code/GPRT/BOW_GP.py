@@ -1,6 +1,8 @@
 __author__ = 'Administrator'
 import sys
 import numpy as np
+sys.path.append('C:\Users\Administrator\Documents\GitHub\GPRT\scr\Python Code\GPRT\elude')
+import elude_features as el
 from sklearn import grid_search, neighbors, svm
 import data_generator, feature_extraction, feature_extraction_single_aa
 import matplotlib.pyplot as plt
@@ -11,6 +13,9 @@ import calc_mtw
 import pylab
 from scipy.stats.stats import pearsonr
 import time
+
+psmDescriptions, featureMatrix = el.getFeatures('data/retention_time_peptide.csv')
+print featureMatrix
 
 # import data
 f = "data.txt"
@@ -28,7 +33,7 @@ print "selecting features....."
 feature = feature_extraction_single_aa.feature_extra(peptide,1)
 
 # train model
-row = len(peptide[0:2000])
+row = len(peptide[0:100])
 
 [train_set_svr, train_tag_svr, test_set_svr, test_tag_svr] = data_generator.processing_Data(feature, rt, row,'svr')
 
@@ -68,7 +73,9 @@ corrcoef_gp = pearsonr(pv_gp,test_tag)
 mtw_svr = calc_mtw.mini_time_win(histo_svr[0],max_t,min_t,step)
 corrcoef_svr = pearsonr(pv_svr,test_tag_svr)
 
-print 'corrcoef of GP = ',corrcoef_gp[0], 'corrcoef of SVR = ',corrcoef_svr[0]
+print 'corrcoef of GP = ',corrcoef_gp[0], '   corrcoef of SVR = ',corrcoef_svr[0]
+print 'mtw of GP = ',mtw_gp, '   mtw of SVR = ', mtw_svr
+print 'running time of GP = ',t_gp, '   running time of SVR = ',t_svr
 
 pylab.figure(1)
 plt.hold('on')
