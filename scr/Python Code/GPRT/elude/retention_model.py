@@ -14,7 +14,9 @@ bulkinessIndex = { "A" : 11.5, "C" : 13.46, "D" : 11.68, "E" : 13.57, "F" : 19.8
 defaultAlphabet = set(["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y"])
 
 percentageAa = 0.25
-
+cos300 = np.cos(300 * np.pi / 180)
+cos400 = np.cos(400 * np.pi / 180)
+  
 def buildRetentionIndex(aaAlphabet, psmDescriptions, 
       normalizeRetentionTimes):
   featureMatrix = computeRetentionIndexFeatureMatrix(aaAlphabet, psmDescriptions)
@@ -46,8 +48,12 @@ def normalizeFeatures(featureMatrix):
   colMean = list()
   colStd = list()
   for i in range(cols):
-    featureMatrix[:,i] -= np.mean(featureMatrix[:,i])
-    featureMatrix[:,i] /= np.std(featureMatrix[:,i])
+    #featureMatrix[:,i] -= np.mean(featureMatrix[:,i])
+    #featureMatrix[:,i] /= np.std(featureMatrix[:,i])
+    minFeature = np.min(featureMatrix[:,i])
+    maxFeature = np.max(featureMatrix[:,i])
+    featureMatrix[:,i] -= minFeature
+    featureMatrix[:,i] /= maxFeature - minFeature
 
 def hasPtms(aaAlphabet):
   return sum([1 for aa in aaAlphabet if aa not in defaultAlphabet]) > 0
@@ -55,94 +61,190 @@ def hasPtms(aaAlphabet):
 def computeRetentionFeatureMatrix(aaAlphabet, psmDescriptions, customIndex):
   ptmsPresent = False
   if hasPtms(aaAlphabet):
-    numFeatures = 20 + 20 + 2 + len(aaAlphabet)
+    numFeatures = 20 + 1 + len(aaAlphabet)
     ptmsPresent = True
   else:
-    numFeatures = 20 + 1 + len(aaAlphabet)
+    numFeatures = 20 + 20 + 2 + len(aaAlphabet)
   
-  polarAa, hydrophobicAa = getExtremeRetentionAA(customIndex)
-  
-  featureMatrix = np.zeros((len(psmDescriptions), 20))
-  for i, psmd in enumerate(psmDescriptions):
-    featureMatrix[i] = computeIndexFeatures(aaAlphabet, psmd.peptide, customIndex, polarAa, hydrophobicAa)
-  
+  featureMatrix = np.zeros((len(psmDescriptions),0))
   if not ptmsPresent:
-    polarAa, hydrophobicAa = getExtremeRetentionAA(kyteDoolittleIndex)    
+    polarAa, hydrophobicAa = getExtremeRetentionAA(kyteDoolittleIndex) 
     kyteDoolittleFeatureMatrix = np.zeros((len(psmDescriptions), 20))
     for i, psmd in enumerate(psmDescriptions):
       kyteDoolittleFeatureMatrix[i] = computeIndexFeatures(aaAlphabet, psmd.peptide, kyteDoolittleIndex, polarAa, hydrophobicAa)
     featureMatrix = np.concatenate((featureMatrix, kyteDoolittleFeatureMatrix), axis = 1)
   
+  polarAa, hydrophobicAa = getExtremeRetentionAA(customIndex)
+  customFeatureMatrix = np.zeros((len(psmDescriptions), 20))
+  for i, psmd in enumerate(psmDescriptions):
+    customFeatureMatrix[i] = computeIndexFeatures(aaAlphabet, psmd.peptide, customIndex, polarAa, hydrophobicAa)
+  featureMatrix = np.concatenate((featureMatrix, customFeatureMatrix), axis = 1)
+  
+  if not ptmsPresent:
+    bulkinessFeatureVector = np.zeros((len(psmDescriptions), 1))
+    for i, psmd in enumerate(psmDescriptions):
+      aas = dm.getAminoAcidList(psmd.peptide)
+      bulkinessFeatureVector[i] = indexSum(aas, bulkinessIndex)
+    featureMatrix = np.concatenate((featureMatrix, bulkinessFeatureVector), axis = 1)
+    
+  lengthFeatureVector = np.zeros((len(psmDescriptions), 1))
+  for i, psmd in enumerate(psmDescriptions):
+    aas = dm.getAminoAcidList(psmd.peptide)
+    lengthFeatureVector[i] = len(aas)
+  featureMatrix = np.concatenate((featureMatrix, lengthFeatureVector), axis = 1)
+  
+  aaFeatureVector = computeRetentionIndexFeatureMatrix(aaAlphabet, psmDescriptions)
+  featureMatrix = np.concatenate((featureMatrix, aaFeatureVector), axis = 1)
+  
+  normalizeFeatures(featureMatrix)
   return featureMatrix
 
 def getExtremeRetentionAA(index):
   numAa = int(np.ceil(percentageAa * len(index)))
   sortedIndex = sorted(index.items(), key = lambda x : x[1])
-  return [x[0] for x in sortedIndex[:numAa]], [x[0] for x in sortedIndex[-1*numAa:]]
+  polarAa = [x[0] for x in sortedIndex if x[1] <= sortedIndex[numAa-1][1]]
+  hydrophobicAa = [x[0] for x in sortedIndex if x[1] >= sortedIndex[-1*numAa][1]]
+  return polarAa, hydrophobicAa
   
 def computeIndexFeatures(aaAlphabet, peptide, index, polarAa, hydrophobicAa):
   features = []
   aas = dm.getAminoAcidList(peptide)
   features.append(indexSum(aas, index))
   features.append(indexAvg(aas, index))
-  features.append(indexN(peptide, index))
-  features.append(indexC(peptide, index))
-  features.append(indexNearestNeigbour(peptide, index, polarAa))
-  features.append(indexMaxPartialSum(peptide, index, 5))
-  features.append(indexMaxPartialSum(peptide, index, 2))
-  features.append(indexMinPartialSum(peptide, index, 5))
-  features.append(indexMinPartialSum(peptide, index, 2))
-  features.append(indexMaxHydrophobicSideHelix(peptide, index))
-  features.append(indexMinHydrophobicSideHelix(peptide, index))
-  features.append(indexMaxHydrophobicMoment(peptide, index, 100, 11))
-  features.append(indexMaxHydrophobicMoment(peptide, index, 180, 11))
-  features.append(indexMinHydrophobicMoment(peptide, index, 100, 11))
-  features.append(indexMinHydrophobicMoment(peptide, index, 180, 11))
-  features.append(indexSumSquaredDiff(peptide, index))
-  features.append(numberTypeAA(peptide, polarAa))
-  features.append(numberConsecTypeAA(peptide, polarAa))
-  features.append(numberTypeAA(peptide, hydrophobicAa))
-  features.append(numberConsecTypeAA(peptide, hydrophobicAa))
+  features.append(indexN(aas, index))
+  features.append(indexC(aas, index))
+  features.append(indexNearestNeighbour(aas, index, polarAa))
+  
+  maxPartSum5, minPartSum5 = indexMaxMinPartialSum(aas, index, 5)
+  maxPartSum2, minPartSum2 = indexMaxMinPartialSum(aas, index, 2)
+  features.append(maxPartSum5)
+  features.append(maxPartSum2)
+  features.append(minPartSum5)
+  features.append(minPartSum2)
+  
+  maxHsideHelix, minHsideHelix = indexMaxMinHydrophobicSideHelix(aas, index)
+  features.append(maxHsideHelix)
+  features.append(minHsideHelix)
+  
+  maxHmoment100, minHmoment100 = indexMaxMinHydrophobicMoment(aas, index, 100, 11)
+  maxHmoment180, minHmoment180 = indexMaxMinHydrophobicMoment(aas, index, 180, 11)
+  features.append(maxHmoment100)
+  features.append(maxHmoment180)
+  features.append(minHmoment100)
+  features.append(minHmoment180)
+  
+  features.append(indexSumSquaredDiff(aas, index))
+  features.append(numberTypeAA(aas, polarAa))
+  features.append(numberConsecTypeAA(aas, polarAa))
+  features.append(numberTypeAA(aas, hydrophobicAa))
+  features.append(numberConsecTypeAA(aas, hydrophobicAa))
   return features
 
+# calculate the sum of hydrophobicities of all aa in the peptide
 def indexSum(aas, index):
   return sum([index[aa] for aa in aas])
 
-def indexAvg(peptide, index):
-  return 0
+# calculate the average of hydrophobicities of all aa in the peptide
+def indexAvg(aas, index):
+  return indexSum(aas, index) / len(aas)
+
+# calculate the hydrophobicity of the N-terminus
+def indexN(aas, index):
+  return index[aas[0]]
   
-def indexN(peptide, index):
-  return 0
+# calculate the hydrophobicity of the C-terminus
+def indexC(aas, index):
+  return index[aas[-1]]
 
-def indexC(peptide, index):
-  return 0
+# calculate the sum of hydrophobicities of neighbours of polar amino acids
+def indexNearestNeighbour(aas, index, polarAa):
+  s = 0.0
+  for i, aa in enumerate(aas):
+    if aa in polarAa:
+      if i > 0:
+        s += max([ 0.0, index[aas[i-1]] ])
+      if i < len(aas) - 1:
+        s += max([ 0.0, index[aas[i+1]] ])
+  return s
 
-def indexNearestNeigbour(peptide, index, polarAa):
-  return 0
+# the most and least hydrophobic window
+def indexMaxMinPartialSum(aas, index, window):
+  w = min([window, len(aas) - 1])
+  maxSum = indexSum(aas[:w], index)
+  minSum = maxSum
+  for i in range(1,len(aas) - w + 1):
+    s = indexSum(aas[i:i+w], index)
+    maxSum = max([maxSum, s])
+    minSum = min([minSum, s])
+  return maxSum, minSum
 
-def indexMaxPartialSum(peptide, index, window):
-  return 0
+# calculate the most and least hydrophobic sides for alpha helices
+def indexMaxMinHydrophobicSideHelix(aas, index):  
+  if len(aas) < 9:
+    avgHindex = avgHydrophobicityIndex(index)
+    hSideHelix = avgHindex * (1 + 2 * cos300 + 2 * cos400)
+    return hSideHelix, hSideHelix
+  else:
+    hydrophobicitySide = 0.0
+    maxHydrophobicitySide = calcHydrophobicitySide(aas[:9], index)
+    minHydrophobicitySide = maxHydrophobicitySide
+    for i in range(1, len(aas) - 9 + 1):
+      hSideHelix = calcHydrophobicitySide(aas[i:i+9], index)
+      maxHydrophobicitySide = max([ maxHydrophobicitySide, hSideHelix ])
+      minHydrophobicitySide = min([ minHydrophobicitySide, hSideHelix ])
+    return maxHydrophobicitySide, minHydrophobicitySide
 
-def indexMinPartialSum(peptide, index, window):
-  return 0
+# calculate the maximum and minimum value of the hydrophobic moment
+def indexMaxMinHydrophobicMoment(aas, index, angle, window):
+  sinSum = 0.0
+  cosSum = 0.0
+  angleRadians = angle * np.pi / 180
+  
+  if len(aas) < window:
+    avgHindex = avgHydrophobicityIndex(index)
+    for i in range(1, window + 1):
+      cosSum += np.cos(i * angleRadians)
+      sinSum += np.sin(i * angleRadians)
+    cosSum *= avgHindex
+    sinSum *= avgHindex
+    hMoment = np.sqrt(cosSum*cosSum + sinSum*sinSum)
+    return hMoment, hMoment
+  else:
+    windowHmoment = 0.0
+    for i in range(1, window + 1):
+      cosSum += index[aas[i-1]] * np.cos(i * angleRadians)
+      sinSum += index[aas[i-1]] * np.sin(i * angleRadians)
+    maxHmoment = cosSum*cosSum + sinSum*sinSum
+    minHmoment = maxHmoment
+    for i in range(window + 1, len(aas) + 1):
+      cosSum += index[aas[i-1]] * np.cos(i * angleRadians)
+      cosSum -= index[aas[i-window-1]] * np.cos((i-window) * angleRadians)
+      sinSum += index[aas[i-1]] * np.sin(i * angleRadians)
+      sinSum -= index[aas[i-window-1]] * np.sin((i-window) * angleRadians)
+      hMoment = cosSum*cosSum + sinSum*sinSum
+      maxHmoment = max([ maxHmoment, hMoment ])
+      minHmoment = min([ minHmoment, hMoment ])
+    return np.sqrt(maxHmoment), np.sqrt(minHmoment)
 
-def indexMaxHydrophobicSideHelix(peptide, index):
-  return 0
+# calculate the sum of squared differences in hydrophobicities between neighbours
+def indexSumSquaredDiff(aas, index):
+  squaredDiffSum = 0.0
+  for i in range(len(aas)-1):
+    diff = index[aas[i]] - index[aas[i+1]]
+    squaredDiffSum += diff * diff
+  return squaredDiffSum
 
-def indexMinHydrophobicSideHelix(peptide, index):
-  return 0
+# calculate the number of a certain type of aa
+def numberTypeAA(aas, aasOfType):
+  return sum([1 for aa in aas if aa in aasOfType])
 
-def indexMaxHydrophobicMoment(peptide, index, angle, window):
-  return 0
+# calculate the number of a consecutive aa pairs of a certain type
+def numberConsecTypeAA(aas, aasOfType):
+  return sum([1 for i in range(len(aas)-1) if aas[i] in aasOfType and aas[i+1] in aasOfType])
 
-def indexMinHydrophobicMoment(peptide, index, angle, window):
-  return 0
+# calculate the average hydrophobicity of an index
+def avgHydrophobicityIndex(index):
+  return np.mean(index.values())
 
-def indexSumSquaredDiff(peptide, index):
-  return 0
-
-def numberTypeAA(peptide, aas):
-  return 0
-
-def numberConsecTypeAA(peptide, aas):
-  return 0
+def calcHydrophobicitySide(aas, index):
+  return index[aas[4]] + cos300 * (index[aas[1]] + index[aas[7]]) + cos400 * (index[aas[0]] + index[aas[8]])
