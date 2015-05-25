@@ -90,3 +90,27 @@ def grab(string):
                     string_new += s
 
     return string_new
+
+def processing_Data(feature,rt,row,str):
+    ratio = 0.8
+    train_row = int(round(ratio * row))
+    end = row #len(feature)
+    if str =='svr':
+       train_tag_temp = np.zeros([train_row])
+       test_tag_temp = np.zeros([end-train_row])
+    elif str =='gp':
+       train_tag_temp = np.zeros([train_row,1])
+       test_tag_temp = np.zeros([end-train_row,1])
+
+
+
+    for i in range(train_row):
+         train_tag_temp[i] = rt[i]
+    for i in range(end-train_row):
+         test_tag_temp[i] = rt[train_row+i]
+
+    train_set = feature[0:train_row][:]
+    train_tag = train_tag_temp
+    test_set = feature[train_row:end][:]
+    test_tag = test_tag_temp
+    return train_set,train_tag,test_set,test_tag

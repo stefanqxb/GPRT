@@ -16,27 +16,6 @@ def BOW(string, hydrop, length):
     feature = forming_feature(string,hydrop,length)
     return feature
 
-def extracting_feature(string):
-    fea_mat = np.zeros([20,20])
-    M = len(string)
-    # 2-gram word
-    for i in range(M):
-        N = len(string[i])-1
-        for j in range(N):
-            a = [string[i][j] , string[i][j+1]]
-            idx = np.zeros([2,1])
-            for k  in range(2):
-                temp = identify(a[k])
-                if temp != -1:
-                   idx[k] = temp
-            fea_mat[int(idx[0])][int(idx[1])] = fea_mat[int(idx[0])][int(idx[1])] + 1
-
-    return fea_mat
-
-def identify(a):
-    letter ='ARNDCQEGHILKMFPSTWYVOU'
-    ind = letter.find(a)
-    return ind
 
 def forming_feature(string,hydrop,length):
     M = len(string)
