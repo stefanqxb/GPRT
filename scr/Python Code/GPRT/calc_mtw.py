@@ -1,8 +1,8 @@
 __author__ = 'Administrator'
 
-def mini_time_win(hist,max_t,min_t,step):
+def mini_time_win(hist,max_t,min_t,step,max_total_t):
     total = sum(hist)
-    threshold = 0.95 * total
+    threshold = round(0.95 * total)
     count = 0
     counter = 0
     for i in range(len(hist)):
@@ -11,5 +11,5 @@ def mini_time_win(hist,max_t,min_t,step):
             counter = i
             break
 
-    time_interval = counter * (max_t - min_t)/(step*max_t)
+    time_interval = counter * (max_t - min_t)/(step*max_total_t)
     return  time_interval
