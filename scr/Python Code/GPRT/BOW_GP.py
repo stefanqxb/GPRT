@@ -12,7 +12,7 @@ from scipy.stats.stats import pearsonr
 
 # feature selection
 print "selecting features....."
-feature,rt = feature_extraction.feature_extra(2,0,100) # num: 1--bow 2--elude num2 1--1gram word 2--2gram word  subset_num: subset
+feature,rt = feature_extraction.feature_extra(1,2,5000) # num: 1--bow 2--elude num2 1--1gram word 2--2gram word  subset_num: subset
 
 row = len(feature)
 
