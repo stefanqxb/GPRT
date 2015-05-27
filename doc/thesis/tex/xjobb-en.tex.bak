@@ -543,8 +543,7 @@ Before introducing the experimental setup, we will introduce two main concepts w
         The value of Pearson Correlation Coefficient is between -1 and 1. A value of 1 (or -1)implies that a linear equation describes the relationship between X and Y perfectly, the sign implies whether the relationship is positive or negative. A value of 0 implies that there is no linear correlation between the variables. The closer the value is to 1, the stronger the linear relation they have, otherwise, the weaker the relation they have.\\
   \item Minimal Time Window:\\
         The minimal time window is a time window including the
-        deviations between observed and predicted retention times for
-        95\% of the peptides ($\Delta t95\%$). Given the time window, we could know the expected range of observing time in advance and thus enhanced paralleling generating ability of the retention time of peptide. In this case, the minimal time window will be showed as ratio of total time instead of a absolute value. The smaller the time window is, the more peptide we could generating at the same time.
+        deviations between observed and predicted retention times for 95\% of the peptides ($\Delta t95\%$). Given the time window, we could know the expected range of observing time in advance and thus enhanced paralleling generating ability of the retention time of peptide. In this case, the minimal time window will be showed as ratio of total running time instead of a absolute value. The total running time is defined as the time interval between the smallest observed retention time and largest one. The smaller the time window is, the more peptide we could generating at the same time.
 
 \end{itemize}
 
@@ -892,7 +891,7 @@ In this thesis, a Gaussian Process Regression Model for the prediction of peptid
 The Gaussian process has stronger capacity than SVR and ANN in terms of parallelized processing since the minimal time window of GP model is smaller than the one of SVR when having similar prediction accuracy. Besides, from the experimental results we could tell, the computational efficiency of the GP model is faster than the SVR model when dealing with big data. This is a significant and useful quality since a lot of biochemical experiments contain large amount of data that need to be processed.\\
 
 \noindent
-In addition, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is almost as good as the biochemical features. Although the performance of these features are still slightly worse than the biochemical features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique and powerful advantages.\\
+In addition, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is almost as good as the biochemical features. Although the performance of these less-biochemical features are still slightly worse than the biochemical features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique and powerful advantages.\\
 
 \noindent
 In the end, two optimization methods have been implemented and compared with each other. Although, we only utilize the original version of them, they still make a significant difference on the experimental results. In addition, their properties in terms of default parameters and the potential solutions of their drawbacks have been discussed too.
@@ -900,13 +899,19 @@ In the end, two optimization methods have been implemented and compared with eac
 
 \section{Future Work}
 
-As we have been analyzing before, one of the most important limitation of GP model is the computational cost. It is quite hard to overcome this problem since the Gaussian Process is non-parametric model. In the last 20 years, many new methods have been carried out to solve this problem. Tresp in \cite{foo22} proposes a Bayesian committee machine(BCM) method and Snelson in \cite{foo23} suggest a method based on sparse Gaussian Process using pseudo-input to enhance the computational efficiency. Therefore, one potential work in the future is to replace the original Gaussian Process with these methods to investigate their performance.\\
+As we have been analyzed before, one of the most important limitations of GP model is the computational cost. It is quite hard to overcome this problem since the Gaussian Process is non-parametric model. In the last 20 years, many new methods have been carried out to solve this problem. Tresp in \cite{foo22} proposes a Bayesian committee machine(BCM) method and Snelson in \cite{foo23} suggest a method based on sparse Gaussian Process using pseudo-input to enhance the computational efficiency. Therefore, one potential work in the future is to replace the original Gaussian Process with these methods to investigate their performance.\\
 
 \noindent
 Another interesting thing is about finding some more proper optimization method to overcome the shortages of current ones. Since we know that the original CG method has the weakness in terms of its dependency of the initial value and the Particle Swarm Optimization could not ensure the convergence to the minimal value of the entire search space, we could try to investigate some new optimization methods which could overcome these drawbacks.\\
 
 \noindent
-However, the theory of Gaussian Process is not complete yet and there are still a lot of aspects need to be fixed and improved. What's more, the application of Gaussian Process method in biotechnological field is still not as common as it is in the other field, such as artificial intelligence or computer vision. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory as well as the rapidly development of computing techniques, more sophisticated and practical Gaussian Process Regression methods will continually broaden their application fields in biotechnology and new applications, new requirements will lead to continue to the improvement of GP method as well.
+However, the theory of Gaussian Process is not complete yet and there are still a lot of aspects need to be fixed and improved. What's more, the Gaussian Process model has been proved to be a powerful and useful tool but the application of it in biotechnological field is still not as common as it is in the other fields, such as artificial intelligence or computer vision. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory and the rapidly development of computer techniques, more sophisticated and practical Gaussian Process Regression models will be created and they will continually broaden their application fields in biotechnology. \\
+
+\noindent
+Apart from the Gaussian Process models, there are some other machine learning methods, such as deep learning method and clustering method that haven't been tested yet. One might be interested in investigating their performance in this case and compare them with the current methods.\\
+
+\noindent
+However, we should see that the prediction of peptide's retention time is just another example of implementation of machine learning method in biochemical problem. From a long-term eyesight, with the help of computer science and machine learning theories, more and more advanced machine learning methods will be utilized to solve the biochemical problems and with the development of biotechnology, more and more biochemical problems will arise which will also motivate the development of machine learning methods. The connection between machine learning techniques and biotechnology will become increasing strong in the further.
 
 
 

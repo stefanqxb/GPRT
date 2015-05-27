@@ -307,7 +307,7 @@ We want to take the advantages from the kernel function and eliminate its weakne
 \end{equation}
 
 \noindent
-where $m$ is the weight between two kernel functions. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
+where $m$ is the weight between two kernel functions. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and finding a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
 
 \section{Property of Gaussian Process}
 
@@ -360,7 +360,20 @@ In our case, we use $2-grams$ method to build our embedding language $L$ then ea
 Since the number of the words $w$ in $L$ is directly related to the length of the peptide sequence, the length of the peptide will be used as a feature to characterize the peptide.\\
 
 \noindent
-In addition, knowing that the hydrophobicity has influenced the retention time of the peptide greatly, it is reasonable to include the hydrophobicity of the peptide in the feature set too.\\
+In addition, knowing that the hydrophobicity has influenced the retention time of the peptide greatly, it is reasonable to include the hydrophobicity of the peptide in the feature set too. As the result, we will get the feature matric as fig.\ref{fig:Fig_feature} showed. Each peptide $p_{i}$ is then represented by 402 features as fig.\ref{fig:feature_sub1} and all of them together form the feature matrix as fig.\ref{fig:feature_sub2}.\\
+
+\begin{figure}[h!]
+\centering
+\subfigure[Feature for each peptide]{
+\label{fig:feature_sub1}
+\includegraphics[width=0.4\textwidth]{feature_structure.jpg}}
+\subfigure[Feature matrix for all peptide]{
+\label{fig:feature_sub2}
+\includegraphics[width=0.8\textwidth]{feature_mat.jpg}}
+\caption{Feature matrix of peptide}
+\label{fig:Fig_feature}
+\end{figure}
+
 
 \noindent
 The advantages of the Bag-of-Word method are mainly showed in two aspects: complexity and flexibility.\\
@@ -543,8 +556,7 @@ Before introducing the experimental setup, we will introduce two main concepts w
         The value of Pearson Correlation Coefficient is between -1 and 1. A value of 1 (or -1)implies that a linear equation describes the relationship between X and Y perfectly, the sign implies whether the relationship is positive or negative. A value of 0 implies that there is no linear correlation between the variables. The closer the value is to 1, the stronger the linear relation they have, otherwise, the weaker the relation they have.\\
   \item Minimal Time Window:\\
         The minimal time window is a time window including the
-        deviations between observed and predicted retention times for
-        95\% of the peptides ($\Delta t95\%$). Given the time window, we could know the expected range of observing time in advance and thus enhanced paralleling generating ability of the retention time of peptide. In this case, the minimal time window will be showed as ratio of total time instead of a absolute value. The smaller the time window is, the more peptide we could generating at the same time.
+        deviations between observed and predicted retention times for 95\% of the peptides ($\Delta t95\%$). Given the time window, we could know the expected range of observing time in advance and thus enhanced paralleling generating ability of the retention time of peptide. In this case, the minimal time window will be showed as ratio of total time instead of a absolute value. The total time is defined as the time interval between the smallest observed retention time and largest one. The smaller the time window is, the more peptide we could generating at the same time.
 
 \end{itemize}
 

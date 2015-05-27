@@ -30,10 +30,3 @@ def forming_feature(string):
         feature[i] = feature[i][:]/float(sum(feature[i],0))
     return feature
 
-def grab_word(string):
-    letter ='A,R,N,D,C,Q,E,G,H,I,L,K,M,F,P,S,T,W,Y,V'
-    str1 = letter.split(',')
-    sub_word = []
-    for s in str1:
-        sub_word.append(s)
-    return sub_word

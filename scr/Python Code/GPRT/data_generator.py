@@ -1,5 +1,8 @@
 __author__ = 'Administrator'
 import numpy as np
+import sys
+sys.path.append('elude/')
+import data_manager
 
 class function_group:
         def __init__( self, keys):
@@ -59,7 +62,6 @@ class function_group:
                     ind.append(i)
             return ind
 
-
 def read_data(path):
     with open(path,'r') as f:
         keys = f.readline().split('\t')
@@ -74,7 +76,6 @@ def read_data(path):
             data.add_data(row)
             row = f.readline()
     return data
-
 
 def grab(string):
     string_new = ''
@@ -102,8 +103,6 @@ def processing_Data(feature,rt,row,str):
        train_tag_temp = np.zeros([train_row,1])
        test_tag_temp = np.zeros([end-train_row,1])
 
-
-
     for i in range(train_row):
          train_tag_temp[i] = rt[i]
     for i in range(end-train_row):
@@ -114,3 +113,14 @@ def processing_Data(feature,rt,row,str):
     test_set = feature[train_row:end][:]
     test_tag = test_tag_temp
     return train_set,train_tag,test_set,test_tag
+
+def extract(inst,num):
+    peptide =[]
+    rt = []
+    for item in inst:
+        if isinstance(item,data_manager.PSMDescription):
+            peptide.append(item.peptide)
+            rt.append(item.retentionTime)
+            if len(rt) >= num:
+                break
+    return peptide,rt

@@ -21,11 +21,11 @@
 \contentsline {chapter}{\chapternumberline {6}Results and Evaluation}{24}
 \contentsline {section}{\numberline {6.1}Experimental Setup}{25}
 \contentsline {section}{\numberline {6.2}Experimental result}{26}
-\contentsline {chapter}{\chapternumberline {7}Limitation and Discussion}{34}
-\contentsline {section}{\numberline {7.1}Model limitation}{34}
-\contentsline {section}{\numberline {7.2}Feature limitation}{34}
-\contentsline {section}{\numberline {7.3}Optimization limitation}{35}
-\contentsline {chapter}{\chapternumberline {8}Conclusion and Future Work}{37}
-\contentsline {section}{\numberline {8.1}Conclusion}{37}
-\contentsline {section}{\numberline {8.2}Future Work}{38}
-\contentsline {chapter}{Bibliography}{40}
+\contentsline {chapter}{\chapternumberline {7}Limitation and Discussion}{35}
+\contentsline {section}{\numberline {7.1}Model limitation}{35}
+\contentsline {section}{\numberline {7.2}Feature limitation}{35}
+\contentsline {section}{\numberline {7.3}Optimization limitation}{36}
+\contentsline {chapter}{\chapternumberline {8}Conclusion and Future Work}{38}
+\contentsline {section}{\numberline {8.1}Conclusion}{38}
+\contentsline {section}{\numberline {8.2}Future Work}{39}
+\contentsline {chapter}{Bibliography}{41}
