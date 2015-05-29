@@ -12,7 +12,7 @@ from scipy.stats.stats import pearsonr
 
 # feature selection
 print "selecting features....."
-feature,rt = feature_extraction.feature_extra(1,2,5000) # num: 1--bow 2--elude num2 1--1gram word 2--2gram word  subset_num: subset
+feature,rt = feature_extraction.feature_extra(1,2,100) # num: 1--bow 2--elude num2 1--1gram word 2--2gram word  subset_num: subset
 
 row = len(feature)
 
@@ -20,8 +20,8 @@ print "training model......."
 #########  SVR model ##########   # svr doesn't work for the elude feature
 [train_set_svr, train_tag_svr, test_set_svr, test_tag_svr] = data_generator.processing_Data(feature, rt, row,'svr')
 t0 = time.time()
-svr1 = svm.SVR(coef0=0.0, degree=3, epsilon=0.1, kernel='rbf', max_iter=-1, shrinking=True, tol=0.001, verbose=False)
-svr = grid_search.GridSearchCV(svr1, param_grid ={"C":np.linspace(100,1000,num = 50),"gamma":np.linspace(10,100,num = 15)})
+svr1 = svm.SVR(C=600, gamma=0.1, coef0=0.0, degree=3, epsilon=0.1, kernel='rbf', max_iter=-1, shrinking=True, tol=0.001, verbose=False)
+svr = grid_search.GridSearchCV(svr1, param_grid ={"C":np.linspace(100,1000,num = 10),"gamma":np.linspace(0.01,10,num = 100)})
 svr.fit(train_set_svr,train_tag_svr)
 pv_svr = svr.predict(test_set_svr)
 t_svr = time.time()-t0

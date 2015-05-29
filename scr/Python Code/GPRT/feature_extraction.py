@@ -22,7 +22,7 @@ def feature_extra( num,num2,subset_num):
         rt = rt[0:subset_num]
     elif num == 2:
         #execute elude feature
-        psmDescriptions, feature_temp = el.getFeatures('data/retention_time_peptide.csv')
+        psmDescriptions, feature_temp = el.getFeatures('data/modify.csv')
         feature = feature_temp[0:subset_num]
         peptide,rt = data_generator.extract(psmDescriptions,subset_num) # grab 1000 as subset to test
     else:

@@ -11,5 +11,5 @@ def mini_time_win(hist,max_t,min_t,step,max_total_t):
             counter = i
             break
 
-    time_interval = counter * (max_t - min_t)/(step*max_total_t)
+    time_interval = 2*counter * (max_t - min_t)/(step*max_total_t)
     return  time_interval
