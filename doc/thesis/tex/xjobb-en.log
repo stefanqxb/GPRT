@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2014.8.4)  27 MAY 2015 09:21
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2014.8.4)  29 MAY 2015 10:40
 entering extended mode
 **C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/xjobb-en.tex
 (C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/xjobb-en.tex
@@ -794,77 +794,75 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 54.
 (D:\CTEX\MiKTeX\tex\latex\psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-<./peptide.png, id=30, 516.42938pt x 295.1025pt>
-File: ./peptide.png Graphic file (type png)
- <use ./peptide.png>
-Package pdftex.def Info: ./peptide.png used on input line 58.
-(pdftex.def)             Requested size: 170.71652pt x 97.55072pt.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 59.
-
-<Alpha_AminoAcidball.png, id=32, 2007.5pt x 1430.34375pt>
+<Alpha_AminoAcidball.png, id=30, 2007.5pt x 1430.34375pt>
 File: Alpha_AminoAcidball.png Graphic file (type png)
 
 <use Alpha_AminoAcidball.png>
-Package pdftex.def Info: Alpha_AminoAcidball.png used on input line 64.
+Package pdftex.def Info: Alpha_AminoAcidball.png used on input line 58.
 (pdftex.def)             Requested size: 170.71652pt x 121.63217pt.
- [1
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 59.
+ <./peptide.png, id=32, 516.42938pt x 295.1025pt>
+File: ./peptide.png Graphic file (type png)
 
- <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/peptide.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 70--72
+<use ./peptide.png>
+Package pdftex.def Info: ./peptide.png used on input line 64.
+(pdftex.def)             Requested size: 170.71652pt x 97.55072pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[1
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 71--73
+
+ []
+
+<RPLC_flow.jpg, id=38, 439.6425pt x 333.49594pt>
+File: RPLC_flow.jpg Graphic file (type jpg)
+ <use RPLC_flow.jpg>
+Package pdftex.def Info: RPLC_flow.jpg used on input line 77.
+(pdftex.def)             Requested size: 316.80121pt x 240.32043pt.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 78.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 78.
+ [2 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/Alpha_AminoAci
+dball.png> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/peptide
+.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 81--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--75
+Underfull \hbox (badness 10000) in paragraph at lines 85--87
 
  []
 
-[2 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/Alpha_AminoAcid
-ball.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 77--79
+[3 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/RPLC_flow.jpg>]
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 80--82
+Underfull \hbox (badness 10000) in paragraph at lines 88--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--85
+Underfull \hbox (badness 10000) in paragraph at lines 91--93
 
  []
 
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 96--98
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 99--101
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 103--105
-
- []
-
-
+[4]
 Underfull \hbox (badness 10000) in paragraph at lines 106--108
 
  []
 
-[4
 
-]
 Underfull \hbox (badness 10000) in paragraph at lines 109--111
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--114
+Underfull \hbox (badness 10000) in paragraph at lines 113--115
 
  []
 
@@ -873,10 +871,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--118
 
  []
 
+[5
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5]
+]
 Underfull \hbox (badness 10000) in paragraph at lines 119--121
 
  []
@@ -892,14 +889,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 126--128
  []
 
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
 Underfull \hbox (badness 10000) in paragraph at lines 129--131
 
- []
-
-
-Overfull \hbox (4.7262pt too wide) in paragraph at lines 132--134
-\T1/ptm/m/n/12 Thus, in [[]], O.V. Krokhin, R. Craig have de-vel-oped an im-pro
-ved model, Sequence-
  []
 
 
@@ -907,132 +901,138 @@ Underfull \hbox (badness 10000) in paragraph at lines 132--134
 
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 135--137
+
+Underfull \hbox (badness 10000) in paragraph at lines 136--138
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 138--140
+Underfull \hbox (badness 10000) in paragraph at lines 139--141
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--144
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 152--153
+Underfull \hbox (badness 10000) in paragraph at lines 145--147
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 154--156
+Underfull \hbox (badness 10000) in paragraph at lines 148--150
+
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--159
+Underfull \hbox (badness 10000) in paragraph at lines 164--166
 
  []
 
-[8
+
+Underfull \hbox (badness 10000) in paragraph at lines 167--169
+
+ []
+
+[9
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 160--162
-
- []
-
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 205--207
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 233--235
+Underfull \hbox (badness 10000) in paragraph at lines 170--172
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 236--238
+Underfull \hbox (badness 10000) in paragraph at lines 215--217
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--241
+Underfull \hbox (badness 10000) in paragraph at lines 243--245
 
  []
 
-<kernel_function.png, id=75, 418.56375pt x 212.29312pt>
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 246--248
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 249--251
+
+ []
+
+<kernel_function.png, id=82, 418.56375pt x 212.29312pt>
 File: kernel_function.png Graphic file (type png)
 
 <use kernel_function.png>
-Package pdftex.def Info: kernel_function.png used on input line 244.
+Package pdftex.def Info: kernel_function.png used on input line 254.
 (pdftex.def)             Requested size: 284.52756pt x 144.30882pt.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 255.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 255.
 
-Underfull \hbox (badness 10000) in paragraph at lines 254--256
+Underfull \hbox (badness 10000) in paragraph at lines 264--266
 
  []
 
-[11 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/kernel_functio
-n.png>] <GP_model.png, id=80, 454.69875pt x 145.29282pt>
+[12 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/kernel_functio
+n.png>] <GP_model.png, id=87, 454.69875pt x 145.29282pt>
 File: GP_model.png Graphic file (type png)
  <use GP_model.png>
-Package pdftex.def Info: GP_model.png used on input line 292.
+Package pdftex.def Info: GP_model.png used on input line 302.
 (pdftex.def)             Requested size: 455.24408pt x 145.4698pt.
 
-Overfull \hbox (59.24408pt too wide) in paragraph at lines 292--292
+Overfull \hbox (59.24408pt too wide) in paragraph at lines 302--302
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 297--298
+Underfull \hbox (badness 10000) in paragraph at lines 307--308
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 299--301
+Underfull \hbox (badness 10000) in paragraph at lines 309--311
 
  []
 
-[12 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/GP_model.png>]
+[13 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/GP_model.png>]
 
-Underfull \hbox (badness 10000) in paragraph at lines 314--315
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 316--318
-
- []
-
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 319--321
+Underfull \hbox (badness 10000) in paragraph at lines 324--325
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 322--324
+Underfull \hbox (badness 10000) in paragraph at lines 326--328
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 329--330
+Underfull \hbox (badness 10000) in paragraph at lines 329--331
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 332--333
+Underfull \hbox (badness 10000) in paragraph at lines 332--334
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 339--340
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--336
+Underfull \hbox (badness 10000) in paragraph at lines 342--343
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 337--339
+Underfull \hbox (badness 10000) in paragraph at lines 344--346
 
  []
 
@@ -1041,239 +1041,258 @@ Underfull \hbox (badness 10000) in paragraph at lines 347--349
 
  []
 
-[15
 
-] <BOW.png, id=95, 350.05782pt x 192.72pt>
+Underfull \hbox (badness 10000) in paragraph at lines 357--359
+
+ []
+
+[16
+
+] <BOW.png, id=102, 350.05782pt x 192.72pt>
 File: BOW.png Graphic file (type png)
  <use BOW.png>
-Package pdftex.def Info: BOW.png used on input line 355.
+Package pdftex.def Info: BOW.png used on input line 365.
 (pdftex.def)             Requested size: 284.52756pt x 156.65224pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 359--361
+Underfull \hbox (badness 10000) in paragraph at lines 369--371
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 362--364
+Underfull \hbox (badness 10000) in paragraph at lines 372--374
 
  []
 
-<feature_structure.jpg, id=96, 229.60782pt x 273.27094pt>
+<feature_structure.jpg, id=103, 229.60782pt x 273.27094pt>
 File: feature_structure.jpg Graphic file (type jpg)
 
 <use feature_structure.jpg>
-Package pdftex.def Info: feature_structure.jpg used on input line 369.
+Package pdftex.def Info: feature_structure.jpg used on input line 379.
 (pdftex.def)             Requested size: 158.39758pt x 188.52794pt.
 
-<feature_mat.jpg, id=97, 502.12593pt x 124.21407pt>
+<feature_mat.jpg, id=104, 502.12593pt x 124.21407pt>
 File: feature_mat.jpg Graphic file (type jpg)
  <use feature_mat.jpg>
-Package pdftex.def Info: feature_mat.jpg used on input line 372.
+Package pdftex.def Info: feature_mat.jpg used on input line 382.
 (pdftex.def)             Requested size: 316.80121pt x 78.37277pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 378--380
+Underfull \hbox (badness 10000) in paragraph at lines 388--390
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 381--383
+Underfull \hbox (badness 10000) in paragraph at lines 391--393
 
  []
 
-[16 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/BOW.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 384--386
+[17 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/BOW.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 394--396
 
  []
 
-[17 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/feature_struct
+[18 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/feature_struct
 ure.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/feature_m
 at.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 391--392
+Underfull \hbox (badness 10000) in paragraph at lines 401--402
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 399--401
+Underfull \hbox (badness 10000) in paragraph at lines 409--411
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 407--408
+Underfull \hbox (badness 10000) in paragraph at lines 417--418
 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [18
+ [19
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 423--425
+Underfull \hbox (badness 10000) in paragraph at lines 433--435
 
  []
 
-<CG_algorithm.png, id=108, 351.56343pt x 237.13594pt>
-File: CG_algorithm.png Graphic file (type png)
- <use CG_algorithm.png>
-Package pdftex.def Info: CG_algorithm.png used on input line 431.
-(pdftex.def)             Requested size: 284.52756pt x 191.91621pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 435--437
-
- []
-
-[19 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/CG_algorithm.p
-ng>]
-Underfull \hbox (badness 10000) in paragraph at lines 438--440
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 452--454
-
- []
-
-
-Overfull \hbox (36.27322pt too wide) in paragraph at lines 466--466
-[] 
- []
-
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 477--479
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 483--485
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 486--488
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 489--491
-
- []
-
-<Gradient_Descent.jpg, id=117, 563.10374pt x 421.575pt>
-File: Gradient_Descent.jpg Graphic file (type jpg)
-
-<use Gradient_Descent.jpg>
-Package pdftex.def Info: Gradient_Descent.jpg used on input line 497.
-(pdftex.def)             Requested size: 158.39758pt x 118.58696pt.
- <CG.jpg, id=118, 563.10374pt x 421.575pt>
-File: CG.jpg Graphic file (type jpg)
-
-<use CG.jpg>
-Package pdftex.def Info: CG.jpg used on input line 500.
-(pdftex.def)             Requested size: 158.39758pt x 118.58696pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 508--509
-
- []
-
-[21 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/Gradient_Desce
-nt.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/CG.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 510--512
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 513--515
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 516--518
-
- []
-
-<PSO.png, id=122, 338.76563pt x 370.38374pt>
-File: PSO.png Graphic file (type png)
- <use PSO.png>
-Package pdftex.def Info: PSO.png used on input line 521.
-(pdftex.def)             Requested size: 341.43306pt x 373.316pt.
+<CG_algorithm.JPG, id=116, 325.215pt x 447.17062pt>
+File: CG_algorithm.JPG Graphic file (type jpg)
+ <use CG_algorithm.JPG>
+Package pdftex.def Info: CG_algorithm.JPG used on input line 441.
+(pdftex.def)             Requested size: 237.60242pt x 326.7116pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 525--527
-
- []
-
-[22] [23 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO.png>]
-
-Underfull \hbox (badness 10000) in paragraph at lines 532--533
+Underfull \hbox (badness 10000) in paragraph at lines 445--447
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 542--544
+Underfull \hbox (badness 10000) in paragraph at lines 448--450
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 545--547
+Underfull \hbox (badness 10000) in paragraph at lines 462--464
 
  []
 
-[24
+[20]
+Overfull \hbox (36.27322pt too wide) in paragraph at lines 476--476
+[] 
+ []
 
-]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/CG_algorithm.
+JPG>]
+Underfull \hbox (badness 10000) in paragraph at lines 487--489
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 493--495
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 496--498
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 499--501
+
+ []
+
+<Gradient_Descent.jpg, id=123, 563.10374pt x 421.575pt>
+File: Gradient_Descent.jpg Graphic file (type jpg)
+
+<use Gradient_Descent.jpg>
+Package pdftex.def Info: Gradient_Descent.jpg used on input line 507.
+(pdftex.def)             Requested size: 158.39758pt x 118.58696pt.
+ <CG.jpg, id=124, 563.10374pt x 421.575pt>
+File: CG.jpg Graphic file (type jpg)
+
+<use CG.jpg>
+Package pdftex.def Info: CG.jpg used on input line 510.
+(pdftex.def)             Requested size: 158.39758pt x 118.58696pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 518--519
+
+ []
+
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 520--522
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--525
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 526--528
+
+ []
+
+<PSO.png, id=128, 338.76563pt x 370.38374pt>
+File: PSO.png Graphic file (type png)
+ <use PSO.png>
+Package pdftex.def Info: PSO.png used on input line 531.
+(pdftex.def)             Requested size: 356.39758pt x 389.67735pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 535--537
+
+ []
+
+
+Underfull \vbox (badness 2057) has occurred while \output is active []
+
+ [23 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/Gradient_Desc
+ent.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/CG.jpg>] 
+[24 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 542--543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 552--554
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 555--557
 
  []
 
-[25] <original_without_opt_usingbow.jpg, id=137, 562.1pt x 421.575pt>
+[25
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 565--567
+
+ []
+
+[26] <original_without_opt_usingbow.jpg, id=143, 562.1pt x 421.575pt>
 File: original_without_opt_usingbow.jpg Graphic file (type jpg)
 
 <use original_without_opt_usingbow.jpg>
 Package pdftex.def Info: original_without_opt_usingbow.jpg used on input line 5
-74.
+84.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
-<original_without_opt_bowfeature_multikernel.jpg, id=138, 562.1pt x 421.575pt>
+<original_without_opt_bowfeature_multikernel.jpg, id=144, 562.1pt x 421.575pt>
 File: original_without_opt_bowfeature_multikernel.jpg Graphic file (type jpg)
 
 <use original_without_opt_bowfeature_multikernel.jpg>
 Package pdftex.def Info: original_without_opt_bowfeature_multikernel.jpg used o
-n input line 577.
+n input line 587.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 581--583
+Underfull \hbox (badness 10000) in paragraph at lines 591--593
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 584--586
+Underfull \hbox (badness 10000) in paragraph at lines 594--596
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 587--589
+Underfull \hbox (badness 10000) in paragraph at lines 597--599
 
  []
 
-<original_without_opt.jpg, id=139, 562.1pt x 421.575pt>
+<original_without_opt.jpg, id=145, 562.1pt x 421.575pt>
 File: original_without_opt.jpg Graphic file (type jpg)
 
 <use original_without_opt.jpg>
-Package pdftex.def Info: original_without_opt.jpg used on input line 594.
+Package pdftex.def Info: original_without_opt.jpg used on input line 604.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
-<Lumi_RBF+poly_without_opt_GP.jpg, id=140, 562.1pt x 421.575pt>
+<Lumi_RBF+poly_without_opt_GP.jpg, id=146, 562.1pt x 421.575pt>
 File: Lumi_RBF+poly_without_opt_GP.jpg Graphic file (type jpg)
 
 <use Lumi_RBF+poly_without_opt_GP.jpg>
-Package pdftex.def Info: Lumi_RBF+poly_without_opt_GP.jpg used on input line 59
+Package pdftex.def Info: Lumi_RBF+poly_without_opt_GP.jpg used on input line 60
 7.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
@@ -1281,7 +1300,7 @@ Package pdftex.def Info: Lumi_RBF+poly_without_opt_GP.jpg used on input line 59
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 602--604
+Underfull \hbox (badness 10000) in paragraph at lines 612--614
 
  []
 
@@ -1289,64 +1308,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 602--604
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 621--623
-
- []
-
-[26 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/original_witho
-ut_opt_usingbow.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/t
-ex/original_without_opt_bowfeature_multikernel.jpg>]
-<bow_svr_without_opt.jpg, id=144, 562.1pt x 421.575pt>
-File: bow_svr_without_opt.jpg Graphic file (type jpg)
-
-<use bow_svr_without_opt.jpg>
-Package pdftex.def Info: bow_svr_without_opt.jpg used on input line 631.
-(pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
-
-<Lumi_svr_without_opt.jpg, id=145, 562.1pt x 421.575pt>
-File: Lumi_svr_without_opt.jpg Graphic file (type jpg)
-
-<use Lumi_svr_without_opt.jpg>
-Package pdftex.def Info: Lumi_svr_without_opt.jpg used on input line 634.
-(pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 658--660
+Underfull \hbox (badness 10000) in paragraph at lines 631--633
 
  []
 
 [27 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/original_witho
-ut_opt.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/Lumi_R
-BF+poly_without_opt_GP.jpg>]
-<PSO_fig2_bow_svr.jpg, id=151, 562.1pt x 421.575pt>
-File: PSO_fig2_bow_svr.jpg Graphic file (type jpg)
- <use PSO_fig2_bow_svr.jpg>
-Package pdftex.def Info: PSO_fig2_bow_svr.jpg used on input line 668.
+ut_opt_usingbow.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/t
+ex/original_without_opt_bowfeature_multikernel.jpg>]
+<bow_svr_without_opt.jpg, id=150, 562.1pt x 421.575pt>
+File: bow_svr_without_opt.jpg Graphic file (type jpg)
+
+<use bow_svr_without_opt.jpg>
+Package pdftex.def Info: bow_svr_without_opt.jpg used on input line 641.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
-<Lumi_svr_PSO_fig2.jpg, id=152, 562.1pt x 421.575pt>
-File: Lumi_svr_PSO_fig2.jpg Graphic file (type jpg)
+<Lumi_svr_without_opt.jpg, id=151, 562.1pt x 421.575pt>
+File: Lumi_svr_without_opt.jpg Graphic file (type jpg)
 
-<use Lumi_svr_PSO_fig2.jpg>
-Package pdftex.def Info: Lumi_svr_PSO_fig2.jpg used on input line 671.
-(pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
- <PSO_fig1_bow.jpg, id=153, 562.1pt x 421.575pt>
-File: PSO_fig1_bow.jpg Graphic file (type jpg)
-
-<use PSO_fig1_bow.jpg>
-Package pdftex.def Info: PSO_fig1_bow.jpg used on input line 680.
-(pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
- <PSO_fig1_Lumi.jpg, id=154, 562.1pt x 421.575pt>
-File: PSO_fig1_Lumi.jpg Graphic file (type jpg)
-
-<use PSO_fig1_Lumi.jpg>
-Package pdftex.def Info: PSO_fig1_Lumi.jpg used on input line 683.
+<use Lumi_svr_without_opt.jpg>
+Package pdftex.def Info: Lumi_svr_without_opt.jpg used on input line 644.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
 
@@ -1356,47 +1336,86 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 707--709
+Underfull \hbox (badness 10000) in paragraph at lines 668--670
+
+ []
+
+[28 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/original_witho
+ut_opt.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/Lumi_R
+BF+poly_without_opt_GP.jpg>]
+<PSO_fig2_bow_svr.jpg, id=157, 562.1pt x 421.575pt>
+File: PSO_fig2_bow_svr.jpg Graphic file (type jpg)
+ <use PSO_fig2_bow_svr.jpg>
+Package pdftex.def Info: PSO_fig2_bow_svr.jpg used on input line 678.
+(pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
+
+<Lumi_svr_PSO_fig2.jpg, id=158, 562.1pt x 421.575pt>
+File: Lumi_svr_PSO_fig2.jpg Graphic file (type jpg)
+
+<use Lumi_svr_PSO_fig2.jpg>
+Package pdftex.def Info: Lumi_svr_PSO_fig2.jpg used on input line 681.
+(pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
+ <PSO_fig1_bow.jpg, id=159, 562.1pt x 421.575pt>
+File: PSO_fig1_bow.jpg Graphic file (type jpg)
+
+<use PSO_fig1_bow.jpg>
+Package pdftex.def Info: PSO_fig1_bow.jpg used on input line 690.
+(pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
+ <PSO_fig1_Lumi.jpg, id=160, 562.1pt x 421.575pt>
+File: PSO_fig1_Lumi.jpg Graphic file (type jpg)
+
+<use PSO_fig1_Lumi.jpg>
+Package pdftex.def Info: PSO_fig1_Lumi.jpg used on input line 693.
+(pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 717--719
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 710--712
+Underfull \hbox (badness 10000) in paragraph at lines 720--722
 
  []
 
-[28 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/bow_svr_withou
+[29 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/bow_svr_withou
 t_opt.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/Lumi_sv
 r_without_opt.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex
 /PSO_fig2_bow_svr.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis
 /tex/Lumi_svr_PSO_fig2.jpg>]
-<PSO_fig1_BOW_mk.jpg, id=158, 562.1pt x 421.575pt>
+<PSO_fig1_BOW_mk.jpg, id=164, 562.1pt x 421.575pt>
 File: PSO_fig1_BOW_mk.jpg Graphic file (type jpg)
  <use PSO_fig1_BOW_mk.jpg>
-Package pdftex.def Info: PSO_fig1_BOW_mk.jpg used on input line 720.
+Package pdftex.def Info: PSO_fig1_BOW_mk.jpg used on input line 730.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
-<CG_fig1_BOW_50times_iter.jpg, id=159, 562.1pt x 421.575pt>
+<CG_fig1_BOW_50times_iter.jpg, id=165, 562.1pt x 421.575pt>
 File: CG_fig1_BOW_50times_iter.jpg Graphic file (type jpg)
 
 <use CG_fig1_BOW_50times_iter.jpg>
-Package pdftex.def Info: CG_fig1_BOW_50times_iter.jpg used on input line 723.
+Package pdftex.def Info: CG_fig1_BOW_50times_iter.jpg used on input line 733.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<PSO_fig1_Lumi_mk.jpg, id=160, 562.1pt x 421.575pt>
+<PSO_fig1_Lumi_mk.jpg, id=166, 562.1pt x 421.575pt>
 File: PSO_fig1_Lumi_mk.jpg Graphic file (type jpg)
  <use PSO_fig1_Lumi_mk.jpg>
-Package pdftex.def Info: PSO_fig1_Lumi_mk.jpg used on input line 732.
+Package pdftex.def Info: PSO_fig1_Lumi_mk.jpg used on input line 742.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
-<CG_fig1_Lumi_50times_iter.jpg, id=161, 562.1pt x 421.575pt>
+<CG_fig1_Lumi_50times_iter.jpg, id=167, 562.1pt x 421.575pt>
 File: CG_fig1_Lumi_50times_iter.jpg Graphic file (type jpg)
 
 <use CG_fig1_Lumi_50times_iter.jpg>
-Package pdftex.def Info: CG_fig1_Lumi_50times_iter.jpg used on input line 735.
+Package pdftex.def Info: CG_fig1_Lumi_50times_iter.jpg used on input line 745.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
 
@@ -1405,255 +1424,255 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[29 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO_fig1_bow.j
+[30 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO_fig1_bow.j
 pg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO_fig1_Lumi.
-jpg>] <CG_fig2_bow_cp.jpg, id=165, 562.1pt x 421.575pt>
+jpg>] <CG_fig2_bow_cp.jpg, id=171, 562.1pt x 421.575pt>
 File: CG_fig2_bow_cp.jpg Graphic file (type jpg)
 
 <use CG_fig2_bow_cp.jpg>
-Package pdftex.def Info: CG_fig2_bow_cp.jpg used on input line 767.
+Package pdftex.def Info: CG_fig2_bow_cp.jpg used on input line 777.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
- <CG_fig2_lumi_cp.jpg, id=166, 562.1pt x 421.575pt>
+ <CG_fig2_lumi_cp.jpg, id=172, 562.1pt x 421.575pt>
 File: CG_fig2_lumi_cp.jpg Graphic file (type jpg)
 
 <use CG_fig2_lumi_cp.jpg>
-Package pdftex.def Info: CG_fig2_lumi_cp.jpg used on input line 770.
+Package pdftex.def Info: CG_fig2_lumi_cp.jpg used on input line 780.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 775--777
+Underfull \hbox (badness 10000) in paragraph at lines 785--787
 
  []
 
-[30 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO_fig1_BOW_m
+[31 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO_fig1_BOW_m
 k.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/CG_fig1_BOW
 _50times_iter.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex
 /PSO_fig1_Lumi_mk.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis
 /tex/CG_fig1_Lumi_50times_iter.jpg>]
-<PSO_bow_5generation.jpg, id=170, 562.1pt x 421.575pt>
+<PSO_bow_5generation.jpg, id=177, 562.1pt x 421.575pt>
 File: PSO_bow_5generation.jpg Graphic file (type jpg)
 
 <use PSO_bow_5generation.jpg>
-Package pdftex.def Info: PSO_bow_5generation.jpg used on input line 785.
+Package pdftex.def Info: PSO_bow_5generation.jpg used on input line 795.
 (pdftex.def)             Requested size: 198.0pt x 148.49905pt.
 
-<PSO_fig2_BOW_mk_30generation.jpg, id=171, 562.1pt x 421.575pt>
+<PSO_fig2_BOW_mk_30generation.jpg, id=178, 562.1pt x 421.575pt>
 File: PSO_fig2_BOW_mk_30generation.jpg Graphic file (type jpg)
 
 <use PSO_fig2_BOW_mk_30generation.jpg>
-Package pdftex.def Info: PSO_fig2_BOW_mk_30generation.jpg used on input line 78
+Package pdftex.def Info: PSO_fig2_BOW_mk_30generation.jpg used on input line 79
 8.
 (pdftex.def)             Requested size: 198.0pt x 148.49905pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<zoom_in_30generation.jpg, id=172, 338.01282pt x 300.3722pt>
+<zoom_in_30generation.jpg, id=179, 338.01282pt x 300.3722pt>
 File: zoom_in_30generation.jpg Graphic file (type jpg)
 
 <use zoom_in_30generation.jpg>
-Package pdftex.def Info: zoom_in_30generation.jpg used on input line 798.
+Package pdftex.def Info: zoom_in_30generation.jpg used on input line 808.
 (pdftex.def)             Requested size: 198.0pt x 175.95305pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 803--805
+Underfull \hbox (badness 10000) in paragraph at lines 813--815
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 806--808
+Underfull \hbox (badness 10000) in paragraph at lines 816--818
 
  []
 
-<changing_trend_of_coef.jpg, id=173, 562.1pt x 421.575pt>
+<changing_trend_of_coef.jpg, id=180, 562.1pt x 421.575pt>
 File: changing_trend_of_coef.jpg Graphic file (type jpg)
 
 <use changing_trend_of_coef.jpg>
-Package pdftex.def Info: changing_trend_of_coef.jpg used on input line 813.
+Package pdftex.def Info: changing_trend_of_coef.jpg used on input line 823.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
-<changing_trend_of_minimal_time_window.jpg, id=174, 562.1pt x 421.575pt>
+<changing_trend_of_minimal_time_window.jpg, id=181, 562.1pt x 421.575pt>
 File: changing_trend_of_minimal_time_window.jpg Graphic file (type jpg)
 
 <use changing_trend_of_minimal_time_window.jpg>
 Package pdftex.def Info: changing_trend_of_minimal_time_window.jpg used on inpu
-t line 816.
+t line 826.
 (pdftex.def)             Requested size: 158.39758pt x 118.79282pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<changing_trend_of_coef_30par.jpg, id=175, 563.10374pt x 414.54875pt>
+<changing_trend_of_coef_30par.jpg, id=182, 563.10374pt x 414.54875pt>
 File: changing_trend_of_coef_30par.jpg Graphic file (type jpg)
 
 <use changing_trend_of_coef_30par.jpg>
-Package pdftex.def Info: changing_trend_of_coef_30par.jpg used on input line 82
+Package pdftex.def Info: changing_trend_of_coef_30par.jpg used on input line 83
 5.
 (pdftex.def)             Requested size: 158.39758pt x 116.61052pt.
 
-<changing_trend_of_mtw_30par.jpg, id=176, 563.10374pt x 421.575pt>
+<changing_trend_of_mtw_30par.jpg, id=183, 563.10374pt x 421.575pt>
 File: changing_trend_of_mtw_30par.jpg Graphic file (type jpg)
 
 <use changing_trend_of_mtw_30par.jpg>
-Package pdftex.def Info: changing_trend_of_mtw_30par.jpg used on input line 828
+Package pdftex.def Info: changing_trend_of_mtw_30par.jpg used on input line 838
 .
 (pdftex.def)             Requested size: 158.39758pt x 118.58696pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[31 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/CG_fig2_bow_cp
+[32 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/CG_fig2_bow_cp
 .jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/CG_fig2_lumi
 _cp.jpg>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[32 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO_bow_5gener
+[33 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO_bow_5gener
 ation.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/PSO_fig
 2_BOW_mk_30generation.jpg>]
 
-LaTeX Warning: Text page 33 contains only floats.
+LaTeX Warning: Text page 34 contains only floats.
 
 
 Overfull \vbox (1.66542pt too high) has occurred while \output is active []
 
 
-[33 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/zoom_in_30gene
+[34 <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/zoom_in_30gene
 ration.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/tex/changi
 ng_trend_of_coef.jpg> <C:/Users/Administrator/Documents/GitHub/GPRT/doc/thesis/
 tex/changing_trend_of_minimal_time_window.jpg> <C:/Users/Administrator/Document
 s/GitHub/GPRT/doc/thesis/tex/changing_trend_of_coef_30par.jpg> <C:/Users/Admini
 strator/Documents/GitHub/GPRT/doc/thesis/tex/changing_trend_of_mtw_30par.jpg>]
-[34]
-Underfull \hbox (badness 10000) in paragraph at lines 859--861
+[35]
+Underfull \hbox (badness 10000) in paragraph at lines 869--871
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 862--864
+Underfull \hbox (badness 10000) in paragraph at lines 872--874
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 868--869
+Underfull \hbox (badness 10000) in paragraph at lines 878--879
 
  []
 
-[35
+[36
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 870--872
+Underfull \hbox (badness 10000) in paragraph at lines 880--882
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 873--875
+Underfull \hbox (badness 10000) in paragraph at lines 883--885
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 878--880
+Underfull \hbox (badness 10000) in paragraph at lines 888--890
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 881--883
+Underfull \hbox (badness 10000) in paragraph at lines 891--893
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 884--886
+Underfull \hbox (badness 10000) in paragraph at lines 894--896
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 887--889
-
- []
-
-[36]
-Underfull \hbox (badness 10000) in paragraph at lines 890--892
+Underfull \hbox (badness 10000) in paragraph at lines 897--899
 
  []
 
 [37]
-Underfull \hbox (badness 10000) in paragraph at lines 898--899
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 900--902
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 903--905
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 908--909
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 906--908
+Underfull \hbox (badness 10000) in paragraph at lines 910--912
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 913--915
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 916--918
 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [38
+ [39
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 915--916
+Underfull \hbox (badness 10000) in paragraph at lines 925--926
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 917--919
+Underfull \hbox (badness 10000) in paragraph at lines 927--929
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 920--922
+Underfull \hbox (badness 10000) in paragraph at lines 930--932
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--925
+Underfull \hbox (badness 10000) in paragraph at lines 933--935
 
  []
 
-[39] [40]
+[40] [41]
 bibitemlist
-[41
+[42
 
 ]
-Underfull \hbox (badness 2119) in paragraph at lines 955--956
+Underfull \hbox (badness 2119) in paragraph at lines 966--967
 []\T1/ptm/m/n/12 Mant CT and Hodges RS (2006). "Context-dependent ef-fects on t
 he
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 971--972
+Underfull \hbox (badness 10000) in paragraph at lines 982--983
 []\T1/ptm/m/n/12 Chang CC and Lin CJ (2011). LIB-SVM: A li-brary for sup-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 971--972
+Underfull \hbox (badness 10000) in paragraph at lines 982--983
 \T1/ptm/m/n/12 port vec-tor ma-chines. ACM Trans-ac-tions on In-tel-li-gent Sys
 -
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 971--972
+Underfull \hbox (badness 10000) in paragraph at lines 982--983
 \T1/ptm/m/n/12 tems and Tech-nol-ogy, 2:27:1C27:27. Soft-ware avail-able at
  []
 
-[42] [43]
+[43] [44]
 \tf@toc=\write4
 
 (C:\Users\Administrator\Documents\GitHub\GPRT\doc\thesis\tex\xjobb-en.aux)
@@ -1662,29 +1681,31 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 5678 strings out of 495354
- 75504 string characters out of 3183860
- 156627 words of memory out of 3000000
- 8703 multiletter control sequences out of 15000+200000
+ 5686 strings out of 495354
+ 75608 string characters out of 3183860
+ 156877 words of memory out of 3000000
+ 8709 multiletter control sequences out of 15000+200000
  79350 words of font info for 68 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 34i,15n,26p,1102b,418s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,15n,26p,1105b,366s stack positions out of 5000i,500n,10000p,200000b,50000s
 {D:/CTEX/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{D:/CTEX/MiKTeX/fonts/enc/dvips/
 lm/lm-mathit.enc}{D:/CTEX/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{D:/CTEX/MiKT
 eX/fonts/enc/dvips/lm/lm-mathex.enc}{D:/CTEX/MiKTeX/fonts/enc/dvips/lm/lm-ec.en
 c}{D:/CTEX/MiKTeX/fonts/enc/dvips/fontname/8r.enc}<D:/CTEX/MiKTeX/fonts/type1/p
 ublic/lm/lmex10.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><D:/CTEX/M
 iKTeX/fonts/type1/public/lm/lmmi12.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lm
-mi8.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmr10.pfb><D:/CTEX/MiKTeX/fonts/t
-ype1/public/lm/lmr12.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmr8.pfb><D:/CTE
-X/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><D:/CTEX/MiKTeX/fonts/type1/public/
-lm/lmssdc10.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><D:/CTEX/MiKTe
-X/fonts/type1/public/lm/lmsy8.pfb><D:/CTEX/MiKTeX/fonts/type1/urw/helvetic/uhvb
-8a.pfb><D:/CTEX/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><D:/CTEX/MiKTeX/font
-s/type1/urw/times/utmb8a.pfb><D:/CTEX/MiKTeX/fonts/type1/urw/times/utmr8a.pfb>
-Output written on xjobb-en.pdf (49 pages, 1534917 bytes).
+mi6.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><D:/CTEX/MiKTeX/fonts/t
+ype1/public/lm/lmmi9.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmr10.pfb><D:/CT
+EX/MiKTeX/fonts/type1/public/lm/lmr12.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm
+/lmr6.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmr8.pfb><D:/CTEX/MiKTeX/fonts/
+type1/public/lm/lmssbx10.pfb><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmssdc10.pfb
+><D:/CTEX/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><D:/CTEX/MiKTeX/fonts/type1/p
+ublic/lm/lmsy8.pfb><D:/CTEX/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><D:/CTEX
+/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><D:/CTEX/MiKTeX/fonts/type1/urw/tim
+es/utmb8a.pfb><D:/CTEX/MiKTeX/fonts/type1/urw/times/utmr8a.pfb>
+Output written on xjobb-en.pdf (50 pages, 1640717 bytes).
 PDF statistics:
- 274 PDF objects out of 1000 (max. 8388607)
+ 289 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 176 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 181 words of extra memory for PDF output out of 10000 (max. 10000000)
 
