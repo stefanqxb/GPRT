@@ -14,9 +14,6 @@ def processTrainData(trainFile, testFile = ""):
   if removeDuplicates:
     trainPsms = dm.removeDuplicates(trainPsms)
   
-  if rm.hasPtms(trainAaAlphabet):
-    trainAaAlphabet = rm.defaultAlphabet
-  
   if len(testFile) > 0:
     testPsms, testAaAlphabet = dm.loadPeptides(testFile)
     if removeDuplicates:
@@ -86,3 +83,32 @@ def getFeaturesUnitTest():
     if errors == 0:
       print "Unit test succeeded"
 
+
+def getFeaturesPtmUnitTest():
+  psmDescriptions, featureMatrix = getFeatures('../data/ptms.tsv')
+  
+  for idx in [100,101,102]:
+    print ""
+    if idx == 100:
+      # feature vector for SLEASAADES[UNIMOD:21]DEDEEAIR
+      eludeFeatureVector = [0.717583994534, 0.581047971251, 0.294176738769, 0.224364488023, 0.296109415359, 0.441661508008, 0.475393977321, 0.624725120124, 0.727760956983, 0.668211219002, 0.654429693683, 0.247200875306, 0.347081770318, 0.0351665721024, 0.00417513692853, 0.374694220463, 0.1875, 0.0, 0.333333333333, 0.0, 0.545454545455, 0.4, 0.0, 0.272727272727, 0.625, 0.0, 0.0, 0.0, 0.2, 0.0, 0.333333333333, 0.0, 0.0, 0.0, 0.0, 0.5, 0.181818181818,1.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    elif idx == 101:
+      # feature vector for SES[UNIMOD:21]TEVDVDGNAIR
+      eludeFeatureVector = [0.669158518626, 0.546753973963, 0.294176738769, 0.224364488023, 0.187879586609, 0.361949023726, 0.475393977321, 0.645100462159, 0.604052087077, 0.718485749344, 0.565657488542, 0.405106822661, 0.329699757631, 0.177532516617, 0.00375790449087, 0.310493122797, 0.1875, 0.0, 0.5, 0.0, 0.363636363636, 0.1, 0.0, 0.181818181818, 0.25, 0.0, 0.1, 0.0, 0.2, 0.0, 0.0, 0.0, 0.111111111111, 0.0, 0.0, 0.5, 0.0909090909091,1.0, 0.166666666667, 0.0, 0.5, 0.0, 0.0]
+    else:
+      # feature vector for TNS[UNIMOD:21]FDMPQLNTR
+      eludeFeatureVector = [0.683288189415, 0.567575941403, 0.453289245976, 0.224364488023, 0.299951401123, 0.498386937785, 0.421187055985, 0.590816202977, 0.625560159191, 0.612188682373, 0.720816928961, 0.131852825174, 0.273510954189, 0.132048018222, 0.151468105821, 0.373391158302, 0.25, 0.0, 0.333333333333, 0.0, 0.272727272727, 0.0, 0.0, 0.0909090909091, 0.0, 0.333333333333, 0.0, 0.0, 0.0, 0.0, 0.333333333333, 0.5, 0.222222222222, 0.166666666667, 0.166666666667, 0.5, 0.0,1.0, 0.333333333333, 0.0, 0.0, 0.0, 0.0] 
+      
+    print "Peptide:", psmDescriptions[idx].peptide
+    # print psmDescriptions[idx].peptide, len(featureMatrix[idx]), featureMatrix[idx][:20]
+    
+    i = 1
+    errors = 0
+    #print ','.join(map(str,featureMatrix[idx]))
+    for eludeFeature, ourFeature in zip(eludeFeatureVector, featureMatrix[idx]):
+      if abs(eludeFeature - ourFeature) > 1e-5 and i not in range(21,41):
+        print "Wrong feature:", i, ", EludeFeature:", eludeFeature, ", OurFeature:", ourFeature
+        errors += 1
+      i += 1
+    if errors == 0:
+      print "Unit test succeeded"

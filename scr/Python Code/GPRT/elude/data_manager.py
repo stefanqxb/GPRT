@@ -47,7 +47,14 @@ def getAminoAcidsUnitTest():
   
 def loadPeptides(fileName):
   psmDescriptions = []
-  reader = csv.reader(open(fileName, 'rb'), delimiter = ' ')
+  delim = '\t'
+  with open(fileName, 'rb') as f:
+    line = f.readline()
+    sniffer = csv.Sniffer()
+    dialect = sniffer.sniff(line)
+    delim = dialect.delimiter
+
+  reader = csv.reader(open(fileName, 'rb'), delimiter = delim)
   includesRT = False
   includesFlanks = False
   aaAlphabet = set()
