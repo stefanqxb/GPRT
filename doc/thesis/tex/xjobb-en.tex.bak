@@ -89,7 +89,7 @@ All of these methods of SVR and ANN have their own drawbacks and still needs to 
 Therefore, the top priority of this thesis is to develop a Gaussian Processes Regression model in terms of predicting the peptide retention time and investigate its performance by using SVR model as benchmark.\\
 
 \noindent
-Furthermore, this thesis will also strive to find some features with less biological meaning to represent the peptide for training model and compare their performance to the biological features.\\
+Furthermore, since most of the features we used now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address the biochemical problems so far. Therefore, this thesis will also strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
 
 \noindent
 In addition, since the GP model has some parameters need to be optimized and these parameters could have a significant impact on the prediction accuracy, different optimization methods towards these parameters will be implemented and their properties will be analyzed in this thesis too.
@@ -146,10 +146,10 @@ Thus, in \cite{foo15}, O.V. Krokhin and R. Craig have developed an improved mode
 After SSRC, several different kinds of factors have been used. One of them is the structural descriptors. The author has employed the Quantitative structure-retention relationships with the information of the peptide's chemical characters and its structure in article \cite{foo16}. The predictor implemented in article \cite{foo1} is also based on three types of chemical structural descriptors and both of them showed good results with the experimental data.\\
 
 \noindent
-In general, most of the features that are widely used now have strong biological meaning, such as amino acid composition, hydrophobicity of the peptide and some other chemical structural descriptors and the performances of these features can fulfill the requirement. However, few of the less-biological meaning features have been tried so far.\\
+In general, most of the features that are widely used now have strong biological meaning, such as amino acid composition, hydrophobicity of the peptide and some other chemical structural descriptors and the performances of these features could fulfill the requirement. However, few of the less-biological meaning features have been tried so far. \\
 
 \noindent
-From the perspective of computer science, anything that can represent an object could be considered as a feature of this object. Therefore, it is worth to believe that some less-biological meaning features could give the same performance in this case. In this thesis,  some features with less biological meaning will be utilized and their performance will be compared to the traditional biological features.
+From the perspective of computer science, anything that can represent an object could be considered as a feature of this object. Therefore, it is worth to believe that some less-biological meaning features could give the same performance in this case. It might be a breakthrough to introduce some new features instead of just using the biochemical features. In this thesis,  some features with less biological meaning will be utilized and compared to the traditional biochemical features.
 
 
 \chapter{Gaussian Processes}
@@ -336,10 +336,10 @@ The Gaussian Processes is based on the Gaussian distribution and Bayesian theory
 \chapter{Feature selection}
 \fontsize{12pt}{16pt}\selectfont
 
-Another key point of this thesis is the feature selection. As mentioned in Chapter 2, most of the state-of-art features have strong connection with the biology aspect. However, few of the so-called less-biological meaningful features have been implemented and investigated so far. Therefore, in this chapter, we will introduce some methods of feature selection that the selected features have less biological meaning and explain the theory behind each of them. The performance of these features will be compared with some benchmarks and fully discussed in the chapter 6.\\
+Another key point of this thesis is the feature selection. As mentioned in Chapter 2, most of the state-of-art features have strong connection with the biology aspect. However, few of the so-called less-biological meaningful features have been implemented and investigated so far. Therefore, in this chapter, we will introduce some methods of feature selection and explain the theory behind them. The performance of these features will be compared with some benchmarks and fully discussed in the chapter 6.\\
 
 \section{Bag of Word}
-The idea of feature selection by Bag of Word method is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\\
+As we known, the peptide could be considered as a string sequence where each letter is a type of amino acid. Therefore, one alternative way is to implement data-analyzed method to extract the features from the peptide sequence. Bag of Word model is one of most popular method in data-analyzed. This method has been implemented in many other aspects in computer science and data mining technique and the idea of feature selection by Bag of Word method is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\\
 
 \noindent
 To be more specific, the peptide sequence is characterized by a predefined set of strings which is considered as the embedding language $L$ and each of the strings in this set is a word $w$ of $L$. In general, there are two ways to define the embedding language $L$ and its words $w$. Here we only discuss one method called $n-grams$.\\
@@ -574,7 +574,11 @@ Before introducing the experimental setup, we will introduce two main concepts w
 In this thesis, the top priority is given to minimize the minimal time window since we want to be able to generate as many peptide as possible and improve the parallelized processing capacity. Therefore, even if the Pearson coefficient coefficient of model A is sightly better than model B, we still claim the model B has better performance than A when the minimal time window of model B is smaller than A.
 
 \section{Experimental Setup}
-The experiment is tested on a 64-bit Ubuntu computer and run by Matlab R2014a. To build the Gaussian Process model, we need to install the software package called GPML which is written by Carl Edward Rasmussen and Hannes Nickisch.\cite{foo18} In addition, to benchmark the GP model, we also need the SVR software packages libsvm \cite{foo20}.
+\noindent
+The experiment is tested on a 64-bit Ubuntu computer and run by Matlab R2014a. To build the Gaussian Process model, we need to install the software package called GPML which is written by Carl Edward Rasmussen and Hannes Nickisch.\cite{foo18} In addition, to benchmark the GP model, we also need the SVR software packages libsvm \cite{foo20}.\\
+
+\noindent
+The experimental data we use in this thesis is a set of 15933 peptides generated from the laboratory.
 \section{Experimental result}
 
 \begin{figure}[h]
@@ -619,9 +623,9 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
          & \multicolumn{2}{c|}{RBF kernel} & \multicolumn{2}{c}{RBF + Poly kernel}\\
          & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
         \hline
-         BOW feature & 0.8508 & 0.4191 &  0.9724 &  0.1822\\
+         BOW feature & 0.8506 & 0.5080 &  0.9674 &  0.2774\\
         \hline
-         Elude feature  & 0.9213 & 0.3346 &  0.9683 & 0.1718\\
+         Elude feature  & 0.9213 & 0.3912 &  0.9737 & 0.2052\\
         \hline
 \end{tabular}
 \caption{Comparison between Single kernel and multi-kernel}

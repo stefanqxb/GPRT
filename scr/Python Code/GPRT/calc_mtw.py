@@ -1,6 +1,8 @@
 __author__ = 'Administrator'
 
-def mini_time_win(hist,max_t,min_t,step,max_total_t):
+def mini_time_win(hist,diff,step,max_total_t):
+    max_t = max(diff)
+    min_t = min(diff)
     total = sum(hist)
     threshold = round(0.95 * total)
     count = 0
