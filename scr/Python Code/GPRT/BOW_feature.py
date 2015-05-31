@@ -21,47 +21,67 @@ def getBOWfeature(file,num):
          peptide_length.append(len(psmd.peptide))
          hydrophobicity.append(bowindexSum(aas, customIndex))
     peptide,rt = dg.extract(psmDescriptions,len(psmDescriptions))
-    bow_feature = BOW(peptide,hydrophobicity,peptide_length,num)
+    bow_feature = BOW(peptide,hydrophobicity,peptide_length,aaAlphabet,num)
     return psmDescriptions ,bow_feature
 
-def BOW(string, hydrop, length,num2):
+def BOW(string, hydrop,length,aaAlphabet,num2):
     if num2 == 1:
-        feature = forming_feature_single(string)  # 1-grams
+        feature = forming_feature_single(string,aaAlphabet,1)  # 1-grams
     elif num2 == 2:
-        feature = forming_feature(string,hydrop,length) # 2-grams
+        feature = forming_feature(string,hydrop,aaAlphabet,length,2)  # 2-grams
     return feature
 
-
-def forming_feature(string,hydrop,length):
+def forming_feature(string,hydrop,aaAlphabet,length,num2):
     M = len(string)
-    N = 20
+    N = len(aaAlphabet)
     weight =[0.4,0.5,0.1]
     feature = np.zeros([M,N*N+3])
-    refer = grab_word(string)
+    refer = grab_word(aaAlphabet,num2)
     for i in range(M):
-        T= len(string[i])
-        for j in range(T-1):
-            a = string[i][j]+string[i][j+1]
+        idx = 0
+        T =len(string[i])
+        while idx < T-1:
+            if  idx < T - 2 and string[i][idx+2] == '[':
+                nextIdx = string[i][idx+1:].find(']') + idx + 2
+                a = string[i][idx:nextIdx]
+                idx +=1
+            elif  string[i][idx+1] == '[':
+                nextIdx = string[i][idx+1:].find(']') + idx + 2
+                a = string[i][idx:nextIdx+1]
+                idx = nextIdx
+            else:
+                a = string[i][idx]+ string[i][idx+1]
+                idx += 1
             if a.find('-') == -1:
                index = refer.index(a)
                if index != -1:
                    feature[i][index] = feature[i][index] +1
+
         feature[i][0:N*N] = float(weight[0])*feature[i][0:N*N]
         feature[i][N*N+1] = feature[i][N*N+1] + float(weight[1])*float(hydrop[i])
         feature[i][N*N+2] = feature[i][N*N+2] + float(weight[2])*float(length[i])
         feature[i] = feature[i][:]/float(sum(feature[i],0))
     return feature
 
-def forming_feature_single(string):
+def forming_feature_single(string,aaAlphabet,num2):
     M = len(string)
-    N = 20
+    N = len(aaAlphabet)
     weight =[0.4,0.5,0.1]
     feature = np.zeros([M,N])
-    refer = grab_word_single(string)
+    refer = grab_word(aaAlphabet,num2)
     for i in range(M):
-        for aa in string[i]:
-            if aa.find('-') == -1:
-               index = refer.index(aa)
+        idx = 0
+        T =len(string[i])
+        while idx < T-1:
+            if  string[i][idx+1] == '[':
+                nextIdx = string[i][idx+1:].find(']') + idx + 2
+                a = string[i][idx:nextIdx]
+                idx = nextIdx
+            else:
+                a = string[i][idx]
+                idx += 1
+            if a.find('-') == -1:
+               index = refer.index(a)
                if index != -1:
                    feature[i][index] = feature[i][index] +1
         feature[i][0:N] = float(weight[0])*feature[i][0:N]
@@ -69,25 +89,21 @@ def forming_feature_single(string):
     return feature
 
 
-def grab_word(string):
-    letter ='A,R,N,D,C,Q,E,G,H,I,L,K,M,F,P,S,T,W,Y,V'
-    str1 = letter.split(',')
-    str2 = letter.split(',')
+def grab_word(aaAlphabet,num2):
+    s1 = aaAlphabet
+    num = len(aaAlphabet)
     sub_word = []
-    for s in str1:
-        for j in str2:
-            temp = s+j
+    if num2 ==1:
+        for i in range(num):
+            temp = s1[i]
             sub_word.append(temp)
+    elif num2 ==2:
+        for i in range(num):
+           for j in range(num):
+               temp = s1[i] + s1[j]
+               sub_word.append(temp)
     return sub_word
 
-
-def grab_word_single(string):
-    letter ='A,R,N,D,C,Q,E,G,H,I,L,K,M,F,P,S,T,W,Y,V'
-    str1 = letter.split(',')
-    sub_word = []
-    for s in str1:
-        sub_word.append(s)
-    return sub_word
 
 
 def bowindexSum(aas,index):
