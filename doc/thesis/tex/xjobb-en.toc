@@ -19,13 +19,13 @@
 \contentsline {section}{\numberline {5.1}The Conjugate Gradient}{20}
 \contentsline {section}{\numberline {5.2}The Particle Swarm Optimization}{23}
 \contentsline {chapter}{\chapternumberline {6}Results and Evaluation}{25}
-\contentsline {section}{\numberline {6.1}Experimental Setup}{26}
+\contentsline {section}{\numberline {6.1}Experimental Setup}{27}
 \contentsline {section}{\numberline {6.2}Experimental result}{27}
-\contentsline {chapter}{\chapternumberline {7}Limitation and Discussion}{36}
-\contentsline {section}{\numberline {7.1}Model limitation}{36}
-\contentsline {section}{\numberline {7.2}Feature limitation}{36}
-\contentsline {section}{\numberline {7.3}Optimization limitation}{37}
-\contentsline {chapter}{\chapternumberline {8}Conclusion and Future Work}{39}
-\contentsline {section}{\numberline {8.1}Conclusion}{39}
-\contentsline {section}{\numberline {8.2}Future Work}{40}
-\contentsline {chapter}{Bibliography}{42}
+\contentsline {chapter}{\chapternumberline {7}Limitation and Discussion}{37}
+\contentsline {section}{\numberline {7.1}Model limitation}{37}
+\contentsline {section}{\numberline {7.2}Feature limitation}{38}
+\contentsline {section}{\numberline {7.3}Optimization limitation}{38}
+\contentsline {chapter}{\chapternumberline {8}Conclusion and Future Work}{40}
+\contentsline {section}{\numberline {8.1}Conclusion}{40}
+\contentsline {section}{\numberline {8.2}Future Work}{41}
+\contentsline {chapter}{Bibliography}{43}
