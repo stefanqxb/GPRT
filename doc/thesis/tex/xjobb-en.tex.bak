@@ -13,7 +13,8 @@
 \usepackage{subfigure}
 \usepackage{multirow}
 \usepackage{colortbl,booktabs}
-
+\usepackage{todonotes}
+\usepackage{color}
 
 \title{Prediction of peptide retention time based on Gaussian Processes}
 
@@ -35,7 +36,7 @@ Examiner: Stefan Carlsson}
 \selectlanguage{english}
 \begin{abstract}
   Retention time (RT) as an important evidence can be used to analysis the peptide's properties. Because of the interactions among peptides, the retention time prediction of peptide has low accuracy,
-  and thus is less effective in the validation of peptide identifications. Besides, the large amount of time on generating features also need to be reduced. This thesis presents a alterative machine learning methods to predict the retention time of a set of peptide in hand. In order to address the precision and computational cost problem, we introduce Gaussian Processes as the trained model and use a new feature extraction method called BOW to generate the features for training the model. We also investigate the effect of different types of kernel function and their parameters. The results show high precision of the prediction and relatively low time cost.
+  and thus is less effective in the validation of peptide identifications. Besides, the large amount of time on generating features also need to be reduced. This thesis presents a alternative machine learning methods to predict the retention time of a set of peptide in hand. In order to address the precision and computational cost problem, we introduce Gaussian Processes as the trained model and use a new feature extraction method called BOW to generate the features for training the model. We also investigate the effect of different types of kernel function and their parameters. The results show high precision of the prediction and relatively low time cost.
 \end{abstract}
 
 \clearpage
@@ -45,23 +46,37 @@ Examiner: Stefan Carlsson}
 \pagestyle{newchap}
 \chapter{Introduction}
 \fontsize{12pt}{16pt}\selectfont
+
+\section{Introduction}
+
+
+Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins presented in them. For this reason, it is important and necessary for us to know what proteins are in them. As a result, it leads us to the large-scale identification of proteins in complex mixtures.
+
+\begin{figure}[h!]
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.3\textwidth]{protein.jpg}\\
+  \caption{protein chain}\label{fig:protein}
+\end{figure}
+
+
 \section{Background}
-Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Therefore, the study of the properties of protein is very necessary and considered as one of most important subject in the biological field.\\
 
 \noindent
 Before introducing the background, we will briefly describe a few concepts that we will involve later so that one could understand the method easier.
+
 \begin{itemize}
   \item Liquid Chromatography: A technique in analytic chemistry used to separate the components in a mixture, to identify each component, and to quantify each component.
   \item Amino acid: Biologically important organic compounds composed of amine (-NH2) and carboxylic acid (-COOH) functional groups, along with a side-chain specific to each amino acid. There are approximately 20 basic types and Fig. \ref{fig:Fig4} is an example of one of them. They are the basic building block of protein, giving protein their specific structural form so that they could have biological activity.
-\begin{figure}
+\begin{figure}[h!]
   \centering
-  \includegraphics[width=6cm]{Alpha_AminoAcidball.png}\\
+  \includegraphics[width=0.4\textwidth]{Alpha_AminoAcidball.png}\\
   \caption{Alpha Amino Acid}\label{fig:Fig4}
 \end{figure}
   \item Peptide: Short sequence(chain) of amino acid connected by peptide bonds as in Fig. \ref{fig:Fig3} It is distinguished from proteins on the basis of size. It only contains approximately 50 or fewer amino acids.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=6cm]{./peptide.png}\\
+  \includegraphics[width=0.4\textwidth]{./peptide.png}\\
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
   \item Hydrophobicity: A physical property of a molecule that is seemingly repelled from a mass of water. It has a great impact in terms of interaction between different proteins and the structure of the protein. And more importantly, in this case, the peptide retention time has a strong relationship with it.
@@ -69,27 +84,47 @@ Before introducing the background, we will briefly describe a few concepts that 
 \end{itemize}
 
 \noindent
-To analyze the protein content, one of the most popular techniques is the Mass spectrometry (MS) based methods. The general idea of MS based method is to identify the amount and type of chemicals present in a sample by measuring the abundance of gas-phase\cite{foo0}. The high performance liquid chromatography (HPLC) is one of the popular MS based methods. This technique has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration. In the end, those peptide will eluted from the column and ionized by electrospray ionization. The results are a set of spectra which contain the valuable information about the proteins in the sample. The fig.\ref{fig:HPLC} shows the general idea of MS based method.\\
+To analyze the protein content and identify the type of protein, one of the most popular techniques is the Mass spectrometry (MS) based methods. The general idea of MS based method is to identify the amount and type of chemicals present in a sample by measuring the abundance of gas-phase\cite{foo0}. The high performance liquid chromatography (HPLC) is one of the popular MS based methods. This technique has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration. In the end, those peptide will eluted from the column and ionized by electrospray ionization. The results are a set of spectra which contain the valuable information about the proteins in the sample. The fig.\ref{fig:HPLC} shows the general idea of MS based method.\\
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
-  \includegraphics[width=0.8\textwidth]{RPLC_flow.jpg}\\
+  \includegraphics[width=0.5\textwidth]{RPLC_flow.jpg}\\
   \caption{Demonstration of HPLC method. (circles with different colour represents different peptides and the blue column represents the liquid chromatography column, The $R_{t1}$ is the retention time of $peptide Pink$)}\label{fig:HPLC}
 \end{figure}
 
 \noindent
-Among these three steps, the most important one is the peptide separation in the column. Retention time (RT) is the amount of time that a peptide needs to go through the column. It is a useful feature in many aspects. It may be used in experiments involving chemometric analyses of peptide mixtures. What's more, it provides us with a new perspective to investigate the behavior and biological characters of the protein. An extensive amount of research has been conducted into predicting peptide retention times. The Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line. The main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN). \\
+Among these three steps, the most important one is the peptide separation in the column. Retention time (RT) is the amount of time that a peptide needs to go through the column. It is a useful feature in many aspects. It may be used as a important parameter in experiments involving chemometric analyses of peptide mixtures. What's more, it provides us with a new perspective to investigate the behavior and biological characters of the protein. An extensive amount of research has been conducted into predicting peptide retention times. The Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line. The main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN). \\
+
 
 \section{Problem Statement}
-\noindent
-All of these methods of SVR and ANN have their own drawbacks and still needs to be improved. One alternative option is to implement the Gaussian Processes (GPs) to build the predictive model. GPs provides a flexible framework for probabilistic regression and are widely used to solve the high-dimensional, small-sample or nonlinear problems. Yet none of the existing publications has the prediction of retention times for peptides analyzed with the use of Gaussian Process.\\
+
+\todo[inline]{Your problem statement is prediction of retention time and not GP. GP is a tool we are using to solve the problem.}
+
+\textcolor{red}{Re-write this focusing on the following points:}
+\begin{itemize}
+	\item \textcolor{red}{What is the problem? In more details.}
+	\item \textcolor{red}{How people have been thinking about this problem?}
+	\item \textcolor{red}{What are some previous attempts in solving the problem?}
+	\item \textcolor{red}{How are we attacking this problem? What is the difference? What are the challenges?}
+\end{itemize}
 
 \noindent
-Therefore, the top priority of this thesis is to develop a Gaussian Processes Regression model in terms of predicting the peptide retention time and investigate its performance by using SVR model as benchmark.\\
+Since the aim is to predict the retention time of large scale of peptides, we need to develop a proper model for the prediction.\\
 
 \noindent
-Furthermore, since most of the features we used now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address the biochemical problems so far. Therefore, this thesis will also strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
+However, all of these methods of SVR and ANN have their own drawbacks and still needs to be improved. Therefore, one alternative option is to implement the Gaussian Processes (GPs) instead of the other methods above.\\
+
+\noindent
+The GPs provides a flexible framework for probabilistic regression and are widely used to solve the high-dimensional, small-sample or nonlinear problems. Yet none of the existing publications has the prediction of retention times for peptides analyzed with the use of Gaussian Process. Due to this fact, the prediction performance of the GPs model to this task is not so unclear yet.\\
+
+\noindent
+Therefore, the top priority of this thesis is to develop a Gaussian Processes Regression model to predict the retention time of the large-scale of peptide and investigate its performance.
+
+\todo[inline]{You should talk about features before talking about the SVM or GP. Keep the order of things in mind. You want to control what the reader is thinking. Previously, we you talk about GP, the reader will ask how do we give peptides to GP or SVM? But if you talk about the features first, by just saying we have methods that maps peptides into a vector space then things becomes more clear.}
+
+\noindent
+Furthermore, since most of the features that used to train the model now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address the biochemical problems so far. Therefore, this thesis will also strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
 
 \noindent
 In addition, since the GP model has some parameters need to be optimized and these parameters could have a significant impact on the prediction accuracy, different optimization methods towards these parameters will be implemented and their properties will be analyzed in this thesis too.
@@ -104,7 +139,7 @@ The structure of the thesis is as follows, we will first introduce the related w
 \chapter{Related Work}
 \fontsize{12pt}{16pt}\selectfont
 \noindent
-Prediction of the retention time for a given peptide could help to improve the confidence of peptide identification. If the prediction of retention time of a peptide is precise enough, then we could tell which peptide it is or which species does it belong to by cross-match its predicted retention time with our database. Therefore, developing efficient algorithms and establishing proper models to generate the prediction of peptide has become more important and necessary.\\
+Prediction of the retention time for a given peptide could help to improve the confidence of peptide identification. If the prediction of retention time of a peptide is precise enough, then we could tell which peptide it is or which species does it belong to by cross-matching its predicted retention time with our database. Therefore, developing efficient algorithms and establishing proper models to generate the prediction of peptide has become more important and necessary.\\
 
 \noindent
 However, to make the prediction successfully, there are two problems needed to be considered. Firstly, what kind of model will have better performance of the prediction. Secondly, what factors will have a great impact on the retention time. Unfortunately, both of these two questions remain open so far. Therefore, in order to answer the questions, a number of models based on different features have been proposed to characterize quantitatively the peptide and to predict its retention time.\\
@@ -152,12 +187,14 @@ In general, most of the features that are widely used now have strong biological
 From the perspective of computer science, anything that can represent an object could be considered as a feature of this object. Therefore, it is worth to believe that some less-biological meaning features could give the same performance in this case. It might be a breakthrough to introduce some new features instead of just using the biochemical features. In this thesis,  some features with less biological meaning will be utilized and compared to the traditional biochemical features.
 
 
-\chapter{Gaussian Processes}
+\chapter{Methodology} 
+
+\section{Gaussian Processes}
 \fontsize{12pt}{16pt}\selectfont
 
 Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind and build an appropriate Gaussian Process model, this chapter starts with a brief introduction of the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain the properties of it. Finally, we will make a comparison between Gaussian Process and the other two methods: ANNs and SVR so that we could see the strengths of Gaussian Process.
 
-\section{Standard Bayesian linear Regression}
+\subsection{Standard Bayesian linear Regression}
 
 Let's first consider a set of input $x = \{(x_{i},y_{i}) | i =1,2...n\}$ along with some noise $\epsilon$. In the regression setting, the targets are real values but the observations are with additive noise. We are interested in inferring the relationship between inputs and targets, i.e. the conditional distribution of the targets given the inputs.\\
 
@@ -227,7 +264,7 @@ p(f_{new}|x_{new},y,x) = \int p(f_{new}|x_{new},w)p(w|x,y)dw \notag \\ \sim N(\f
 
 
 
-\section{Gaussian Processes Regression}
+\subsection{Gaussian Processes Regression}
 A Gaussian processes, a distribution over a set of functions, is fully specified by its mean function and covariance function as \ref{eq:11}
 \begin{equation} \label{eq:11}
   f(x) \sim GP(m(x), k(x,x'))
@@ -303,7 +340,7 @@ These equations give us the corresponding mean value and covariance value of the
   \caption {Graphical model for a GP for regression\cite{foo18}.}\label{fig:Fig2}
 \end{figure}
 
-\section{Multi-Kernel Function}
+\subsection{Multi-Kernel Function}
 As mentioned above, the general idea of a kernel function is to use it to project the data in low dimensional space to higher one. In general, the kernel function could be divided into two types: global kernel function and local kernel function. The RBF kernel function is considered as a typical local kernel while the Polynomial kernel is a global one\cite{foo21}.\\
 
 \noindent
@@ -319,7 +356,7 @@ We want to take the advantages from the kernel function and eliminate its weakne
 \noindent
 where $m$ is the weight between two kernel functions. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
 
-\section{Property of Gaussian Processes}
+\subsection{Property of Gaussian Processes}
 
 As a supervised learning algorithm, the Gaussian Processes is also based on the idea that similar input result in similar outputs or output distributions. But it also have its unique strengths compare with ANN (Backpropagation (BP) algorithm as example) and SVR. \\
 
@@ -333,12 +370,12 @@ As for the SVR, it improves this situation by using structure risk minimization 
 The Gaussian Processes is based on the Gaussian distribution and Bayesian theory which implies a solid foundation of probabilistic and statistic. For example, the Gaussian Process not only give the predicted value but also the uncertainty of the prediction. This property makes the prediction easier to interpret and understand. What's more, since Gaussian Processes make the prediction based on the distribution of all data and weaken the contribution of single outlier, it prevents the overfitting problem and gives better generalization capacity than SVR. In addition, in terms of the choice of hyperparameters, the Gaussian Processes is self-adaptive. In other words, the Gaussian Process choose the optimal hyperparameters during its process of training a model while SVR could only choose them by using cross-validation method or based on the pervious experiences. Besides, compared with the BP and SVR model, the number of parameters of Gaussian Processes is quite small which makes the optimization easier to implement.\\
 
 
-\chapter{Feature selection}
+\section{Feature selection}
 \fontsize{12pt}{16pt}\selectfont
 
 Another key point of this thesis is the feature selection. As mentioned in Chapter 2, most of the state-of-art features have strong connection with the biology aspect. However, few of the so-called less-biological meaningful features have been implemented and investigated so far. Therefore, in this chapter, we will introduce some methods of feature selection and explain the theory behind them. The performance of these features will be compared with some benchmarks and fully discussed in the chapter 6.\\
 
-\section{Bag of Word}
+\subsection{Bag of Word}
 As we known, the peptide could be considered as a string sequence where each letter is a type of amino acid. Therefore, one alternative way is to implement data-analyzed method to extract the features from the peptide sequence. Bag of Word model is one of most popular method in data-analyzed. This method has been implemented in many other aspects in computer science and data mining technique and the idea of feature selection by Bag of Word method is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\\
 
 \noindent
@@ -395,7 +432,7 @@ In terms of complexity, the most popular features that have been used nowadays a
 When it comes to the flexibility, since the embedding language $L$ is constituted by the words that are directly and simply extracted from the samples, this method could easily change the language set $L$ for particular context of the task which might imply a wider applicability in other field of biological research.\\
 
 
-\chapter{Optimization}
+\section{Optimization}
 \fontsize{12pt}{16pt}\selectfont
 
 In the Gaussian Process model, the most important part is the covariance function of the model since the Gaussian Process consider it as the kernel function. The value of the covariance function along with the value of the mean function are known as the hyperparameters in this case. Initially, we need to determine the hyperparameters manually. However, since we do not know the best combination of these hyperparameters beforehand, we have a group of parameters $[ m, \sigma , \mu]$ where $m$ is the weighted factor of kernel function and $\sigma$ is the value of covariance function and $\mu$ represent the value of mean function that need to be optimized for the best performance.\\
@@ -412,7 +449,7 @@ where $C =k(x,x)+\sigma_{n}^{2}I_{n}$\\
 \noindent
 Here, we will implement two different optimization methods based on different principles. The first one is the Conjugate Gradient method and the second one is the Particle Swarm Optimization method. The principle of each method will be explained in detail along with their own strengths and weaknesses towards this case.
 
-\section{The Conjugate Gradient}
+\subsection{The Conjugate Gradient}
 
 Since we want to optimize the hyperparameter group $[ w, \sigma , \mu]$, we will try to find the minimum value of the objective function. The conjugate gradient method (CG)is one of the most widely used methods and is developed based on the gradient descending method and Newton Method.\\
 
@@ -513,7 +550,7 @@ What's more, since the traditional gradient descent method will slow down the se
 \end{figure}
 
 
-\section{The Particle Swarm Optimization}
+\subsection{The Particle Swarm Optimization}
 
 The Particle Swarm Optimization (PSO) method is one of the new iterative methods for problem optimization. It improves the solution by iteratively searching for the best result in current circumstance. \\
 
@@ -635,7 +672,7 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
 \end{table}
 
 \noindent
-As we can see from the figures, the multi-kernel gives better performance than a single kernel in general. The multi-kernel function helps GP model to improve the correlation coefficient in both cases. The scatter plots in both cases become narrower and closer to the ideal blue line.\\   
+As we can see from the figures, the multi-kernel gives better performance than a single kernel in general. The multi-kernel function helps GP model to improve the correlation coefficient in both cases. The scatter plots in both cases become narrower and closer to the ideal blue line.\\
 
 \noindent
 More importantly, it also reduces the minimal time window dramatically, from 0.5080 to 0.2474 and 0.3912 to 0.2052 for $BOW feature$ and $Elude feature$ respectively. This also implies that the multi-kernel makes the prediction more precisely and narrow down the deviations between observed and predicted retention times.\\
@@ -839,7 +876,7 @@ As the Fig.\ref{Fig.sub.201} and Fig.\ref{Fig.sub.202} showed, the trend of all 
 \end{table}
 
 \noindent
-In the end, as benchmark, we will summarize the performance of other state-of-art retention time prediction models and compare them with our GP model in terms of correlation coefficient$\rho$ , minimal time window($\Delta_{t95\%}$) and computational cost. The Table.\ref{table6} shows the result of different models.\\
+In the end, as benchmark, we will summarize the performance of other popular retention time prediction models and compare them with our GP model in terms of correlation coefficient$\rho$ , minimal time window($\Delta_{t95\%}$) and computational cost. The Table.\ref{table6} shows the result of different models.\\
 
 \begin{table}[h!]
 \normalsize
@@ -847,35 +884,43 @@ In the end, as benchmark, we will summarize the performance of other state-of-ar
 \begin{tabular}{l|c|c|c|c}
    & GP Model & Elude Model & SSRC  & BioLCCC \\
 \hline
- Pearson Correlation Coefficient($\rho$)  &  &  &  &  \\
+ Pearson Correlation Coefficient($\rho$) & 0.9757 & 0.9879 & 0.9064 & 0.9153  \\
 \hline
- Minimal Time Window($\Delta_{t95\%}$) &  &  &  &  \\
+ Minimal Time Window($\Delta_{t95\%}$) & 0.1908 & 0.1651 & 0.4028 & 0.3750 \\
 \hline
- Computational Cost & & & &\\
+ Computational Cost & 1731 sec & 16323 sec & \ & \ \\
 \hline
 \end{tabular}
 \caption{Comparison of performance based on different number of particles}
 \label{table6}
 \end{table}
 
+\noindent
+The last two columns are empty because we do not know how long it takes to train the model for prediction.\\
+
+\noindent
+As we can seen form Table.\ref{table6}, our GP model gives much better performance than SSRC and BioLCCC. Our model successfully reduce the $\Delta_{t95\%}$ to a level of $0.1908$ while the BioLCCC only gives $0.3750$ and result of SSRC is $0.4028$. That means our model reduces almost 20 mins of the time window which enhance the parallelized processing ability dramatically. In addition, the $\rho$ of our GP model is also higher than the SSRC and BioLCCC which means our prediction is more precise than the other two methods.\\
+
+\noindent
+What's more, our GP model gives similar performance as Elude which is considered to be the most popular and best model so far. Although the Elude gives better performance in both correlation coefficient and minimal time window, the computational cost of Elude is much higher than our GP model. In big data analysis, such high computational cost could be a very serious problem and we should make a balance between the accuracy and the efficiency. Considering that the computational cost of Elude is almost 10 times as our GP model, the $\rho$ and $\Delta_{t95\%}$ of our GP model are still good enough and our model has stronger practical ability than Elude.
 
 \chapter{Limitation and Discussion}
 \fontsize{12pt}{16pt}\selectfont
 
-As we could see from the previous section, the GP model has a better performance in general. However, there are still some limitations of the model that needs to be improved. In this section, we will discuss the limitations in terms of model,feature and optimization methods.
+As we could see from the previous chapter, the GP model has a better performance than most of the other methods. However, there are still some limitations of the model that needs to be improved. In this chapter, we will discuss the limitations in terms of model,feature and optimization methods.
 
 \section{Model limitation}
 
 \noindent
-One of the main limitation is the computational cost of Gaussian Process model. Due to the fact that the Gaussian Process Regression model is a non-parametric model, for training part, the hyperparameters are obtained by optimizing the margin likelihood function. Therefore, we need to compute the inverse of covariance function $K_{n} + \sigma_{n}^{2}I_{n}$  which makes the computational cost of the model to a level of  $O(n^{3}*p)$ where $p$ is the times of gradient computation. As for the prediction part, the computational cost for each data is $O(n^{2})$. When dealing a large amount of data, this drawback could become more serious and do harm to the implementation.\\
+One of the main limitation is the computational cost of Gaussian Process model. Although the computational cost of our GP model is better than Elude, it is still a main problem due to the fact that the Gaussian Process Regression model is a non-parametric model. For training part, the hyperparameters are obtained by optimizing the margin likelihood function. Therefore, we need to compute the inverse of covariance function $K_{n} + \sigma_{n}^{2}I_{n}$  which makes the computational cost of the model to a level of  $O(n^{3}*p)$ where $p$ is the times of gradient computation. As for the prediction part, the computational cost for each data is $O(n^{2})$. When dealing a large amount of data, this drawback could become more serious and do harm to the implementation.\\
 
 \noindent
-Another limitation of the GP model is the assumption of the $Gaussian Noise$ which means the noise fulfills the Gaussian distribution. This assumption makes the GP model easier when calculating the matrix. However, the noise is actually not a $Gaussian Noise$ in some cases and this assumption will influence the prediction.\\
+Another limitation of the GP model is the assumption of the $Gaussian Noise$ which means the noise needs to fulfill the Gaussian distribution. This assumption makes the GP model easier when calculating the matrix. However, the noise is actually not a $Gaussian Noise$ in some cases and this assumption will therefore influence the prediction and leads to worse results.\\
 
 
 \section{Feature limitation}
 
-As for the features, the main limitation is the lack of information for our features. This means the $BOW$ feature provides less biochemical information which could help the model to predict. This limitation is reflected by the fact that the $Elude feature$ performs better than the $BOW feature$ in general.\\
+As for the features, the main limitation is the lack of information for our features. This means the $BOW$ feature provides less biochemical information which could help the model to predict.  This limitation is reflected by the fact that the $Elude feature$ performs better than the $BOW feature$ in general. \\
 
 \noindent
 However, the accuracy of the prediction and the computational efficiency is a trade-off. On one hand, providing features with less information means the prediction could have more opportunity to be less precisely. On the other hand, compared to those features with more information, these features require less time to be calculated and therefore easier to implemented.\\
@@ -908,16 +953,19 @@ To overcome this, there are many other CG methods. They could improve the perfor
 The retention time of peptide is useful information for many biochemical problems. For example, the retention time can be used in some quality control experiments as the control parameter. It can also be used for the identification of a new peptide which is alternative way to identify it instead of calculating the peptide's spectrum. Therefore, the successful prediction of retention time could be really useful in many aspects.\\
 
 \noindent
-In this thesis, a Gaussian Process Regression Model for the prediction of peptide retention time has been proposed and tested in different datasets. Compared with the SVR and ANN methods, the Gaussian Process has better performance in terms of the minimal time window and computational efficiency.\\
+In this thesis, a Gaussian Process Regression Model for the prediction of peptide retention time has been proposed and tested in different datasets. First of all, the importance of kernel function has been investigated and comparison has been made between single kernel function and multi-kernel function. The multi-kernel function combines the strengths of two kernel functions and improves the accuracy of the prediction results significantly.\\
 
 \noindent
-The Gaussian process has stronger capacity than SVR and ANN in terms of parallelized processing since the minimal time window of GP model is smaller than the one of SVR when having similar prediction accuracy. Besides, from the experimental results we could tell, the computational efficiency of the GP model is faster than the SVR model when dealing with big data. This is a significant and useful quality since a lot of biochemical experiments contain large amount of data that need to be processed.\\
+Secondly, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is almost as good as the biochemical features. Although the performance of these less-biochemical features are still slightly worse than the biochemical features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique and powerful advantages.\\
 
 \noindent
-In addition, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is almost as good as the biochemical features. Although the performance of these less-biochemical features are still slightly worse than the biochemical features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique and powerful advantages.\\
+In addition, two optimization methods have been implemented and compared with each other. Although, we only utilize the original version of them, they still make a significant difference on the experimental results. In addition, their properties in terms of default parameters and the potential solutions of their drawbacks have been discussed too.\\
 
 \noindent
-In the end, two optimization methods have been implemented and compared with each other. Although, we only utilize the original version of them, they still make a significant difference on the experimental results. In addition, their properties in terms of default parameters and the potential solutions of their drawbacks have been discussed too.
+In the end, the GP model has also compared with the other state-of-art prediction methods. The GP model has better performance than most of them in terms of the minimal time window ($\Delta_{t95\$}$) and correlation coefficient ($\rho$). Even compared with the best predicted model Elude, the predicted result of our model is still similar.\\
+
+\noindent
+The Gaussian process has stronger capacity than any of these models in terms of parallelized processing since the minimal time window of GP model is smaller than or similar to the other models when having similar prediction accuracy. Besides, from the experimental results we could tell, the computational efficiency of the GP model is faster than the Elude model when dealing with big data. This is a significant and useful quality since a lot of biochemical experiments contain large amount of data that need to be processed.\\
 
 
 \section{Future Work}

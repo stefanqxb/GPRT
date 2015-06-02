@@ -47,42 +47,33 @@ Examiner: Stefan Carlsson}
 \chapter{Introduction}
 \fontsize{12pt}{16pt}\selectfont
 
-\todo[inline]{Don't start with background. Start with introduction. Don't go in any details in the introduction just try to explain the problem with as simple terminologies as possible.}
-
-\textcolor{red}{Re-write the introduction focusing on these things :}
-
-\begin{itemize}
-	\item \textcolor{red}{Functions of different biological organisms is determined by the proteins presented in them}
-	\item \textcolor{red}{For this reason it is important for us to what proteins are present in them}
-	\item \textcolor{red}{Tandem Mass Spectrometry is the leading technique for global and large-scale identification of proteins in complex mixtures.}
-	\item \textcolor{red}{Briefly explain how it works, I will send you a sample that I had written a while back}
-	\item \textcolor{red}{Talk about the differences between DDA and DIA}
-	\item \textcolor{red}{Finally talk about why RT prediction can improve the identification}
-\end{itemize}
+\section{Introduction}
 
 
-\section{Background}
-Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Therefore, the study of \textcolor{red}{the properties of protein} \todo{I don't think that this is correct} is very necessary and considered as one of most important subject in the biological field.\\
+Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins presented in them. For this reason, it is important and necessary for us to know what proteins are in them. As a result, it leads us to the large-scale identification of proteins in complex mixtures.
 
-
-\todo[inline]{The goal is identification of proteins and not study of their properties}
-
+\begin{figure}[h!]
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.3\textwidth]{protein.jpg}\\
+  \caption{protein chain}\label{fig:protein}
+\end{figure}
 
 \noindent
-Before introducing \todo{Remove these from here.} the background, we will briefly describe a few concepts that we will involve later so that one could understand the method easier.
-\todo[inline]{Move this list to the background section talking about the biology problem.}
+Before deeper introduction, we will briefly describe a few concepts that we will involve later so that one could understand the method easier.
+
 \begin{itemize}
   \item Liquid Chromatography: A technique in analytic chemistry used to separate the components in a mixture, to identify each component, and to quantify each component.
   \item Amino acid: Biologically important organic compounds composed of amine (-NH2) and carboxylic acid (-COOH) functional groups, along with a side-chain specific to each amino acid. There are approximately 20 basic types and Fig. \ref{fig:Fig4} is an example of one of them. They are the basic building block of protein, giving protein their specific structural form so that they could have biological activity.
-\begin{figure}
+\begin{figure}[h!]
   \centering
-  \includegraphics[width=6cm]{Alpha_AminoAcidball.png}\\
+  \includegraphics[width=0.4\textwidth]{Alpha_AminoAcidball.png}\\
   \caption{Alpha Amino Acid}\label{fig:Fig4}
 \end{figure}
   \item Peptide: Short sequence(chain) of amino acid connected by peptide bonds as in Fig. \ref{fig:Fig3} It is distinguished from proteins on the basis of size. It only contains approximately 50 or fewer amino acids.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=6cm]{./peptide.png}\\
+  \includegraphics[width=0.4\textwidth]{./peptide.png}\\
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
   \item Hydrophobicity: A physical property of a molecule that is seemingly repelled from a mass of water. It has a great impact in terms of interaction between different proteins and the structure of the protein. And more importantly, in this case, the peptide retention time has a strong relationship with it.
@@ -90,22 +81,21 @@ Before introducing \todo{Remove these from here.} the background, we will briefl
 \end{itemize}
 
 \noindent
-To analyze the protein content, one of the most popular techniques is the Mass spectrometry (MS) based methods. The general idea of MS based method is to identify the amount and type of chemicals present in a sample by measuring the abundance of gas-phase\cite{foo0}. The high performance liquid chromatography (HPLC) is one of the popular MS based methods. This technique has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration. In the end, those peptide will eluted from the column and ionized by electrospray ionization. The results are a set of spectra which contain the valuable information about the proteins in the sample. The fig.\ref{fig:HPLC} shows the general idea of MS based method.\\
+To analyze the protein content and identify the type of protein, one of the most popular techniques is the Mass spectrometry (MS) based methods. The general idea of MS based method is to identify the amount and type of chemicals present in a sample by measuring the abundance of gas-phase\cite{foo0}. The high performance liquid chromatography (HPLC) is one of the popular MS based methods. This technique has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration. In the end, those peptide will eluted from the column and ionized by electrospray ionization. The results are a set of spectra which contain the valuable information about the proteins in the sample. The fig.\ref{fig:HPLC} shows the general idea of MS based method.\\
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
-  \includegraphics[width=0.8\textwidth]{RPLC_flow.jpg}\\
+  \includegraphics[width=0.5\textwidth]{RPLC_flow.jpg}\\
   \caption{Demonstration of HPLC method. (circles with different colour represents different peptides and the blue column represents the liquid chromatography column, The $R_{t1}$ is the retention time of $peptide Pink$)}\label{fig:HPLC}
 \end{figure}
 
 \noindent
-Among these three steps, the most important one is the peptide separation in the column. Retention time (RT) is the amount of time that a peptide needs to go through the column. It is a useful feature in many aspects. It may be used in experiments involving chemometric analyses of peptide mixtures. What's more, it provides us with a new perspective to investigate the behavior and biological characters of the protein. An extensive amount of research has been conducted into predicting peptide retention times. The Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line. The main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN). \\
+Among these three steps, the most important one is the peptide separation in the column. Retention time (RT) is the amount of time that a peptide needs to go through the column. Each kind of peptide has a certain amount of retention time based on its hydrophobicity. Therefore, it is a useful feature in peptide separation and identification. It provides us with a new perspective to identify the protein. Besides, it may be used as a important parameter in other experiments involving chemometric analyses of peptide mixtures as well. Therefore, precise prediction of the peptide retention time could be helpful to the protein identification.\\
 
 
 \section{Problem Statement}
 
-\todo[inline]{Don't remove the indentation.}
 \todo[inline]{Your problem statement is prediction of retention time and not GP. GP is a tool we are using to solve the problem.}
 
 \textcolor{red}{Re-write this focusing on the following points:}
@@ -117,19 +107,20 @@ Among these three steps, the most important one is the peptide separation in the
 \end{itemize}
 
 \noindent
-All of these methods of SVR and ANN have their own drawbacks and still needs to be improved. One alternative option is to implement the Gaussian Processes (GPs) to build the predictive model. GPs provides a flexible framework for probabilistic regression and are widely used to solve the high-dimensional, small-sample or nonlinear problems. \textcolor{red}{Yet none of the existing publications has the prediction of retention times for peptides analyzed with the use of Gaussian Process.}\todo{Remove this}\\
-
-\todo[inline]{After describing the problem, you can say that we want to use GP for solving it since it is a very flexible framework and has not been previously applied to this problem. Then, slightly talk about the challenges of applying GP to this problem.}
-
+In order to predict the retention time of large-scale of peptides, an extensive amount of models have been conducted. For example, the Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line. \\
 
 \noindent
-Therefore, the top priority of this thesis is to develop a Gaussian Processes Regression model in terms of predicting the peptide retention time and investigate its performance by using SVR model as benchmark.\\
+To train a regression model, we first need some proper features which can represent the peptide. Since most of the features now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address the biochemical problems so far. Therefore, this thesis will strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
 
 \noindent
+What's more, the main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN). However, all of these methods of SVR and ANN have their own drawbacks and still needs to be improved.\\
 
-\todo[inline]{You should talk about features before talking about the SVM or GP. Keep the order of things in mind. You want to control what the reader is thinking. Previously, we you talk about GP, the reader will ask how do we give peptides to GP or SVM? But if you talk about the features first, by just saying we have methods that maps peptides into a vector space then things becomes more clear.}
+\noindent
+Therefore, in this thesis, we would like to implement the Gaussian Processes (GPs) model to predict the retention time and investigate its performance by comparing with the other existing methods.\\
 
-Furthermore, since most of the features we used now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address the biochemical problems so far. Therefore, this thesis will also strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
+\noindent
+The GPs provides a flexible framework for probabilistic regression and are widely used to solve the high-dimensional, small-sample or nonlinear problems. Yet none of the existing publications has the prediction of retention times for peptides analyzed with the use of Gaussian Process.\\
+
 
 \noindent
 In addition, since the GP model has some parameters need to be optimized and these parameters could have a significant impact on the prediction accuracy, different optimization methods towards these parameters will be implemented and their properties will be analyzed in this thesis too.
@@ -137,14 +128,14 @@ In addition, since the GP model has some parameters need to be optimized and the
 
 \section{Outline}
 \noindent
-The structure of the thesis is as follows, we will first introduce the related work on retention time prediction in section 2. It will be followed by the detailed description of Gaussian Processes in section 3. The theory behind Gaussian Processes and a detailed mathematics derivation will also be covered in this section. Section 4 introduces three different methods regarding features selection of Gaussian Processes. The optimization will be covered in section 5 and two different method will be used to optimize the parameters in the previous model. Then, the experimental results and evaluation will be analyzed in section 6. Finally, we will discuss the future work and give some perspectives for it in section 7.
+The structure of the thesis is as follows, we will first introduce the related work on retention time prediction in chapter 2. It will be followed by the methodologies we use in in chapter 3. Within chapter 3, the detailed description of Gaussian Processes and a detailed mathematics derivation will be covered in section 1. Following that, section 2 introduces a different method regarding features selection of Gaussian Processes. The optimization will be covered in section 3 and two different method will be used to optimize the parameters of our model. In chapter 4, the experimental results and evaluation will be analyzed and our model will be compared with some other popular predictors. A discussion of the limitation of our model will be given in chapter 5. Finally, we will discuss the future work and give some perspectives for it in chapter 6.
 
 
 
 \chapter{Related Work}
 \fontsize{12pt}{16pt}\selectfont
 \noindent
-Prediction of the retention time for a given peptide could help to improve the confidence of peptide identification. If the prediction of retention time of a peptide is precise enough, then we could tell which peptide it is or which species does it belong to by cross-match its predicted retention time with our database. Therefore, developing efficient algorithms and establishing proper models to generate the prediction of peptide has become more important and necessary.\\
+Prediction of the retention time for a given peptide could help to improve the confidence of peptide identification. If the prediction of retention time of a peptide is precise enough, then we could tell which peptide it is or which species does it belong to by cross-matching its predicted retention time with our database. Therefore, developing efficient algorithms and establishing proper models to generate the prediction of peptide has become more important and necessary.\\
 
 \noindent
 However, to make the prediction successfully, there are two problems needed to be considered. Firstly, what kind of model will have better performance of the prediction. Secondly, what factors will have a great impact on the retention time. Unfortunately, both of these two questions remain open so far. Therefore, in order to answer the questions, a number of models based on different features have been proposed to characterize quantitatively the peptide and to predict its retention time.\\
@@ -192,12 +183,14 @@ In general, most of the features that are widely used now have strong biological
 From the perspective of computer science, anything that can represent an object could be considered as a feature of this object. Therefore, it is worth to believe that some less-biological meaning features could give the same performance in this case. It might be a breakthrough to introduce some new features instead of just using the biochemical features. In this thesis,  some features with less biological meaning will be utilized and compared to the traditional biochemical features.
 
 
-\chapter{Gaussian Processes}
+\chapter{Methodology} 
+
+\section{Gaussian Processes}
 \fontsize{12pt}{16pt}\selectfont
 
 Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind and build an appropriate Gaussian Process model, this chapter starts with a brief introduction of the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain the properties of it. Finally, we will make a comparison between Gaussian Process and the other two methods: ANNs and SVR so that we could see the strengths of Gaussian Process.
 
-\section{Standard Bayesian linear Regression}
+\subsection{Standard Bayesian linear Regression}
 
 Let's first consider a set of input $x = \{(x_{i},y_{i}) | i =1,2...n\}$ along with some noise $\epsilon$. In the regression setting, the targets are real values but the observations are with additive noise. We are interested in inferring the relationship between inputs and targets, i.e. the conditional distribution of the targets given the inputs.\\
 
@@ -267,7 +260,7 @@ p(f_{new}|x_{new},y,x) = \int p(f_{new}|x_{new},w)p(w|x,y)dw \notag \\ \sim N(\f
 
 
 
-\section{Gaussian Processes Regression}
+\subsection{Gaussian Processes Regression}
 A Gaussian processes, a distribution over a set of functions, is fully specified by its mean function and covariance function as \ref{eq:11}
 \begin{equation} \label{eq:11}
   f(x) \sim GP(m(x), k(x,x'))
@@ -343,7 +336,7 @@ These equations give us the corresponding mean value and covariance value of the
   \caption {Graphical model for a GP for regression\cite{foo18}.}\label{fig:Fig2}
 \end{figure}
 
-\section{Multi-Kernel Function}
+\subsection{Multi-Kernel Function}
 As mentioned above, the general idea of a kernel function is to use it to project the data in low dimensional space to higher one. In general, the kernel function could be divided into two types: global kernel function and local kernel function. The RBF kernel function is considered as a typical local kernel while the Polynomial kernel is a global one\cite{foo21}.\\
 
 \noindent
@@ -359,7 +352,7 @@ We want to take the advantages from the kernel function and eliminate its weakne
 \noindent
 where $m$ is the weight between two kernel functions. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
 
-\section{Property of Gaussian Processes}
+\subsection{Property of Gaussian Processes}
 
 As a supervised learning algorithm, the Gaussian Processes is also based on the idea that similar input result in similar outputs or output distributions. But it also have its unique strengths compare with ANN (Backpropagation (BP) algorithm as example) and SVR. \\
 
@@ -373,12 +366,12 @@ As for the SVR, it improves this situation by using structure risk minimization 
 The Gaussian Processes is based on the Gaussian distribution and Bayesian theory which implies a solid foundation of probabilistic and statistic. For example, the Gaussian Process not only give the predicted value but also the uncertainty of the prediction. This property makes the prediction easier to interpret and understand. What's more, since Gaussian Processes make the prediction based on the distribution of all data and weaken the contribution of single outlier, it prevents the overfitting problem and gives better generalization capacity than SVR. In addition, in terms of the choice of hyperparameters, the Gaussian Processes is self-adaptive. In other words, the Gaussian Process choose the optimal hyperparameters during its process of training a model while SVR could only choose them by using cross-validation method or based on the pervious experiences. Besides, compared with the BP and SVR model, the number of parameters of Gaussian Processes is quite small which makes the optimization easier to implement.\\
 
 
-\chapter{Feature selection}
+\section{Feature selection}
 \fontsize{12pt}{16pt}\selectfont
 
 Another key point of this thesis is the feature selection. As mentioned in Chapter 2, most of the state-of-art features have strong connection with the biology aspect. However, few of the so-called less-biological meaningful features have been implemented and investigated so far. Therefore, in this chapter, we will introduce some methods of feature selection and explain the theory behind them. The performance of these features will be compared with some benchmarks and fully discussed in the chapter 6.\\
 
-\section{Bag of Word}
+\subsection{Bag of Word}
 As we known, the peptide could be considered as a string sequence where each letter is a type of amino acid. Therefore, one alternative way is to implement data-analyzed method to extract the features from the peptide sequence. Bag of Word model is one of most popular method in data-analyzed. This method has been implemented in many other aspects in computer science and data mining technique and the idea of feature selection by Bag of Word method is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\\
 
 \noindent
@@ -435,7 +428,7 @@ In terms of complexity, the most popular features that have been used nowadays a
 When it comes to the flexibility, since the embedding language $L$ is constituted by the words that are directly and simply extracted from the samples, this method could easily change the language set $L$ for particular context of the task which might imply a wider applicability in other field of biological research.\\
 
 
-\chapter{Optimization}
+\section{Optimization}
 \fontsize{12pt}{16pt}\selectfont
 
 In the Gaussian Process model, the most important part is the covariance function of the model since the Gaussian Process consider it as the kernel function. The value of the covariance function along with the value of the mean function are known as the hyperparameters in this case. Initially, we need to determine the hyperparameters manually. However, since we do not know the best combination of these hyperparameters beforehand, we have a group of parameters $[ m, \sigma , \mu]$ where $m$ is the weighted factor of kernel function and $\sigma$ is the value of covariance function and $\mu$ represent the value of mean function that need to be optimized for the best performance.\\
@@ -452,7 +445,7 @@ where $C =k(x,x)+\sigma_{n}^{2}I_{n}$\\
 \noindent
 Here, we will implement two different optimization methods based on different principles. The first one is the Conjugate Gradient method and the second one is the Particle Swarm Optimization method. The principle of each method will be explained in detail along with their own strengths and weaknesses towards this case.
 
-\section{The Conjugate Gradient}
+\subsection{The Conjugate Gradient}
 
 Since we want to optimize the hyperparameter group $[ w, \sigma , \mu]$, we will try to find the minimum value of the objective function. The conjugate gradient method (CG)is one of the most widely used methods and is developed based on the gradient descending method and Newton Method.\\
 
@@ -553,7 +546,7 @@ What's more, since the traditional gradient descent method will slow down the se
 \end{figure}
 
 
-\section{The Particle Swarm Optimization}
+\subsection{The Particle Swarm Optimization}
 
 The Particle Swarm Optimization (PSO) method is one of the new iterative methods for problem optimization. It improves the solution by iteratively searching for the best result in current circumstance. \\
 
@@ -675,7 +668,7 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
 \end{table}
 
 \noindent
-As we can see from the figures, the multi-kernel gives better performance than a single kernel in general. The multi-kernel function helps GP model to improve the correlation coefficient in both cases. The scatter plots in both cases become narrower and closer to the ideal blue line.\\   
+As we can see from the figures, the multi-kernel gives better performance than a single kernel in general. The multi-kernel function helps GP model to improve the correlation coefficient in both cases. The scatter plots in both cases become narrower and closer to the ideal blue line.\\
 
 \noindent
 More importantly, it also reduces the minimal time window dramatically, from 0.5080 to 0.2474 and 0.3912 to 0.2052 for $BOW feature$ and $Elude feature$ respectively. This also implies that the multi-kernel makes the prediction more precisely and narrow down the deviations between observed and predicted retention times.\\
