@@ -13,7 +13,8 @@
 \usepackage{subfigure}
 \usepackage{multirow}
 \usepackage{colortbl,booktabs}
-
+\usepackage{todonotes}
+\usepackage{color}
 
 \title{Prediction of peptide retention time based on Gaussian Processes}
 
@@ -35,7 +36,7 @@ Examiner: Stefan Carlsson}
 \selectlanguage{english}
 \begin{abstract}
   Retention time (RT) as an important evidence can be used to analysis the peptide's properties. Because of the interactions among peptides, the retention time prediction of peptide has low accuracy,
-  and thus is less effective in the validation of peptide identifications. Besides, the large amount of time on generating features also need to be reduced. This thesis presents a alterative machine learning methods to predict the retention time of a set of peptide in hand. In order to address the precision and computational cost problem, we introduce Gaussian Processes as the trained model and use a new feature extraction method called BOW to generate the features for training the model. We also investigate the effect of different types of kernel function and their parameters. The results show high precision of the prediction and relatively low time cost.
+  and thus is less effective in the validation of peptide identifications. Besides, the large amount of time on generating features also need to be reduced. This thesis presents a alternative machine learning methods to predict the retention time of a set of peptide in hand. In order to address the precision and computational cost problem, we introduce Gaussian Processes as the trained model and use a new feature extraction method called BOW to generate the features for training the model. We also investigate the effect of different types of kernel function and their parameters. The results show high precision of the prediction and relatively low time cost.
 \end{abstract}
 
 \clearpage
@@ -45,11 +46,31 @@ Examiner: Stefan Carlsson}
 \pagestyle{newchap}
 \chapter{Introduction}
 \fontsize{12pt}{16pt}\selectfont
+
+\todo[inline]{Don't start with background. Start with introduction. Don't go in any details in the introduction just try to explain the problem with as simple terminologies as possible.}
+
+\textcolor{red}{Re-write the introduction focusing on these things :}
+
+\begin{itemize}
+	\item \textcolor{red}{Functions of different biological organisms is determined by the proteins presented in them}
+	\item \textcolor{red}{For this reason it is important for us to what proteins are present in them}
+	\item \textcolor{red}{Tandem Mass Spectrometry is the leading technique for global and large-scale identification of proteins in complex mixtures.}
+	\item \textcolor{red}{Briefly explain how it works, I will send you a sample that I had written a while back}
+	\item \textcolor{red}{Talk about the differences between DDA and DIA}
+	\item \textcolor{red}{Finally talk about why RT prediction can improve the identification}
+\end{itemize}
+
+
 \section{Background}
-Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Therefore, the study of the properties of protein is very necessary and considered as one of most important subject in the biological field.\\
+Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Therefore, the study of \textcolor{red}{the properties of protein} \todo{I don't think that this is correct} is very necessary and considered as one of most important subject in the biological field.\\
+
+
+\todo[inline]{The goal is identification of proteins and not study of their properties}
+
 
 \noindent
-Before introducing the background, we will briefly describe a few concepts that we will involve later so that one could understand the method easier.
+Before introducing \todo{Remove these from here.} the background, we will briefly describe a few concepts that we will involve later so that one could understand the method easier.
+\todo[inline]{Move this list to the background section talking about the biology problem.}
 \begin{itemize}
   \item Liquid Chromatography: A technique in analytic chemistry used to separate the components in a mixture, to identify each component, and to quantify each component.
   \item Amino acid: Biologically important organic compounds composed of amine (-NH2) and carboxylic acid (-COOH) functional groups, along with a side-chain specific to each amino acid. There are approximately 20 basic types and Fig. \ref{fig:Fig4} is an example of one of them. They are the basic building block of protein, giving protein their specific structural form so that they could have biological activity.
@@ -81,14 +102,33 @@ To analyze the protein content, one of the most popular techniques is the Mass s
 \noindent
 Among these three steps, the most important one is the peptide separation in the column. Retention time (RT) is the amount of time that a peptide needs to go through the column. It is a useful feature in many aspects. It may be used in experiments involving chemometric analyses of peptide mixtures. What's more, it provides us with a new perspective to investigate the behavior and biological characters of the protein. An extensive amount of research has been conducted into predicting peptide retention times. The Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line. The main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN). \\
 
+
 \section{Problem Statement}
+
+\todo[inline]{Don't remove the indentation.}
+\todo[inline]{Your problem statement is prediction of retention time and not GP. GP is a tool we are using to solve the problem.}
+
+\textcolor{red}{Re-write this focusing on the following points:}
+\begin{itemize}
+	\item \textcolor{red}{What is the problem? In more details.}
+	\item \textcolor{red}{How people have been thinking about this problem?}
+	\item \textcolor{red}{What are some previous attempts in solving the problem?}
+	\item \textcolor{red}{How are we attacking this problem? What is the difference? What are the challenges?}
+\end{itemize}
+
 \noindent
-All of these methods of SVR and ANN have their own drawbacks and still needs to be improved. One alternative option is to implement the Gaussian Processes (GPs) to build the predictive model. GPs provides a flexible framework for probabilistic regression and are widely used to solve the high-dimensional, small-sample or nonlinear problems. Yet none of the existing publications has the prediction of retention times for peptides analyzed with the use of Gaussian Process.\\
+All of these methods of SVR and ANN have their own drawbacks and still needs to be improved. One alternative option is to implement the Gaussian Processes (GPs) to build the predictive model. GPs provides a flexible framework for probabilistic regression and are widely used to solve the high-dimensional, small-sample or nonlinear problems. \textcolor{red}{Yet none of the existing publications has the prediction of retention times for peptides analyzed with the use of Gaussian Process.}\todo{Remove this}\\
+
+\todo[inline]{After describing the problem, you can say that we want to use GP for solving it since it is a very flexible framework and has not been previously applied to this problem. Then, slightly talk about the challenges of applying GP to this problem.}
+
 
 \noindent
 Therefore, the top priority of this thesis is to develop a Gaussian Processes Regression model in terms of predicting the peptide retention time and investigate its performance by using SVR model as benchmark.\\
 
 \noindent
+
+\todo[inline]{You should talk about features before talking about the SVM or GP. Keep the order of things in mind. You want to control what the reader is thinking. Previously, we you talk about GP, the reader will ask how do we give peptides to GP or SVM? But if you talk about the features first, by just saying we have methods that maps peptides into a vector space then things becomes more clear.}
+
 Furthermore, since most of the features we used now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address the biochemical problems so far. Therefore, this thesis will also strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
 
 \noindent
