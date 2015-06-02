@@ -49,8 +49,7 @@ Examiner: Stefan Carlsson}
 
 \section{Introduction}
 
-
-Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins presented in them. For this reason, it is important and necessary for us to know what proteins are in them. As a result, it leads us to the large-scale identification of proteins in complex mixtures.
+Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins presented in them. For this reason, it is important and necessary for us to know what proteins are in them. As a result, it leads us to problem of the large-scale identification of proteins in complex mixtures.
 
 \begin{figure}[h!]
   \centering
@@ -59,29 +58,13 @@ Protein, the most essential component of all the cells and organisms, plays an i
   \caption{protein chain}\label{fig:protein}
 \end{figure}
 
-\noindent
-Before deeper introduction, we will briefly describe a few concepts that we will involve later so that one could understand the method easier.
-
-\begin{itemize}
-  \item Liquid Chromatography: A technique in analytic chemistry used to separate the components in a mixture, to identify each component, and to quantify each component.
-  \item Amino acid: Biologically important organic compounds composed of amine (-NH2) and carboxylic acid (-COOH) functional groups, along with a side-chain specific to each amino acid. There are approximately 20 basic types and Fig. \ref{fig:Fig4} is an example of one of them. They are the basic building block of protein, giving protein their specific structural form so that they could have biological activity.
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.4\textwidth]{Alpha_AminoAcidball.png}\\
-  \caption{Alpha Amino Acid}\label{fig:Fig4}
-\end{figure}
-  \item Peptide: Short sequence(chain) of amino acid connected by peptide bonds as in Fig. \ref{fig:Fig3} It is distinguished from proteins on the basis of size. It only contains approximately 50 or fewer amino acids.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.4\textwidth]{./peptide.png}\\
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
-  \item Hydrophobicity: A physical property of a molecule that is seemingly repelled from a mass of water. It has a great impact in terms of interaction between different proteins and the structure of the protein. And more importantly, in this case, the peptide retention time has a strong relationship with it.
-  \item Elution: In analytical and organic chemistry, elution is the process of extracting different materials from mixtures by washing mixtures with a solvent and separating materials based on different affinity to the solvent.
-\end{itemize}
-
 \noindent
-To analyze the protein content and identify the type of protein, one of the most popular techniques is the Mass spectrometry (MS) based methods. The general idea of MS based method is to identify the amount and type of chemicals present in a sample by measuring the abundance of gas-phase\cite{foo0}. The high performance liquid chromatography (HPLC) is one of the popular MS based methods. This technique has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration. In the end, those peptide will eluted from the column and ionized by electrospray ionization. The results are a set of spectra which contain the valuable information about the proteins in the sample. The fig.\ref{fig:HPLC} shows the general idea of MS based method.\\
+Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique to identify the protein in complex mixtures. The main part of this technique is the high performance liquid chromatography (HPLC). The HPLC has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration. In the end, those peptide will eluted from the column and ionized by electrospray ionization. The results are a set of spectra which each of the spectra corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
 
 \begin{figure}[h!]
   \centering
@@ -91,29 +74,22 @@ To analyze the protein content and identify the type of protein, one of the most
 \end{figure}
 
 \noindent
-Among these three steps, the most important one is the peptide separation in the column. Retention time (RT) is the amount of time that a peptide needs to go through the column. Each kind of peptide has a certain amount of retention time based on its hydrophobicity. Therefore, it is a useful feature in peptide separation and identification. It provides us with a new perspective to identify the protein. Besides, it may be used as a important parameter in other experiments involving chemometric analyses of peptide mixtures as well. Therefore, precise prediction of the peptide retention time could be helpful to the protein identification.\\
+There are mainly two ways to match these spectra with the theoretical spectra obtained from the database so that we would identify them. The traditional one is Data Dependant Acquisition (DDA) \cite{fooc} and the other is Data Independent Acquisition (DIA) \cite{food}\cite{fooe}\cite{foof}. In the strategy of DIA, the obtained spectra in previous experiment is partitioned into several fixed sized windows. By keeping the window small, it can be assumed that the resulting spectrum only corresponds to very few peptides which makes it easier to identify. However, how to define the size of the window is still a problem. If the window size is too small, there will be a large inconsistency in the peaks of the spectra which will mislead the identification of the peptide. And if we simply expand the window size, it will contain more spectra and probably more peptides. As a result, the complexity of the matching problem will increase dramatically.\\
 
+\noindent
+An alternative way to solve this problem is to utilize its retention time. In the previous HPLC process, the retention time (RT) is the amount of time that a peptide needs to go through the column during the peptide separation. Each kind of peptide has a certain amount of retention time based on its hydrophobicity as in \ref{fig:HPLC}. Meanwhile, this retention time of peptide could also be estimated by regression model. Therefore, by comparing the predicted retention time and the real retention time of the peptide, we could reduce the number of the peptide that need to be matched which helps to improve the efficiency of peptide identification significantly. The more precise the predicted retention time we could get, the narrower the range of peptide we need to match will be and the higher efficiency we could have to identify the peptide.\\
 
+ 
 \section{Problem Statement}
-
-\todo[inline]{Your problem statement is prediction of retention time and not GP. GP is a tool we are using to solve the problem.}
-
-\textcolor{red}{Re-write this focusing on the following points:}
-\begin{itemize}
-	\item \textcolor{red}{What is the problem? In more details.}
-	\item \textcolor{red}{How people have been thinking about this problem?}
-	\item \textcolor{red}{What are some previous attempts in solving the problem?}
-	\item \textcolor{red}{How are we attacking this problem? What is the difference? What are the challenges?}
-\end{itemize}
 
 \noindent
 In order to predict the retention time of large-scale of peptides, an extensive amount of models have been conducted. For example, the Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line. \\
 
 \noindent
-To train a regression model, we first need some proper features which can represent the peptide. Since most of the features now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address the biochemical problems so far. Therefore, this thesis will strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
+To train a regression model, we first need some proper features which can represent the peptide. Since most of the features now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address this biochemical problem so far. Therefore, this thesis will strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
 
 \noindent
-What's more, the main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN). However, all of these methods of SVR and ANN have their own drawbacks and still needs to be improved.\\
+What's more, the main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN) and all of these methods have their own drawbacks that need to be improved.\\
 
 \noindent
 Therefore, in this thesis, we would like to implement the Gaussian Processes (GPs) model to predict the retention time and investigate its performance by comparing with the other existing methods.\\
@@ -183,7 +159,7 @@ In general, most of the features that are widely used now have strong biological
 From the perspective of computer science, anything that can represent an object could be considered as a feature of this object. Therefore, it is worth to believe that some less-biological meaning features could give the same performance in this case. It might be a breakthrough to introduce some new features instead of just using the biochemical features. In this thesis,  some features with less biological meaning will be utilized and compared to the traditional biochemical features.
 
 
-\chapter{Methodology} 
+\chapter{Methodology}
 
 \section{Gaussian Processes}
 \fontsize{12pt}{16pt}\selectfont
@@ -983,6 +959,18 @@ However, we should see that the prediction of peptide's retention time is just a
 
 
 \begin{thebibliography}{99}
+    \bibitem{fooa} Mathias Wilhelm, Judith Schlegl, Hannes Hahne, Amin Moghaddas Gholami,Marcus Lieberenz, Mikhail M Savitski, Emanuel Ziegler, Lars Butzmann,Siegfried Gessulat, Harald Marx, Toby Mathieson, Simone Lemeer, Karsten Schnatbaum, Ulf Reimer, Holger Wenschuh, Martin Mollenhauer, Julia Slotta-Huspenina, Joos-Hendrik Boese, Marcus Bantscheff, Anja Gerstmair, Franz Faerber, and Bernhard Kuster. Mass-spectrometry-based draft of the human proteome. Nature, 509(7502):582-587, April 2015.
+    
+    \bibitem{foob} Christine C Wu and Michael J MacCoss. Shotgun proteomics: tools for the analysis of complex biological systems. Curr Opin Mol Ther, 4(3):242-250,2002.
+    
+    \bibitem{fooc} Matthias Mann, Ronald C Hendrickson, and Akhilesh Pandey. ANALYSIS OF PROTEINS AND PROTEOMES BY MASS SPECTROMETRY. Annual Review of Biochemistry, 70(1):437-473, 2001
+    
+    \bibitem{food} Jarrett D Egertson, Andreas Kuehn, Gennifer E Merrihew, Nicholas W Bateman, Brendan X MacLean, Ying S Ting, Jesse D Canterbury, DonaldMMarsh,Markus Kellmann, Vlad Zabrouskov, Christine CWu, and Michael J MacCoss. Multiplexed MS/MS for improved data-independent acquisition. Nature Methods, 10(8):744-746, June 2013.
+    
+    \bibitem{fooe} Ludovic C Gillet, Pedro Navarro, Stephen Tate, Hannes Roest, Nathalie Selevsek, Lukas Reiter, Ron Bonner, and Ruedi Aebersold. "Targeted Data Extraction of the MS/MS Spectra Generated by Data-independent Acquisition: A New Concept for Consistent and Accurate Proteome Analysis. Molecular \& Cellular Proteomics", 11(6), June 2012.
+    
+    \bibitem{foof} Hannes L R\"{o}st, George Rosenberger, Pedro Navarro, Ludovic GILLET, Sa\"{s}a M Miladinovi\"{c}, Olga T Schubert, Witold Wolski, Ben C Collins, Johan Malmstr\"{o}m, Lars Malmstr\"{o}m, and Ruedi Aebersold. OpenSWATH enables automated, targeted analysis of data-independent acquisition MS data. Nature Publishing Group, 32(3):219-223, March 2014.
+        
     \bibitem{foo0} Sparkman, O. David (2000). Mass spectrometry desk reference. Pittsburgh: Global View Pub. ISBN 0-9660813-2-3.
 
     \bibitem{foo1} Baczek T, Wiczling P, Marszall M, et al. (2005). "Prediction of peptide retention at different HPLC conditions from multiple linear regression models." Journal of Proteome Research, 4(2):555¨C63
@@ -1032,6 +1020,7 @@ However, we should see that the prediction of peptide's retention time is just a
 
     \bibitem{foo23}Snelson E, Ghahramani Z. Sparse Gaussian processes
         using pseudo-inputs[C]. Proc of the NIPS 18. Vancouver, 2006: 1257-1264
+        
     \bibitem{foo24}Gorshkov, Alexander V.; Tarasova, Irina A.; Evreinov, Victor V.; Savitski, Mikhail M.; Nielsen, Michael Lund; Zubarev, Roman A.; Gorshkov, Mikhail V.  "Liquid chromatography at critical conditions: Comprehensive approach to sequence-dependent retention time prediction. "  Analytical Chemistry, Vol. 78, No. 22, 2006, p. 7770-7777
 
 
