@@ -49,7 +49,7 @@ Examiner: Stefan Carlsson}
 
 \section{Introduction}
 
-Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins presented in them. For this reason, it is important and necessary for us to know what proteins are in them. As a result, it leads us to the large-scale identification of proteins in complex mixtures.
+Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins presented in them. For this reason, it is important and necessary for us to know what proteins are in them. As a result, it leads us to problem of the large-scale identification of proteins in complex mixtures.
 
 \begin{figure}[h!]
   \centering
@@ -58,8 +58,13 @@ Protein, the most essential component of all the cells and organisms, plays an i
   \caption{protein chain}\label{fig:protein}
 \end{figure}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{./peptide.png}\\
+  \caption{Peptide model}\label{fig:Fig3}
+\end{figure}
 \noindent
-Shotgun proteomics[13,8,12] is the most popular technique to identify the protein in complex mixtures. The main part of this technique is the high performance liquid chromatography (HPLC). The high performance liquid chromatography (HPLC) has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration. In the end, those peptide will eluted from the column and ionized by electrospray ionization. The results are a set of spectra which each of the spectra corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
+Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique to identify the protein in complex mixtures. The main part of this technique is the high performance liquid chromatography (HPLC). The HPLC has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration. In the end, those peptide will eluted from the column and ionized by electrospray ionization. The results are a set of spectra which each of the spectra corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
 
 \begin{figure}[h!]
   \centering
@@ -69,10 +74,11 @@ Shotgun proteomics[13,8,12] is the most popular technique to identify the protei
 \end{figure}
 
 \noindent
-There are mainly two ways to match these spectra with the theoretical spectra obtained from the database so that we would identify them: Data Dependant Acquisition (DDA)[10] and Data Independent Acquisition (DIA)[3,6,11]. In the strategy of DIA, the obtained spectra is partitioned into several fixed sized windows. By keeping the window small, it can be assumed that the resulting spectrum only corresponds to very few peptides which makes it easier to identify. However, how to define the size of the window is still a problem. If the window size is too small, there will be a large inconsistency in the peaks which will ruin the identification of the peptide. However, if we simply expand the window size, it will contain more spectra. As a result, the complexity of the matching system will increase dramatically.\\
+There are mainly two ways to match these spectra with the theoretical spectra obtained from the database so that we would identify them. The traditional one is Data Dependant Acquisition (DDA) \cite{fooc} and the other is Data Independent Acquisition (DIA) \cite{food}\cite{fooe}\cite{foof}. In the strategy of DIA, the obtained spectra in previous experiment is partitioned into several fixed sized windows. By keeping the window small, it can be assumed that the resulting spectrum only corresponds to very few peptides which makes it easier to identify. However, how to define the size of the window is still a problem. If the window size is too small, there will be a large inconsistency in the peaks of the spectra which will mislead the identification of the peptide. And if we simply expand the window size, it will contain more spectra and probably more peptides. As a result, the complexity of the matching problem will increase dramatically.\\
 
 \noindent
-An alternative way to identify peptide is to use its retention time. Among the three steps in the previous HPLC process, the most important one is the peptide separation in the column. Retention time (RT) is the amount of time that a peptide needs to go through the column. Each kind of peptide has a certain amount of retention time based on its hydrophobicity. Therefore, it is a useful feature in peptide separation and identification. It provides us with a new perspective to identify the protein. Besides, it may be used as a important parameter in other experiments involving chemometric analyses of peptide mixtures as well. Therefore, precise prediction of the peptide retention time could be helpful to the protein identification.
+An alternative way to solve this problem is to utilize its retention time. In the previous HPLC process, the retention time (RT) is the amount of time that a peptide needs to go through the column during the peptide separation. Each kind of peptide has a certain amount of retention time based on its hydrophobicity as in \ref{fig:HPLC}. Meanwhile, this retention time of peptide could also be estimated by regression model. Therefore, by comparing the predicted retention time and the real retention time of the peptide, we could reduce the number of the peptide that need to be matched which helps to improve the efficiency of peptide identification significantly. The more precise the predicted retention time we could get, the narrower the range of peptide we need to match will be and the higher efficiency we could have to identify the peptide.\\
+
 
 \section{Problem Statement}
 
@@ -80,10 +86,10 @@ An alternative way to identify peptide is to use its retention time. Among the t
 In order to predict the retention time of large-scale of peptides, an extensive amount of models have been conducted. For example, the Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line. \\
 
 \noindent
-To train a regression model, we first need some proper features which can represent the peptide. Since most of the features now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address the biochemical problems so far. Therefore, this thesis will strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
+To train a regression model, we first need some proper features which can represent the peptide. Since most of the features now are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address this biochemical problem so far. Therefore, this thesis will strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
 
 \noindent
-What's more, the main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN). However, all of these methods of SVR and ANN have their own drawbacks and still needs to be improved.\\
+What's more, the main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN) and all of these methods have their own drawbacks that need to be improved.\\
 
 \noindent
 Therefore, in this thesis, we would like to implement the Gaussian Processes (GPs) model to predict the retention time and investigate its performance by comparing with the other existing methods.\\
@@ -105,7 +111,7 @@ The structure of the thesis is as follows, we will first introduce the related w
 \chapter{Related Work}
 \fontsize{12pt}{16pt}\selectfont
 \noindent
-Prediction of the retention time for a given peptide could help to improve the confidence of peptide identification. If the prediction of retention time of a peptide is precise enough, then we could tell which peptide it is or which species does it belong to by cross-matching its predicted retention time with our database. Therefore, developing efficient algorithms and establishing proper models to generate the prediction of peptide has become more important and necessary.\\
+Prediction of the retention time for a given peptide could help to improve the confidence of peptide identification. Therefore, developing efficient algorithms and establishing proper models to generate the prediction of peptide has become more important and necessary.\\
 
 \noindent
 However, to make the prediction successfully, there are two problems needed to be considered. Firstly, what kind of model will have better performance of the prediction. Secondly, what factors will have a great impact on the retention time. Unfortunately, both of these two questions remain open so far. Therefore, in order to answer the questions, a number of models based on different features have been proposed to characterize quantitatively the peptide and to predict its retention time.\\
@@ -158,7 +164,7 @@ From the perspective of computer science, anything that can represent an object 
 \section{Gaussian Processes}
 \fontsize{12pt}{16pt}\selectfont
 
-Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind and build an appropriate Gaussian Process model, this chapter starts with a brief introduction of the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain the properties of it. Finally, we will make a comparison between Gaussian Process and the other two methods: ANNs and SVR so that we could see the strengths of Gaussian Process.
+Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind and build an appropriate Gaussian Process model, this chapter starts with a brief introduction of the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain the properties of it. Finally, we will make a comparison between Gaussian Process and the other two methods: ANNs and SVR so that we could see the difference of Gaussian Process.
 
 \subsection{Standard Bayesian linear Regression}
 
@@ -231,7 +237,11 @@ p(f_{new}|x_{new},y,x) = \int p(f_{new}|x_{new},w)p(w|x,y)dw \notag \\ \sim N(\f
 
 
 \subsection{Gaussian Processes Regression}
-A Gaussian processes, a distribution over a set of functions, is fully specified by its mean function and covariance function as \ref{eq:11}
+
+A Gaussian Process regression model inherits the Bayesian theorem and compute the posterior predictive distributions for new test inputs instead of identifying the "best-guess" predictions for them as SVR did.\\
+
+\noindent
+A Gaussian Process, a distribution over a set of functions, is fully specified by its mean function and covariance function as \ref{eq:11}
 \begin{equation} \label{eq:11}
   f(x) \sim GP(m(x), k(x,x'))
 \end{equation}
@@ -247,10 +257,10 @@ k(x,x') = E[(f(x)-m(x))(f(x')-m(x'))]
 Normally, for the sake of simplicity,  we will take the mean function to be zero and only consider the effect of covariance function. In fact, the problem of learning in Gaussian Processes is the problem of finding suitable properties for the covariance functions\cite{foo18}.\\
 
 \noindent
-Since the Bayesian linear regression model has natural disadvantages in terms of expressiveness and the relationship between our input and targeted value is barely linear, we take the advantage from Gaussian Processes in terms of dealing with nonlinear problem by utilizing the kernel function. \\
+Since the Bayesian linear regression model has natural disadvantages in terms of expressiveness and the relationship between our input (peptide sequence) and output (retention time) is barely linear, we take the advantage from Gaussian Processes in terms of dealing with nonlinear problem by utilizing the kernel function. \\
 
 \noindent
-The principle of a kernel function is to project the original nonlinear input data into a higher dimensional space where they become linear separable so that the linear model could be implemented directly in that space. The Fig\ref{fig:Fig1} shows the ideal of the kernel function\\
+The principle of a kernel function is to project the original nonlinear input data into a higher dimensional space where they become linear separable so that the linear model could be implemented directly in that space. The Fig\ref{fig:Fig1} shows the idea of the kernel function\\
 
 \begin{figure}[h!]
   \centering
@@ -259,13 +269,13 @@ The principle of a kernel function is to project the original nonlinear input da
 \end{figure}
 
 \noindent
-To be more specific, the Gaussian Process specifies the covariance function as the kernel function which takes the inner dot product between a pair of random variables and we assume the observations have independent identically distributed Gaussian noise, then the prior of the observations becomes:
+To be more specific, the Gaussian Process specifies the covariance function as the kernel function which takes the inner dot product between a pair of random variables. We assume the observations have independent identically distributed Gaussian noise, then the prior of the observations becomes:
 \begin{equation}\label{eq:14}
   cov(f(x_{a}),f(x_{b})) = k(x_{a},x_{b})+ \sigma_{n}^{2}\delta_{ab}
 \end{equation}
 
 \noindent
-where the $k(x_{a},x_{b})$ is a general form of kernel function\footnote[{1}]{There are many different kinds of kernel functions such as Radius Basis Function, Polynomial Function and Sigmoid Function. Linear function is also one of the simplest kernel function.} and $\delta_{ab}$ is a Kronecker delta which is one iff $a\equiv b$ and zero otherwise.\\
+where the $k(x_{a},x_{b})$ is a general form of kernel function and $\delta_{ab}$ is a Kronecker delta which is one iff $a\equiv b$ and zero otherwise.\\
 
 \noindent
 Then, we could generate the joint distribution of the observations $y$ and the predicted value $f_{new}$ under the prior as
@@ -293,8 +303,8 @@ Then, we could generate the joint distribution of the observations $y$ and the p
 Deriving the conditional distribution, we finally arrive at the key predictive equations for Gaussian process regression
 \begin{align}\label{eq:17}
    f_{new}|x,y,x_{new} &\sim N(\bar f_{new}, cov(f_{new})), \quad where\\
-   \bar f_{new} &= k(x_{new},x)[k(x,x)+\sigma_{n}{2}I]^{-1}y\\
-   cov(f_{new}) &= k(x_{new},x_{new})-k(x_{new},x)[k(x,x)+\sigma_{n}{2}I]^{-1}k(x,x_{new})
+   \bar f_{new} &= k(x_{new},x)[k(x,x)+\sigma_{n}^{2}I]^{-1}y\\
+   cov(f_{new}) &= k(x_{new},x_{new})-k(x_{new},x)[k(x,x)+\sigma_{n}^{2}I]^{-1}k(x,x_{new})
 \end{align}
 
 \noindent
@@ -306,8 +316,41 @@ These equations give us the corresponding mean value and covariance value of the
   \caption {Graphical model for a GP for regression\cite{foo18}.}\label{fig:Fig2}
 \end{figure}
 
-\subsection{Multi-Kernel Function}
-As mentioned above, the general idea of a kernel function is to use it to project the data in low dimensional space to higher one. In general, the kernel function could be divided into two types: global kernel function and local kernel function. The RBF kernel function is considered as a typical local kernel while the Polynomial kernel is a global one\cite{foo21}.\\
+\subsection{Kernel Function and Multi-Kernels}
+
+As we could seen from \ref{eq:17}, the accuracy of the estimation of our retention time is highly dependent on the covariance function $k(x_{a},x_{b})$ . In Gaussian Process model, there are several popular covariance functions.\\
+
+\begin{itemize}
+  \item Matern covariance:\\
+  \begin{equation}\label{eq:kr1}
+   k(x_{a},x_{b}) = (1+\frac{\sqrt{3}(x_{a}-x_{b})}{l})exp(-\frac{\sqrt{3}(x_{a}-x_{b})}{l})
+  \end{equation}
+
+  \item Linear covariance:\\
+  \begin{equation}\label{eq:kr2}
+   k(x_{a},x_{b}) = x_{a}\Sigma x_{b}
+  \end{equation}
+
+  \item Polynomial covariance:\\
+  \begin{equation}\label{eq:kr3}
+   k(x_{a},x_{b}) = (x_{a}- x_{b})^{k}
+  \end{equation}
+
+  \item Rational quadratic covariance:\\
+  \begin{equation}\label{eq:kr4}
+   k(x_{a},x_{b}) = (1+\frac{|x_{a}-x_{b}|^{2}}{2\alpha l^{2}})^{-\alpha}
+  \end{equation}
+
+  \item RBF covariance:\\
+  \begin{equation}\label{eq:kr5}
+   k(x_{a},x_{b}) = exp(-\frac{|x_{a}-x_{b}|^{2})}{2l^{2}})
+  \end{equation}
+\end{itemize}
+
+\noindent
+Different covariance function has different properties and generates different similarity measures between pairs of data points. The RBF covariance in \ref{eq:kr5} is the most popular kernel function. In Gaussian process, all these covariance function are weighted by a smoothness factor $\delta_{ab}$ as showed in \ref{eq:14}. This variable together with the parameters in each covariance function are known as the hyperparameters. These hyperparameters will need to be optimized later by maximization of the marginal log-likelihood function of GP model. The detail of how to achieve it will be covered in the section of optimization.
+
+Another interesting thing of the kernel function is that they could be divided into two types: global kernel function and local kernel function. The RBF kernel function is considered as a typical local kernel while the Polynomial kernel is a global one\cite{foo21}.\\
 
 \noindent
 However, both type of kernel functions have their own strengths and limitations in different aspects. The local kernel function has strength in terms of approximation but the generalization ability is weak while the global one has stronger generalization ability but weaker approximation capacity.\\
@@ -953,6 +996,18 @@ However, we should see that the prediction of peptide's retention time is just a
 
 
 \begin{thebibliography}{99}
+    \bibitem{fooa} Mathias Wilhelm, Judith Schlegl, Hannes Hahne, Amin Moghaddas Gholami,Marcus Lieberenz, Mikhail M Savitski, Emanuel Ziegler, Lars Butzmann,Siegfried Gessulat, Harald Marx, Toby Mathieson, Simone Lemeer, Karsten Schnatbaum, Ulf Reimer, Holger Wenschuh, Martin Mollenhauer, Julia Slotta-Huspenina, Joos-Hendrik Boese, Marcus Bantscheff, Anja Gerstmair, Franz Faerber, and Bernhard Kuster. Mass-spectrometry-based draft of the human proteome. Nature, 509(7502):582-587, April 2015.
+
+    \bibitem{foob} Christine C Wu and Michael J MacCoss. Shotgun proteomics: tools for the analysis of complex biological systems. Curr Opin Mol Ther, 4(3):242-250,2002.
+
+    \bibitem{fooc} Matthias Mann, Ronald C Hendrickson, and Akhilesh Pandey. ANALYSIS OF PROTEINS AND PROTEOMES BY MASS SPECTROMETRY. Annual Review of Biochemistry, 70(1):437-473, 2001
+
+    \bibitem{food} Jarrett D Egertson, Andreas Kuehn, Gennifer E Merrihew, Nicholas W Bateman, Brendan X MacLean, Ying S Ting, Jesse D Canterbury, DonaldMMarsh,Markus Kellmann, Vlad Zabrouskov, Christine CWu, and Michael J MacCoss. Multiplexed MS/MS for improved data-independent acquisition. Nature Methods, 10(8):744-746, June 2013.
+
+    \bibitem{fooe} Ludovic C Gillet, Pedro Navarro, Stephen Tate, Hannes Roest, Nathalie Selevsek, Lukas Reiter, Ron Bonner, and Ruedi Aebersold. "Targeted Data Extraction of the MS/MS Spectra Generated by Data-independent Acquisition: A New Concept for Consistent and Accurate Proteome Analysis. Molecular \& Cellular Proteomics", 11(6), June 2012.
+
+    \bibitem{foof} Hannes L R\"{o}st, George Rosenberger, Pedro Navarro, Ludovic GILLET, Sa\"{s}a M Miladinovi\"{c}, Olga T Schubert, Witold Wolski, Ben C Collins, Johan Malmstr\"{o}m, Lars Malmstr\"{o}m, and Ruedi Aebersold. OpenSWATH enables automated, targeted analysis of data-independent acquisition MS data. Nature Publishing Group, 32(3):219-223, March 2014.
+
     \bibitem{foo0} Sparkman, O. David (2000). Mass spectrometry desk reference. Pittsburgh: Global View Pub. ISBN 0-9660813-2-3.
 
     \bibitem{foo1} Baczek T, Wiczling P, Marszall M, et al. (2005). "Prediction of peptide retention at different HPLC conditions from multiple linear regression models." Journal of Proteome Research, 4(2):555¨C63
@@ -1002,6 +1057,7 @@ However, we should see that the prediction of peptide's retention time is just a
 
     \bibitem{foo23}Snelson E, Ghahramani Z. Sparse Gaussian processes
         using pseudo-inputs[C]. Proc of the NIPS 18. Vancouver, 2006: 1257-1264
+
     \bibitem{foo24}Gorshkov, Alexander V.; Tarasova, Irina A.; Evreinov, Victor V.; Savitski, Mikhail M.; Nielsen, Michael Lund; Zubarev, Roman A.; Gorshkov, Mikhail V.  "Liquid chromatography at critical conditions: Comprehensive approach to sequence-dependent retention time prediction. "  Analytical Chemistry, Vol. 78, No. 22, 2006, p. 7770-7777
 
 
