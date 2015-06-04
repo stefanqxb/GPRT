@@ -940,17 +940,19 @@ What's more, our GP model gives similar performance as Elude which is considered
 
 \section{Limitation and Discussion}
 
-As we could see from the previous chapter, the GP model has a better performance than most of the other methods. However, there are still some limitations of the model that needs to be improved. 
+As we could see from\todo{As we discussed in } the previous chapter, \textcolor{red}{the}\todo{remove} GP model\todo{GP outperforms most other models} has a better performance than most of the other methods. However, there are still some limitations of the\todo{this model} model that needs to be improved. 
 
 \subsection{Model limitation}
 
 \noindent
-One of the main limitation is the computational cost of Gaussian Process model. Although the computational cost of our GP model is better than Elude, it is still a main problem due to the fact that the Gaussian Process Regression model is a non-parametric model. For training part, the hyperparameters are obtained by optimizing the margin likelihood function. Therefore, we need to compute the inverse of covariance function $K_{n} + \sigma_{n}^{2}I_{n}$  which makes the computational cost of the model to a level of  $O(n^{3}*p)$ where $p$ is the times of gradient computation. As for the prediction part, the computational cost for each data is $O(n^{2})$. When dealing a large amount of data, this drawback could become more serious and do harm to the implementation.\\
+One of the main limitation is the computational cost of Gaussian Process model. Although the computational cost of our GP model is better than Elude, it is still a main problem due to the fact that the Gaussian Process Regression model is a non-parametric model. For training part, the hyperparameters are obtained by optimizing the \textcolor{red}{margin}\todo{I think it is just called the likelihood function.} likelihood function. Therefore, we need to compute the inverse of covariance function $K_{n} + \sigma_{n}^{2}I_{n}$  which makes the computational cost of the model to a level of  $O(n^{3}*p)$ where $p$ is the times of gradient computation. As for the prediction part, the computational cost for each data is $O(n^{2})$. When dealing a large amount of data, this drawback could become more serious and do harm to the implementation.\\
 
 \noindent
-Another limitation of the GP model is the assumption of the $Gaussian Noise$ which means the noise needs to fulfill the Gaussian distribution. This assumption makes the GP model easier when calculating the matrix. However, the noise is actually not a $Gaussian Noise$ in some cases and this assumption will therefore influence the prediction and leads to worse results.\\
+Another limitation of the GP model is the assumption of the $Gaussian Noise$ \todo{replace all $Gaussian Noise$ with \textit{Gaussian Noise}} which means the noise needs to fulfill the Gaussian distribution. This assumption makes the GP model easier when calculating the matrix. However, the noise is actually not a $Gaussian Noise$ in some cases and this assumption will therefore influence the prediction and leads to worse results.\\
 
 \subsection{Feature limitation}
+
+\todo[inline]{Organize this subsection a bit more. (a) Unlike elute feature, our features do not have significant biological meaning. (b) The performance is not very different (c) This means that the features that are suitable for this task are unknown and (d) finding those features will require further investigation.}
 
 As for the features, the main limitation is the lack of information for our features. This means the $BOW feature$ provides less biochemical information which could help the model to predict.  This limitation is reflected by the fact that the $Elude feature$ performs better than the $BOW feature$ in general. \\
 
@@ -969,35 +971,39 @@ Like most evolutionary algorithms, PSO usually requires a large number of fitnes
 Besides, as all other heuristic algorithms, PSO do not guarantee an optimal solution is ever found. In fact, the optimized result could be slightly different from time to time but always has the same trend. More specifically, PSO does not use the gradient of the problem being optimized, which means PSO does not require that the optimization problem be differentiable as is required by classic optimization methods such as gradient descent and quasi-newton methods. As a result, it might find the local optimal value instead of the optimal value in the whole search space and consider it as the "global optimal value" due to the its convergence. \\
 
 \noindent
-To overcome the shortages of the PSO method, a number of different methods based on the original PSO have been carried out, such as Gray-PSO, Chaos-PSO. Each of these method has combined PSO with some other method so that it could overcome the problem of the original PSO and has its own advantage when dealing with some specific tasks. \\
+To overcome the shortages of the PSO method, a number of different methods based on the original PSO have been carried out, such as Gray-PSO, Chaos-PSO. Each of these method\textcolor{red}{s} has combined PSO with some other method so that it could overcome the problem of the original PSO and \textcolor{red}{has its}\todo{have their} own advantage\textcolor{red}{s} when dealing with some specific tasks. \\
 
 \noindent
 As for the CG method, one of the most limitation of the CG method is its dependency on the initial point which would have a great influence on the final result. Due to this limitation, the CG method could not ensure to converge to the minimum value in the whole search space.\\
 
 \noindent
-To overcome this, there are many other CG methods. They could improve the performance of the original CG method when dealing with some specific tasks but they still have their drawbacks as well. Since the priority of this thesis is not given to the optimization part, we just simply implement the original methods.\\
+To overcome this, there are many other CG methods\todo{write as : there are many variations of CG.}. They could improve the performance of the original CG method when dealing with some specific tasks but they still have their drawbacks as well. \textcolor{red}{Since the priority of this thesis is not given to the optimization part, we just simply implement the original methods.}\todo{remove}\\
 
 \section{Conclusion}
+\todo[inline]{The first paragraph doesn't seem to be necessary. You don't need to motivate why you are computing the retention time. Just focus on the technicalities.}
 
-The retention time of peptide is useful information for many biochemical problems. For example, the retention time can be used in some quality control experiments as the control parameter. It can also be used for the identification of a new peptide which is alternative way to identify it instead of calculating the peptide's spectrum. Therefore, the successful prediction of retention time could be really useful in many aspects.\\
+The retention time of peptide is useful information for many biochemical problems. For example, the retention time can be used in some quality control experiments as the control parameter. \textcolor{red}{It can also be used for the identification of a new peptide which is alternative way to identify it instead of calculating the peptide's spectrum.}\todo{This doesn't seem to be correct} Therefore, the successful prediction of retention time could be really useful in many aspects.\\
 
 \noindent
-In this thesis, a Gaussian Process Regression Model for the prediction of peptide retention time has been proposed and tested in different datasets. First of all, the importance of kernel function has been investigated and comparison has been made between single kernel function and multi-kernel function. The multi-kernel function combines the strengths of two kernel functions and improves the accuracy of the prediction results significantly.\\
+In this thesis, \textcolor{red}{a Gaussian Process Regression Model for the prediction of peptide retention time has been proposed and tested in different datasets.}\todo{rewrite : GP model has been proposed for ...} \textcolor{red}{First of all,}\todo{remove} the importance of kernel function has been investigated and comparison has been made between single kernel function and multi-kernel function. The multi-kernel function combines the strengths of two kernel functions and improves the accuracy of the prediction results significantly.\\
 
 \noindent
 Secondly, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is almost as good as the biochemical features. Although the performance of these less-biochemical features are still slightly worse than the biochemical features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique and powerful advantages.\\
 
 \noindent
-In addition, two optimization methods have been implemented and compared with each other. Although, we only utilize the original version of them, they still make a significant difference on the experimental results. In addition, their properties in terms of default parameters and the potential solutions of their drawbacks have been discussed too.\\
+In addition, two optimization methods have been implemented and compared with each other. Although, we only utilize the original version of them, they still make a significant \textcolor{red}{difference}\todo{impact} on the experimental results. \textcolor{red}{In addition, their properties in terms of default parameters and the potential solutions of their drawbacks have been discussed too.}\todo{remove}\\
 
 \noindent
-In the end, the GP model has also compared with the other state-of-art prediction methods. The GP model has better performance than most of them in terms of the minimal time window ($\Delta_{t95\$}$) and correlation coefficient ($\rho$). Even compared with the best predicted model Elude, the predicted result of our model is still similar.\\
+\textcolor{red}{In the end}\todo{Finally}, \textcolor{red}{the} GP model has\todo{was} also compared with the other state-of-art prediction methods. The GP model has better performance than most of them in terms of the minimal time window ($\Delta_{t95\$}$) and correlation coefficient ($\rho$). Even compared with the best predicted model Elude, the predicted result of our model is still similar.\\
 
+\todo[inline]{Rewrite the next paragraph!}
 \noindent
 The Gaussian process has stronger capacity than any of these models in terms of parallelized processing since the minimal time window of GP model is smaller than or similar to the other models when having similar prediction accuracy. Besides, from the experimental results we could tell, the computational efficiency of the GP model is faster than the Elude model when dealing with big data. This is a significant and useful quality since a lot of biochemical experiments contain large amount of data that need to be processed.\\
 
 
 \section{Future Work}
+
+\todo[inline]{This section is not bad but I would suggest that you limit it to the immediate future works of your method rather than the whole biotechnology science. In this section, you just want to give the reader some clue about how this work can be continued.}
 
 As we have analyzed before, one of the most important limitations of GP model is the computational cost. It is quite hard to overcome this problem since the Gaussian Process is non-parametric model. In the last 20 years, many new methods have been proposed to solve this problem. Tresp in \cite{foo22} proposes a Bayesian committee machine(BCM) method and Snelson in \cite{foo23} suggest a method based on sparse Gaussian Process using pseudo-input to enhance the computational efficiency. Therefore, one potential work in the future is to replace the original Gaussian Process with these methods to investigate their performance.\\
 
@@ -1005,13 +1011,13 @@ As we have analyzed before, one of the most important limitations of GP model is
 Another interesting thing is about finding some more proper optimization method to overcome the shortages of current ones. Since we know that the original CG method has the weakness in terms of its dependency of the initial value and the Particle Swarm Optimization could not ensure the convergence to the minimal value of the entire search space, we could try to investigate some new optimization methods which could overcome these drawbacks.\\
 
 \noindent
-However, the theory of Gaussian Process is not complete yet and there are still a lot of aspects need to be fixed and improved. What's more, the Gaussian Process model has been proved to be a powerful and useful tool but the application of it in biotechnological field is still not as common as it is in the other fields, such as artificial intelligence or computer vision. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory and the rapidly development of computer techniques, more sophisticated and practical Gaussian Process Regression models will be created and they will continually broaden their application fields in biotechnology. \\
+However, the theory of Gaussian Process is not complete \textcolor{red}{yet}\todo{remove} and there are still a lot of aspects need to be fixed and improved. What's more, the Gaussian Process model has been proved to be a powerful and useful tool but the application of it in biotechnological field is still not as common as it is in the other fields, such as artificial intelligence or computer vision. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory and the rapidly development of computer techniques, more sophisticated and practical Gaussian Process Regression models will be created and they will continually broaden their application fields in biotechnology. \\
 
 \noindent
-Apart from the Gaussian Process models, there are some other machine learning methods, such as deep learning method and clustering method that haven't been tested yet. One might be interested in investigating their performance in this case and compare them with the current methods.\\
+Apart from the Gaussian Process models, there are \textcolor{red}{some}\todo{remove} other machine learning methods, such as deep learning method and clustering method that haven't been tested yet. One might be interested in investigating their performance in this case and compare them with the current methods.\\
 
 \noindent
-However, we should see that the prediction of peptide's retention time is just another example of implementation of machine learning method in biochemical problem. From a long-term perspective, with the help of computer science and machine learning theories, more and more advanced machine learning methods will be utilized to solve the biochemical problems and with the development of biotechnology, more and more biochemical problems will arise which will also motivate the development of machine learning methods. The connection between machine learning techniques and biotechnology will become increasing strong in the further.
+However, we should see that the prediction of peptide's retention time is just another example of implementation of machine learning method in biochemical problem. From a long-term perspective, with the help of computer science and machine learning theories, more and more advanced machine learning methods will be utilized to solve \textcolor{red}{the}\todo{remove} biochemical problems and with the development of biotechnology, more and more biochemical problems will arise which will also motivate the development of machine learning methods. The connection between machine learning techniques and biotechnology will become increasing strong in the further.
 
 
 
