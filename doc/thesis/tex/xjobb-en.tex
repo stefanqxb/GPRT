@@ -64,11 +64,10 @@ Protein, the most essential component of all the cells and organisms, plays an i
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
 \noindent
-Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique for identifying proteins in complex mixtures. The main part of this technique is high performance liquid chromatography (HPLC). HPLC has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration.
+Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique for identifying proteins in complex mixtures. The main part of this technique is high performance liquid chromatography (HPLC). HPLC has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. The hydrophobicity is the physical property of a molecule that is seemingly repelled from a mass of water. To be more specific, a specific solvent will be pumped through the column with increasing concentration. Peptide with different hydrophobicity will gradually digest in the solvent due to their hydrophobicity and then wash out from the column.\\
 
-\todo[inline]{Talk about peptides gradually get separated from the pool. This gradual separation is the retention time data. Actually your task is to predict when a peptide is seperated from the pool.}
-
-In the end, those peptide will separated from the column and ionized by electrospray ionization and then tossed into mass spectrometer. The result is a set of spectra. Each spectra corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
+\noindent
+In the end, those peptides will separated from the column and ionized by electrospray ionization and then tossed into mass spectrometer. The result is a set of spectra. Each spectra corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
 
 \begin{figure}[h!]
   \centering
@@ -102,7 +101,7 @@ In this thesis, we would like to apply the Gaussian Processes (GP) model to pred
 GP provides a flexible framework for probabilistic regression and is widely used to solve high-dimensional, small-sample or nonlinear problems. Yet none of the existing publications has used this model for predicting retention times.\\
 
 \noindent
-In addition, since GP model has some parameters need to be optimized which have a significant impact on the prediction accuracy, in this thesis, we will investigate different optimization methods and analyze their properties. \\
+In addition, since GP model has some parameters need to be optimized which have a significant impact on the prediction accuracy, in this thesis, we will investigate different optimization methods towards these parameters and analyze their properties. \\
 
 
 \section{Outline}
@@ -165,10 +164,79 @@ From the perspective of computer science, anything that can represent an object 
 
 \chapter{Methodology}
 
+To predict the peptide's retention time, there are mainly three things we need to cover: feature selection, model building and parameter optimization. The idea is we first extract some representative features from the peptides, then we train the GP regression model by using these features. At the meanwhile, we try to optimize the parameters of the model so that it can gives better predictions. In this chapter, we will introduce each of these steps and explain them in details.
+
+\section{Feature selection}
+\fontsize{12pt}{16pt}\selectfont
+
+\subsection{Bag of Word}
+
+As mentioned in Chapter 2, few of the new features which have excellent performance in other fields have been implemented to address this problem so far. Therefore, we would like to introduce the Bag of Word method for feature selection.\\
+
+\noindent
+The peptide could be considered as a string where each letter is a type of amino acid. Therefore, one alternative way is to extract the features from the peptide is to implement string-analyzed method. Bag of Word model is one of most popular method in string-analyzed. This method is widely used in computer science and data mining technique.
+The idea of feature selection by Bag of Word method is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\\
+
+\noindent
+To be more specific, the peptide sequence is characterized by a predefined set of strings which is considered as the embedding language $L$ and each of the strings in this set is a word $w$ of $L$. In general, there are two ways to define the embedding language $L$ and its words $w$. Here we only discuss one method called $n-grams$.\\
+
+\noindent
+The $n-grams$ method simply shifts a small window with fixed length $n$ along all of the peptide sequences to extract substrings with length $n$. The language $L$ then consist of all the possible substrings that have been extracted.\\
+
+\noindent
+After establishing the embedding language $L$, we try to project each peptide $p_{i}$ into a vector space composed by the words of $L$ using a function $\phi$
+defined as
+\begin{equation}\label{eq:18}
+  \phi : p_{i} \rightarrow \phi_{w}(p_{i}), \quad w \in L
+\end{equation}
+
+\noindent
+where the return of $\phi_{w}(p_{i})$ is defined as frequency for the occurrences of $w$ in $p_{i}$.\\
+
+\noindent
+In our case, we use the $2-grams$ method to build our embedding language $L$ then each $w$ in $L$ is a 2-amino-acid group and since we have 20 different amino acid in total, each of the peptide will be represented by the frequencies of occurrences of 400 words. A graphical flow of the bag-of-word method can be seen as Fig.\ref{fig:Fig5}:
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=10cm]{./figures/BOW.png}\\
+  \caption{Bag of Word}\label{fig:Fig5}
+\end{figure}
+
+\noindent
+Since the number of the words $w$ in $L$ is directly related to the length of the peptide sequence, the length of the peptide will be used as a feature to characterize the peptide.\\
+
+\noindent
+In addition, knowing that the hydrophobicity is one of the determinative factor of the retention time of the peptide, it is reasonable to include the hydrophobicity of the peptide in the features set too. As the result, we will get the feature matric as fig.\ref{fig:Fig_feature} showed. Each peptide $p_{i}$ is then represented by 402 features as fig.\ref{fig:feature_sub1} and all of them together form the feature matrix as fig.\ref{fig:feature_sub2}.\\
+
+\begin{figure}[h!]
+\centering
+\subfigure[Feature for each peptide]{
+\label{fig:feature_sub1}
+\includegraphics[width=0.4\textwidth]{./figures/feature_structure.jpg}}
+\subfigure[Feature matrix for all peptide]{
+\label{fig:feature_sub2}
+\includegraphics[width=0.8\textwidth]{./figures/feature_mat.jpg}}
+\caption{Feature matrix of peptide}
+\label{fig:Fig_feature}
+\end{figure}
+
+
+\noindent
+The advantages of the Bag-of-Word method are mainly showed in two aspects: complexity and flexibility.\\
+
+\noindent
+In terms of complexity, the most popular features that have been used nowadays are mainly biochemical features. However, in order to calculate these features, a large amount of time is required. What's worse, some particular facilities are needed to calculate some of them, for example, if we use the structure descriptor as a feature, we need to use some structure analyzer to produce them which is quite expensive and time consuming. Comparing with computing these features, the computational cost of our method is very low. According to \cite{foo17}, the run-time complexity of Bag-of-Word is only $O(|x|+|y|)$ when it is  $O(|x|\cdot |y|)$  for another benchmark method where $x$ and $y$ are the peptide sequences while $|x|$ and $|y|$ are the maximal nonzero dimensions of $\phi_{w}(x)$ and $\phi_{w}(y)$.\\
+
+\noindent
+As for the flexibility, since the embedding language $L$ is constituted by the words that are directly and simply extracted from the samples, this method could easily change the language set $L$ for particular context of the task. This property implies a wider applicability in other field of biological research.\\
+
 \section{Gaussian Processes}
 \fontsize{12pt}{16pt}\selectfont
 
-Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind and build an appropriate Gaussian Process model, this chapter starts with a brief introduction of the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain the properties of it. Finally, we will make a comparison between Gaussian Process and the other two methods: ANNs and SVR so that we could see the difference of Gaussian Process.
+By implementing the Bag of Word model, we now have the features to present the peptides in hand. The next step is to establish a nonlinear regression model to find out the relation between the peptide and their retention time. In this thesis, we use GP regression model to make the prediction.\\
+
+\noindent
+Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind and build an appropriate Gaussian Process model, this chapter starts with a brief introduction of the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain the properties of it. Finally, we will make a comparison between Gaussian Process and the other two methods: ANN and SVR so that we could see the difference of Gaussian Process.
 
 \subsection{Standard Bayesian linear Regression}
 
@@ -383,76 +451,13 @@ As for the SVR, it improves this situation by using structure risk minimization 
 \noindent
 The Gaussian Processes is based on the Gaussian distribution and Bayesian theory which implies a solid foundation of probabilistic and statistic. For example, the Gaussian Process not only give the predicted value but also the uncertainty of the prediction. This property makes the prediction easier to interpret and understand. What's more, since Gaussian Processes make the prediction based on the distribution of all data and weaken the contribution of single outlier, it prevents the overfitting problem and gives better generalization capacity than SVR. In addition, in terms of the choice of hyperparameters, the Gaussian Processes is self-adaptive. In other words, the Gaussian Process choose the optimal hyperparameters during its process of training a model while SVR could only choose them by using cross-validation method or based on the pervious experiences. Besides, compared with the BP and SVR model, the number of parameters of Gaussian Processes is quite small which makes the optimization easier to implement.\\
 
-
-\section{Feature selection}
-\fontsize{12pt}{16pt}\selectfont
-
-Another key point of this thesis is the feature selection. As mentioned in Chapter 2, most of the state-of-art features have strong connection with the biology aspect. However, few of the so-called less-biological meaningful features have been implemented and investigated so far. Therefore, in this chapter, we will introduce some methods of feature selection and explain the theory behind them. The performance of these features will be compared with some benchmarks and fully discussed in the chapter 6.\\
-
-\subsection{Bag of Word}
-As we known, the peptide could be considered as a string sequence where each letter is a type of amino acid. Therefore, one alternative way is to implement data-analyzed method to extract the features from the peptide sequence. Bag of Word model is one of most popular method in data-analyzed. This method has been implemented in many other aspects in computer science and data mining technique and the idea of feature selection by Bag of Word method is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\\
-
-\noindent
-To be more specific, the peptide sequence is characterized by a predefined set of strings which is considered as the embedding language $L$ and each of the strings in this set is a word $w$ of $L$. In general, there are two ways to define the embedding language $L$ and its words $w$. Here we only discuss one method called $n-grams$.\\
-
-\noindent
-The $n-grams$ method simply shifts a small window with fixed length $n$ along all of the peptide sequences to extract substrings with length $n$. The language $L$ then consist of all the possible substrings that have been extracted.\\
-
-\noindent
-After establishing the embedding language $L$, we try to project each peptide $p_{i}$ into a vector space composed by the words of $L$ using a function $\phi$
-defined as
-\begin{equation}\label{eq:18}
-  \phi : p_{i} \rightarrow \phi_{w}(p_{i}), \quad w \in L
-\end{equation}
-
-\noindent
-where the return of $\phi_{w}(p_{i})$ is defined as frequency for the occurrences of $w$ in $p_{i}$.\\
-
-\noindent
-In our case, we use the $2-grams$ method to build our embedding language $L$ then each $w$ in $L$ is a 2-amino-acid group and since we have 20 different amino acid in total, each of the peptide will be represented by the frequencies of occurrences of 400 words. A graphical flow of the bag-of-word method can be seen as Fig.\ref{fig:Fig5}:
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=10cm]{./figures/BOW.png}\\
-  \caption{Bag of Word}\label{fig:Fig5}
-\end{figure}
-
-\noindent
-Since the number of the words $w$ in $L$ is directly related to the length of the peptide sequence, the length of the peptide will be used as a feature to characterize the peptide.\\
-
-\noindent
-In addition, knowing that the hydrophobicity has influenced the retention time of the peptide greatly, it is reasonable to include the hydrophobicity of the peptide in the feature set too. As the result, we will get the feature matric as fig.\ref{fig:Fig_feature} showed. Each peptide $p_{i}$ is then represented by 402 features as fig.\ref{fig:feature_sub1} and all of them together form the feature matrix as fig.\ref{fig:feature_sub2}.\\
-
-\begin{figure}[h!]
-\centering
-\subfigure[Feature for each peptide]{
-\label{fig:feature_sub1}
-\includegraphics[width=0.4\textwidth]{./figures/feature_structure.jpg}}
-\subfigure[Feature matrix for all peptide]{
-\label{fig:feature_sub2}
-\includegraphics[width=0.8\textwidth]{./figures/feature_mat.jpg}}
-\caption{Feature matrix of peptide}
-\label{fig:Fig_feature}
-\end{figure}
-
-
-\noindent
-The advantages of the Bag-of-Word method are mainly showed in two aspects: complexity and flexibility.\\
-
-\noindent
-In terms of complexity, the most popular features that have been used nowadays are biological features. However, in order to calculate these features, a large amount of time is required. What's worse, some particular facilities are needed to calculate some of them, for example, we need to use  the secondary structure. Comparing with these features extraction methods, the computational cost of our method is very low. According to \cite{foo17}, the run-time complexity of Bag-of-Word is $O(|x|+|y|)$ when it is  $O(|x|\cdot |y|)$  for another benchmark method where $x$ and $y$ are the peptide sequences while $|x|$ and $|y|$ are the maximal nonzero dimensions of $\phi_{w}(x)$ and $\phi_{w}(y)$.\\
-
-\noindent
-When it comes to the flexibility, since the embedding language $L$ is constituted by the words that are directly and simply extracted from the samples, this method could easily change the language set $L$ for particular context of the task which might imply a wider applicability in other field of biological research.\\
-
-
 \section{Optimization}
 \fontsize{12pt}{16pt}\selectfont
 
-In the Gaussian Process model, the most important part is the covariance function of the model since the Gaussian Process consider it as the kernel function. The value of the covariance function along with the value of the mean function are known as the hyperparameters in this case. Initially, we need to determine the hyperparameters manually. However, since we do not know the best combination of these hyperparameters beforehand, we have a group of parameters $[ m, \sigma , \mu]$ where $m$ is the weighted factor of kernel function and $\sigma$ is the value of covariance function and $\mu$ represent the value of mean function that need to be optimized for the best performance.\\
+In the Gaussian Process model, the most important part is the covariance function of the model since the Gaussian Process consider it as the kernel function. As we mentioned before, the smoothness factor $\delta_{ab}$ showed in \ref{eq:14} together with the parameters in each covariance function are known as the hyperparameters. These hyperparameters directly determine the properties of the covariance function and further the GP model. Thus, we want to optimize these hyperparameters to get the best combination of these hyperparameters so that we could have a better model for predicting the retention time.\\
 
 \noindent
-As for the definition of optimizing the model, we simply aim at minimizing the error between the predicted retention time and the true one. In this case, the objective function is the negative log marginal likelihood of Gaussian Processes as \ref{eq:20}
+As for the definition of best combination, we are simply looking for the combination of the hyperparameters that minimizes the value of the objective function. In this case, the objective function is the negative log marginal likelihood of Gaussian Processes as \ref{eq:20}
 
 \begin{equation}\label{eq:20}
   min f(x) =-logp(y|x,\theta)
@@ -465,7 +470,7 @@ Here, we will implement two different optimization methods based on different pr
 
 \subsection{The Conjugate Gradient}
 
-Since we want to optimize the hyperparameter group $[ w, \sigma , \mu]$, we will try to find the minimum value of the objective function. The conjugate gradient method (CG)is one of the most widely used methods and is developed based on the gradient descending method and Newton Method.\\
+The conjugate gradient method (CG) is one of the most widely used methods and is developed based on the gradient descending method and Newton Method.\\
 
 \noindent
 In CG theory, we have two important assumptions:
@@ -485,7 +490,7 @@ The first assumption allow us to have the follow equation:
 where$g^{k+1}$ is the gradient of the current point and $\beta_{k}$ is some coefficients that need to be calculated. The second assumption is actually used to allow us calculating the $\beta_{k}$\\
 
 \noindent
-The process of Conjugate Gradient(CG) method could be described as Fig.\ref{fig:Fig7}
+The process of Conjugate Gradient (CG) method could be described as Fig.\ref{fig:Fig7}
 \begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
@@ -569,7 +574,7 @@ What's more, since the traditional gradient descent method will slow down the se
 The Particle Swarm Optimization (PSO) method is one of the new iterative methods for problem optimization. It improves the solution by iteratively searching for the best result in current circumstance. \\
 
 \noindent
-Initially, we have a branch of separated particles that represent the potential solution by their position, a group of parameters $[ w, \sigma , \mu]$ in our case. And for each parameter in the one particle, we assign different velocity for them. In each iteration, the particle updates its position simply by its velocity of each parameter. Then we use these parameter to calculate the model and evaluate the result by some predefined loss functions. After that, we record the best position for each particle(local optimal value) as well as the best position in the whole search space(global optimal value).\\
+Initially, we have a branch of separated particles that represent the potential solution by their position, a group of the hyperparameters in our case. And for each parameter in the one particle, we assign different velocity for them. In each iteration, the particle updates its position simply by its velocity of each parameter. Then we use these parameter to calculate the model and evaluate the result by some predefined loss functions. After that, we record the best position for each particle(local optimal value) as well as the best position in the whole search space(global optimal value).\\
 
 \noindent
 The smart part of this method is the update of the velocity of each particle. The individual velocity for each particle is influenced not only by its local best known position (local optimal value) but also the best known positions in the search-space (global optimal value), which are updated as better positions are found by other particles. This is expected to move the swarm toward the best solution.\\
@@ -585,6 +590,18 @@ In the end, the iteration will be terminated by some criterion, such as the maxi
 
 \noindent
 PSO is a heuristic search algorithm based on swarm intelligence since it makes no assumptions about the problem being optimized and can search very large spaces. Therefore, PSO can also be used on optimization problems that are partially irregular, noisy, change over time, etc. What's more, since it uses swarm intelligence which means each of the particle is related to the others and the final result is depended on the contribution of all particles, the robustness of system is strong and will not be be dramatically influenced by some outliers. In addition, its strengths in terms of convergence, global search capacity and practicability also make it one of the most popular optimization algorithm in the world. \\
+
+\section{Summarize of the Chapter}
+
+After optimizing the hyperparameters, the GP regression model is ready to predict the peptide's retention time. The general process of this chapter could be illustrated as the fig.\ref{fig:framework} and the performance of the GP model will be showed in the next chapter.\\
+
+\begin{figure}[h!]
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=1\textwidth]{./figures/workflow.jpg}\\
+  \caption{The general process of predicting peptide's retention time}\label{fig:framework}
+\end{figure}
+
 
 
 \chapter{Results and Evaluation}
@@ -632,7 +649,7 @@ The experimental data we use in this thesis is a set of 15933 peptides generated
   \caption{a subset of experimental peptide sequence}\label{fig:data}
 \end{figure}
 
-\section{Experimental result}
+\section{Experimental Results}
 
 \begin{figure}[h]
 \centering
@@ -923,7 +940,7 @@ What's more, our GP model gives similar performance as Elude which is considered
 
 \section{Limitation and Discussion}
 
-As we could see from the previous chapter, the GP model has a better performance than most of the other methods. However, there are still some limitations of the model that needs to be improved. In this chapter, we will discuss the limitations in terms of model,feature and optimization methods.
+As we could see from the previous chapter, the GP model has a better performance than most of the other methods. However, there are still some limitations of the model that needs to be improved. 
 
 \subsection{Model limitation}
 
@@ -933,16 +950,15 @@ One of the main limitation is the computational cost of Gaussian Process model. 
 \noindent
 Another limitation of the GP model is the assumption of the $Gaussian Noise$ which means the noise needs to fulfill the Gaussian distribution. This assumption makes the GP model easier when calculating the matrix. However, the noise is actually not a $Gaussian Noise$ in some cases and this assumption will therefore influence the prediction and leads to worse results.\\
 
-
 \subsection{Feature limitation}
 
-As for the features, the main limitation is the lack of information for our features. This means the $BOW$ feature provides less biochemical information which could help the model to predict.  This limitation is reflected by the fact that the $Elude feature$ performs better than the $BOW feature$ in general. \\
+As for the features, the main limitation is the lack of information for our features. This means the $BOW feature$ provides less biochemical information which could help the model to predict.  This limitation is reflected by the fact that the $Elude feature$ performs better than the $BOW feature$ in general. \\
 
 \noindent
-However, the accuracy of the prediction and the computational efficiency is a trade-off. On one hand, providing features with less information means the prediction could have more opportunity to be less precisely. On the other hand, compared to those features with more information, these features require less time to be calculated and therefore easier to implemented.\\
+However, the accuracy of the prediction and the computational efficiency is a trade-off. On one hand, providing features with more information means the prediction could be more precisely. On the other hand, compared to those features with less information, these biochemical features require more time to be calculated.\\
 
 \noindent
-Since one of the purpose of this thesis to test some less-biology features and investigate their performance, this limitation is unavoidable. Besides, the prediction result of $BOW features$ is still acceptable and not much worse than the one of $ Elude features$.  In addition, considering one of the limitation of GP Model itself is the computational cost, this will compensate the situation.\\
+Since one of the purpose of this thesis to test some new features that have been successfully implemented and investigate their performance, this limitation is unavoidable. Besides, the prediction result of $BOW features$ is still acceptable and not much worse than the one of $ Elude features$.  In addition, considering one of the limitation of GP Model itself is the computational cost, this will compensate the situation.\\
 
 \subsection{Optimization limitation}
 
@@ -962,6 +978,7 @@ As for the CG method, one of the most limitation of the CG method is its depende
 To overcome this, there are many other CG methods. They could improve the performance of the original CG method when dealing with some specific tasks but they still have their drawbacks as well. Since the priority of this thesis is not given to the optimization part, we just simply implement the original methods.\\
 
 \section{Conclusion}
+
 The retention time of peptide is useful information for many biochemical problems. For example, the retention time can be used in some quality control experiments as the control parameter. It can also be used for the identification of a new peptide which is alternative way to identify it instead of calculating the peptide's spectrum. Therefore, the successful prediction of retention time could be really useful in many aspects.\\
 
 \noindent
