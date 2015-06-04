@@ -49,7 +49,7 @@ Examiner: Stefan Carlsson}
 
 \section{Introduction}
 
-Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins presented in them\todo{proteins that are present in them.}. For this reason, it is important and necessary \textcolor{red}{for us}\todo{remove} to know what proteins are in \textcolor{red}{them}\todo{are in different organisms}. As a result, it\todo{this} leads us to \todo{the} problem of \textcolor{red}{the} \todo{remove} large-scale identification of proteins in complex mixtures.
+Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins that are presented in them. For this reason, it is important and necessary for us to know what proteins are in different organisms. As a result, this leads us to the problem of large-scale identification of proteins in complex mixtures.
 
 \begin{figure}[h!]
   \centering
@@ -64,11 +64,11 @@ Protein, the most essential component of all the cells and organisms, plays an i
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
 \noindent
-Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique \textcolor{red}{to identify}\todo{for identifying} \textcolor{red}{the}\todo{remove} protein\textcolor{red}{s} in complex mixtures. The main part of this technique is \textcolor{red}{the}\todo{remove} high performance liquid chromatography (HPLC). \textcolor{red}{The}\todo{remove} HPLC has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration.
+Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique for identifying proteins in complex mixtures. The main part of this technique is high performance liquid chromatography (HPLC). HPLC has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. To be more specific, a specific solvent will be pumped through the column with increasing concentration.
 
 \todo[inline]{Talk about peptides gradually get separated from the pool. This gradual separation is the retention time data. Actually your task is to predict when a peptide is seperated from the pool.}
 
-In the end, those peptide will eluted from the column and ionized by electrospray ionization and then tossed into mass spectrometer. The result\textcolor{red}{s are}\todo{is} a set of spectra\textcolor{red}{ which each of the}\todo{. Each}spectra corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
+In the end, those peptide will separated from the column and ionized by electrospray ionization and then tossed into mass spectrometer. The result is a set of spectra. Each spectra corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
 
 \begin{figure}[h!]
   \centering
@@ -77,50 +77,38 @@ In the end, those peptide will eluted from the column and ionized by electrospra
   \caption{Demonstration of HPLC method. (circles with different colour represents different peptides and the blue column represents the liquid chromatography column, The $R_{t1}$ is the retention time of $peptide Pink$)}\label{fig:HPLC}
 \end{figure}
 
-\todo[inline]{We should re-write the following two paragraphs. You can merge them into one paragraph. You can follow this : (a) Our task is to determine which peptides were in the sample (b) We usually have a list of theoretical peptides that we know should be in the sample (c) Currently, we have to compare every peptide with every spectrum to see if the peptide exists in the pool (d) if the number of peptides is large then this problem has a high complexity (e) Alternatively, we can significantly reduce the number of peptides compared to a spectrum if we know which peptides are more likely to be separated from the pool at the time the spectrum is produced. (f) This time is referred as retention time (RT) (g) Our task is to find a mapping between the peptides and the retention time.}
+\noindent
+Since we want to know which peptides were in the sample, we will compare them with a list of theoretical peptides from the database that we know should be in the sample. Currently, we have to compare every peptide with every spectrum to see if the peptide exists in the sample or not. However, when the number of peptides becomes increasingly large, the complexity of this method becomes extremely high which will result in a poor computational efficiency.\\
 
 \noindent
-There are mainly two ways to match these spectra with the theoretical spectra obtained from the database so that we would identify them. The traditional one is Data Dependant Acquisition (DDA) \cite{fooc} and the other is Data Independent Acquisition (DIA) \cite{food}\cite{fooe}\cite{foof}. In the strategy of DIA, the obtained spectra in previous experiment is partitioned into several fixed sized windows. By keeping the window small, it can be assumed that the resulting spectrum only corresponds to very few peptides which makes it easier to identify. However, how to define the size of the window is still a problem. If the window size is too small, there will be a large inconsistency in the peaks of the spectra which will mislead the identification of the peptide. And if we simply expand the window size, it will contain more spectra and probably more peptides. As a result, the complexity of the matching problem will increase dramatically.\\
-
-\noindent
-An alternative way to solve this problem is to utilize its retention time. In the previous HPLC process, the retention time (RT) is the amount of time that a peptide needs to go through the column during the peptide separation. Each kind of peptide has a certain amount of retention time based on its hydrophobicity as in \ref{fig:HPLC}. Meanwhile, this retention time of peptide could also be estimated by regression model. Therefore, by comparing the predicted retention time and the real retention time of the peptide, we could reduce the number of the peptide that need to be matched which helps to improve the efficiency of peptide identification significantly. The more precise the predicted retention time we could get, the narrower the range of peptide we need to match will be and the higher efficiency we could have to identify the peptide.\\
+An alternative way to solve this problem is to utilize its retention time. We could reduce the number of peptides compared to a spectrum if we know which peptides are more likely to separated from the column at the time the spectrum is produced. This time is defined as the retention time of a peptide. So the more precise the predicted retention time we could get, the less peptides we need to match and the higher efficiency we could have to identify the peptide.\\
 
 
 \section{Problem Statement}
 
 \noindent
-\todo[inline]{Different models have been applied to the task of predicting the retention time of the peptides. For example, ...}
-In order to predict the retention time \textcolor{red}{of large-scale of}\todo{remove, retention time of the peptides} peptides, an extensive amount of models have been conducted. For example, the Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line.\todo{cite} \\
-
-\todo[inline]{Different models have been applied to the task of predicting the retention time of the peptides. For example, ...}
+Different models have been applied to the task of predicting the retention time of the peptides. For example, the Sequence Specific Retention Calculator (SSRC) which predicts retention times based on amino acid sequences is available on-line \cite{foo15}.\\
 
 \noindent
-
-\todo[inline]{Re-write the following paragraph! (a) Most methods are based on biological features, (b) we are interested in BOW features that have shown to be successful for sequence analysis.}
-To train a regression model, we first need some proper features which can represent the peptide \todo{in a vector space}. Since most of \textcolor{red}{the features now}\todo{most of the available features} are biochemical features, some features with less biochemical meaning but have been proved to be useful in other fields have not been tested to address this biochemical problem so far. Therefore, this thesis will strive to find some new features to represent the peptide for training model and compare their performance to the traditional biochemical features.\\
-
-\todo[inline]{You shouldn't write the GP, the SVM, the ANN. It is like calling me the heydar. Also all these are singular, so no GPs.}
+To train a regression model, we first need some proper features which can represent the peptide in a vector space. Since most of most of the available features are biochemical features, we are interested in BOW features that have shown to be successful for sequence analysis. Therefore, in this thesis will utilize these features for training model and compare their performance to the traditional biochemical features.\\
 
 \noindent
-\textcolor{red}{What's more,}\todo{remove} the main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN) and all of these methods have their own drawbacks that need to be improved.\\
+The main algorithm behind current RT prediction methods is mostly based on either Support Vector Regression (SVR) or Artificial Neural Network (ANN) and all of these methods have their own drawbacks that need to be improved.\\
 
 \noindent
-\textcolor{red}{Therefore,}\todo{remove} in this thesis, we would like \textcolor{red}{to implement}\todo{apply} the Gaussian Processes (GPs) model to predict the retention time and investigate its performance by comparing \todo{it} with the other existing methods.\\
+In this thesis, we would like to apply the Gaussian Processes (GP) model to predict the retention time and investigate its performance by comparing it with the other existing methods.\\
 
 \noindent
-\textcolor{red}{The GPs}\todo{GP} provides a flexible framework for probabilistic regression and \textcolor{red}{are}\todo{is} widely used to solve \textcolor{red}{the}\todo{remove} high-dimensional, small-sample or nonlinear problems\todo{You can write this a bit better}. Yet none of the existing publications has \todo{used this model for predicting ...} the prediction of retention times for peptides analyzed with the use of Gaussian Process.\\
-
+GP provides a flexible framework for probabilistic regression and is widely used to solve high-dimensional, small-sample or nonlinear problems. Yet none of the existing publications has used this model for predicting retention times.\\
 
 \noindent
-In addition, since \textcolor{red}{the}\todo{remove} GP model has some parameters need to be optimized \textcolor{red}{and these parameters could}\todo{which have ..} have a significant impact on the prediction accuracy\textcolor{red}{,}.\todo{In this thesis, we will investigate different optimization methods and analyze their properties.} different optimization methods towards these parameters will be implemented and their properties will be analyzed in this thesis too.
+In addition, since GP model has some parameters need to be optimized which have a significant impact on the prediction accuracy, in this thesis, we will investigate different optimization methods and analyze their properties. \\
 
 
 \section{Outline}
 
-\todo[inline]{Write the outline this way, Chapter 2, introduces the related works .... Chapter 3, provides a detailed description of Gaussian process ...}
 
-\noindent
-The structure of the thesis is as follow\textcolor{red}{a,}\todo{following:} we will first introduce the related work on retention time prediction in chapter 2. It will be followed by the methodologies we use in in chapter 3. Within chapter 3, the detailed description of Gaussian Processes and a detailed mathematics derivation will be covered in section 1. Following that, section 2 introduces a different method regarding features selection of Gaussian Processes. The optimization will be covered in section 3 and two different method will be used to optimize the parameters of our model. In chapter 4, the experimental results and evaluation will be analyzed and our model will be compared with some other popular predictors. A discussion of the limitation of our model will be given in chapter 5. Finally, we will discuss the future work and give some perspectives for it in chapter 6.
+The structure of the thesis is as following: Chapter 2, introduces the related works. Chapter 3, provides the whole methodologies and is divided into 3 sections, section 1 provides the detailed description of Gaussian Processes and a detailed mathematics derivation and section 2 gives the idea of Bag of word method for features selection and section 3 will cover the two optimization methods that are used to optimize the parameters of our model. Chapter 4, the experimental results and evaluation will be analyzed and our model will be compared with some other popular predictors. Chapter 5, a discussion of the limitation of our model will be given. Chapter 6, discusses the future work and gives some perspectives for it.
 
 
 
@@ -1016,14 +1004,6 @@ However, we should see that the prediction of peptide's retention time is just a
     \bibitem{fooa} Mathias Wilhelm, Judith Schlegl, Hannes Hahne, Amin Moghaddas Gholami,Marcus Lieberenz, Mikhail M Savitski, Emanuel Ziegler, Lars Butzmann,Siegfried Gessulat, Harald Marx, Toby Mathieson, Simone Lemeer, Karsten Schnatbaum, Ulf Reimer, Holger Wenschuh, Martin Mollenhauer, Julia Slotta-Huspenina, Joos-Hendrik Boese, Marcus Bantscheff, Anja Gerstmair, Franz Faerber, and Bernhard Kuster. Mass-spectrometry-based draft of the human proteome. Nature, 509(7502):582-587, April 2015.
 
     \bibitem{foob} Christine C Wu and Michael J MacCoss. Shotgun proteomics: tools for the analysis of complex biological systems. Curr Opin Mol Ther, 4(3):242-250,2002.
-
-    \bibitem{fooc} Matthias Mann, Ronald C Hendrickson, and Akhilesh Pandey. ANALYSIS OF PROTEINS AND PROTEOMES BY MASS SPECTROMETRY. Annual Review of Biochemistry, 70(1):437-473, 2001
-
-    \bibitem{food} Jarrett D Egertson, Andreas Kuehn, Gennifer E Merrihew, Nicholas W Bateman, Brendan X MacLean, Ying S Ting, Jesse D Canterbury, DonaldMMarsh,Markus Kellmann, Vlad Zabrouskov, Christine CWu, and Michael J MacCoss. Multiplexed MS/MS for improved data-independent acquisition. Nature Methods, 10(8):744-746, June 2013.
-
-    \bibitem{fooe} Ludovic C Gillet, Pedro Navarro, Stephen Tate, Hannes Roest, Nathalie Selevsek, Lukas Reiter, Ron Bonner, and Ruedi Aebersold. "Targeted Data Extraction of the MS/MS Spectra Generated by Data-independent Acquisition: A New Concept for Consistent and Accurate Proteome Analysis. Molecular \& Cellular Proteomics", 11(6), June 2012.
-
-    \bibitem{foof} Hannes L R\"{o}st, George Rosenberger, Pedro Navarro, Ludovic GILLET, Sa\"{s}a M Miladinovi\"{c}, Olga T Schubert, Witold Wolski, Ben C Collins, Johan Malmstr\"{o}m, Lars Malmstr\"{o}m, and Ruedi Aebersold. OpenSWATH enables automated, targeted analysis of data-independent acquisition MS data. Nature Publishing Group, 32(3):219-223, March 2014.
 
     \bibitem{foo0} Sparkman, O. David (2000). Mass spectrometry desk reference. Pittsburgh: Global View Pub. ISBN 0-9660813-2-3.
 
