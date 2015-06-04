@@ -348,12 +348,13 @@ As we could seen from \ref{eq:17}, the accuracy of the estimation of our retenti
 \end{itemize}
 
 \noindent
-Different covariance function has different properties and generates different similarity measures between pairs of data points. The RBF covariance in \ref{eq:kr5} is the most popular kernel function. In Gaussian process, all these covariance function are weighted by a smoothness factor $\delta_{ab}$ as showed in \ref{eq:14}. This variable together with the parameters in each covariance function are known as the hyperparameters. These hyperparameters will need to be optimized later by maximization of the marginal log-likelihood function of GP model. The detail of how to achieve it will be covered in the section of optimization.
-
-Another interesting thing of the kernel function is that they could be divided into two types: global kernel function and local kernel function. The RBF kernel function is considered as a typical local kernel while the Polynomial kernel is a global one\cite{foo21}.\\
+Different covariance function has different properties and generates different similarity measures between pairs of data points. The RBF covariance in \ref{eq:kr5} is the most popular kernel function. In Gaussian process, all these covariance function are weighted by a smoothness factor $\delta_{ab}$ as showed in \ref{eq:14}. This variable together with the parameters in each covariance function are known as the hyperparameters. These hyperparameters will need to be optimized to allow the model to have better performance, This is achieved by maximizing the objective function (marginal log-likelihood function) of GP model. The detail of how to achieve it will be covered in the section of optimization.\\
 
 \noindent
-However, both type of kernel functions have their own strengths and limitations in different aspects. The local kernel function has strength in terms of approximation but the generalization ability is weak while the global one has stronger generalization ability but weaker approximation capacity.\\
+Another interesting thing of these kernel functions is that they could be divided into two types: global kernel function and local kernel function. The RBF kernel function is considered as a typical local kernel while the Polynomial kernel is a global one\cite{foo21}.\\
+
+\noindent
+Both types of kernel functions have their own strengths and limitations in different aspects. The local kernel function has strength in terms of approximation but the generalization ability is weak while the global one has stronger generalization ability but weaker approximation capacity.\\
 
 \noindent
 We want to take the advantages from the kernel function and eliminate its weakness as much as possible. Therefore, to overcome the weakness of the single kernel function, one simple way is combining those two types of kernel function together as a multi-kernel function, such as the RBF and the Polynomial one.
@@ -363,7 +364,7 @@ We want to take the advantages from the kernel function and eliminate its weakne
 \end{equation}
 
 \noindent
-where $m$ is the weight between two kernel functions. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
+where $m$ is the weight between two kernel functions. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will also explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
 
 \subsection{Property of Gaussian Processes}
 
@@ -618,7 +619,7 @@ In this thesis, the top priority is given to minimize the minimal time window si
 The experiment is tested on a 64-bit Ubuntu computer and run by Matlab R2014a. To build the Gaussian Process model, we need to install the software package called GPML which is written by Carl Edward Rasmussen and Hannes Nickisch.\cite{foo18} In addition, to benchmark the GP model, we also need the SVR software packages libsvm \cite{foo20}.\\
 
 \noindent
-The experimental data we use in this thesis is a set of 15933 peptides generated from the laboratory as \ref{fig:data}.\\
+The experimental data we use in this thesis is a set of 15933 peptides generated from the laboratory as \ref{fig:data}. We separate them into training set and testing set respectively. The training set contains 12747 peptides while the testing set has 3186 peptides.\\
 
 \begin{figure}[h!]
   \centering
