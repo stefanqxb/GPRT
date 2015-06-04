@@ -918,12 +918,14 @@ As we can seen form Table.\ref{table6}, our GP model gives much better performan
 \noindent
 What's more, our GP model gives similar performance as Elude which is considered to be the most popular and best model so far. Although the Elude gives better performance in both correlation coefficient and minimal time window, the computational cost of Elude is much higher than our GP model. In big data analysis, such high computational cost could be a very serious problem and we should make a balance between the accuracy and the efficiency. Considering that the computational cost of Elude is almost 10 times as our GP model, the $\rho$ and $\Delta_{t95\%}$ of our GP model are still good enough and our model has stronger practical ability than Elude.
 
-\chapter{Limitation and Discussion}
+\chapter{Discussion and Conclusion}
 \fontsize{12pt}{16pt}\selectfont
+
+\section{Limitation and Discussion}
 
 As we could see from the previous chapter, the GP model has a better performance than most of the other methods. However, there are still some limitations of the model that needs to be improved. In this chapter, we will discuss the limitations in terms of model,feature and optimization methods.
 
-\section{Model limitation}
+\subsection{Model limitation}
 
 \noindent
 One of the main limitation is the computational cost of Gaussian Process model. Although the computational cost of our GP model is better than Elude, it is still a main problem due to the fact that the Gaussian Process Regression model is a non-parametric model. For training part, the hyperparameters are obtained by optimizing the margin likelihood function. Therefore, we need to compute the inverse of covariance function $K_{n} + \sigma_{n}^{2}I_{n}$  which makes the computational cost of the model to a level of  $O(n^{3}*p)$ where $p$ is the times of gradient computation. As for the prediction part, the computational cost for each data is $O(n^{2})$. When dealing a large amount of data, this drawback could become more serious and do harm to the implementation.\\
@@ -932,7 +934,7 @@ One of the main limitation is the computational cost of Gaussian Process model. 
 Another limitation of the GP model is the assumption of the $Gaussian Noise$ which means the noise needs to fulfill the Gaussian distribution. This assumption makes the GP model easier when calculating the matrix. However, the noise is actually not a $Gaussian Noise$ in some cases and this assumption will therefore influence the prediction and leads to worse results.\\
 
 
-\section{Feature limitation}
+\subsection{Feature limitation}
 
 As for the features, the main limitation is the lack of information for our features. This means the $BOW$ feature provides less biochemical information which could help the model to predict.  This limitation is reflected by the fact that the $Elude feature$ performs better than the $BOW feature$ in general. \\
 
@@ -942,7 +944,7 @@ However, the accuracy of the prediction and the computational efficiency is a tr
 \noindent
 Since one of the purpose of this thesis to test some less-biology features and investigate their performance, this limitation is unavoidable. Besides, the prediction result of $BOW features$ is still acceptable and not much worse than the one of $ Elude features$.  In addition, considering one of the limitation of GP Model itself is the computational cost, this will compensate the situation.\\
 
-\section{Optimization limitation}
+\subsection{Optimization limitation}
 
 \noindent
 Like most evolutionary algorithms, PSO usually requires a large number of fitness evaluations to obtain a sufficiently good solution. This poses an obstacle for applying PSO to computationally expensive problems.\\
@@ -958,10 +960,6 @@ As for the CG method, one of the most limitation of the CG method is its depende
 
 \noindent
 To overcome this, there are many other CG methods. They could improve the performance of the original CG method when dealing with some specific tasks but they still have their drawbacks as well. Since the priority of this thesis is not given to the optimization part, we just simply implement the original methods.\\
-
-
-\chapter{Conclusion and Future Work}
-\fontsize{12pt}{16pt}\selectfont
 
 \section{Conclusion}
 The retention time of peptide is useful information for many biochemical problems. For example, the retention time can be used in some quality control experiments as the control parameter. It can also be used for the identification of a new peptide which is alternative way to identify it instead of calculating the peptide's spectrum. Therefore, the successful prediction of retention time could be really useful in many aspects.\\
