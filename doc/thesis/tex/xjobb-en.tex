@@ -54,13 +54,13 @@ Protein, the most essential component of all the cells and organisms, plays an i
 \begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
-  \includegraphics[width=0.3\textwidth]{protein.jpg}\\
+  \includegraphics[width=0.3\textwidth]{./figures/protein.jpg}\\
   \caption{protein chain}\label{fig:protein}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.4\textwidth]{./peptide.png}\\
+  \includegraphics[width=0.4\textwidth]{./figures/peptide.png}\\
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
 \noindent
@@ -73,7 +73,7 @@ In the end, those peptide will separated from the column and ionized by electros
 \begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
-  \includegraphics[width=0.5\textwidth]{RPLC_flow.jpg}\\
+  \includegraphics[width=0.5\textwidth]{./figures/RPLC_flow.jpg}\\
   \caption{Demonstration of HPLC method. (circles with different colour represents different peptides and the blue column represents the liquid chromatography column, The $R_{t1}$ is the retention time of $peptide Pink$)}\label{fig:HPLC}
 \end{figure}
 
@@ -268,7 +268,7 @@ The principle of a kernel function is to project the original nonlinear input da
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=10cm]{kernel_function.png}\\
+  \includegraphics[width=10cm]{./figures/kernel_function.png}\\
   \caption {Projection of data from low-dimensional space into higher dimensional space by Radius Basis Function makes inseparable data separable}\label{fig:Fig1}
 \end{figure}
 
@@ -316,7 +316,7 @@ These equations give us the corresponding mean value and covariance value of the
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=16cm]{GP_model.png}\\
+  \includegraphics[width=16cm]{./figures/GP_model.png}\\
   \caption {Graphical model for a GP for regression\cite{foo18}.}\label{fig:Fig2}
 \end{figure}
 
@@ -413,7 +413,7 @@ In our case, we use the $2-grams$ method to build our embedding language $L$ the
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=10cm]{BOW.png}\\
+  \includegraphics[width=10cm]{./figures/BOW.png}\\
   \caption{Bag of Word}\label{fig:Fig5}
 \end{figure}
 
@@ -427,10 +427,10 @@ In addition, knowing that the hydrophobicity has influenced the retention time o
 \centering
 \subfigure[Feature for each peptide]{
 \label{fig:feature_sub1}
-\includegraphics[width=0.4\textwidth]{feature_structure.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/feature_structure.jpg}}
 \subfigure[Feature matrix for all peptide]{
 \label{fig:feature_sub2}
-\includegraphics[width=0.8\textwidth]{feature_mat.jpg}}
+\includegraphics[width=0.8\textwidth]{./figures/feature_mat.jpg}}
 \caption{Feature matrix of peptide}
 \label{fig:Fig_feature}
 \end{figure}
@@ -489,7 +489,7 @@ The process of Conjugate Gradient(CG) method could be described as Fig.\ref{fig:
 \begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
-  \includegraphics[width=0.6\textwidth]{CG_algorithm.JPG}\\
+  \includegraphics[width=0.6\textwidth]{./figures/CG_algorithm.JPG}\\
   \caption{Conjugate Gradient algorithm}\label{fig:Fig7}
 \end{figure}
 
@@ -555,10 +555,10 @@ What's more, since the traditional gradient descent method will slow down the se
 \centering
 \subfigure[Gradient Descent]{
 \label{Fig.sub.1}
-\includegraphics[width=0.4\textwidth]{Gradient_Descent.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/Gradient_Descent.jpg}}
 \subfigure[Conjugate Gradient]{
 \label{fig:sub1}
-\includegraphics[width=0.4\textwidth]{CG.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/CG.jpg}}
 \caption{Comparison of convergence rate}
 \label{fig:sub2}
 \end{figure}
@@ -579,7 +579,7 @@ In the end, the iteration will be terminated by some criterion, such as the maxi
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\textwidth]{PSO.png}\\
+  \includegraphics[width=0.9\textwidth]{./figures/PSO.png}\\
   \caption{Particle Swarm Optimization}\label{fig:Fig8}
 \end{figure}
 
@@ -628,7 +628,7 @@ The experimental data we use in this thesis is a set of 15933 peptides generated
 \begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
-  \includegraphics[width=0.4\textwidth]{data.jpg}\\
+  \includegraphics[width=0.4\textwidth]{./figures/data.jpg}\\
   \caption{a subset of experimental peptide sequence}\label{fig:data}
 \end{figure}
 
@@ -638,10 +638,10 @@ The experimental data we use in this thesis is a set of 15933 peptides generated
 \centering
 \subfigure[Bag of Word feature with RBF kernel]{
 \label{Fig.sub.1}
-\includegraphics[width=0.4\textwidth]{original_without_opt_usingbow.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/original_without_opt_usingbow.jpg}}
 \subfigure[Bag of Word feature with RBF+Poly kernel]{
 \label{Fig.sub.2}
-\includegraphics[width=0.4\textwidth]{original_without_opt_bowfeature_multikernel.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/original_without_opt_bowfeature_multikernel.jpg}}
 \caption{Comparison of performance based on different kernels} \label{fig:Fig9}
 \end{figure}
 
@@ -658,10 +658,10 @@ As benchmark, we also test the model by using $Elude feature$. The fig.\ref{fig:
 \centering
 \subfigure[Elude feature with RBF kernel]{
 \label{fig:sub1}
-\includegraphics[width=0.4\textwidth]{original_without_opt.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/original_without_opt.jpg}}
 \subfigure[Elude feature with RBF+Poly kernel]{
 \label{Fig.sub.2}
-\includegraphics[width=0.4\textwidth]{Lumi_RBF+poly_without_opt_GP.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/Lumi_RBF+poly_without_opt_GP.jpg}}
 \caption{Comparison of performance based on different kernel with Luminita's feature}
 \label{fig:Fig10}
 \end{figure}
@@ -699,10 +699,10 @@ After comparing the Gaussian Process with single kernel and multi-kernel, we wil
 \centering
 \subfigure[BOW feature with GP model]{
 \label{fig:sub1}
-\includegraphics[width=0.4\textwidth]{PSO_fig1_bow.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/PSO_fig1_bow.jpg}}
 \subfigure[Elude feature with GP model]{
 \label{Fig.sub.2}
-\includegraphics[width=0.4\textwidth]{PSO_fig1_Lumi.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/PSO_fig1_Lumi.jpg}}
 \caption{Performance of the feature based on Gaussian Process model after PSO optimization}
 \label{fig:Fig14}
 \end{figure}
@@ -741,10 +741,10 @@ The following plots show the experimental results of different optimization meth
 \centering
 \subfigure[BOW feature with PSO]{
 \label{fig:sub1}
-\includegraphics[width=0.4\textwidth]{PSO_fig1_BOW_mk.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/PSO_fig1_BOW_mk.jpg}}
 \subfigure[BOW feature with CG]{
 \label{Fig.sub.2}
-\includegraphics[width=0.4\textwidth]{CG_fig1_BOW_50times_iter.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/CG_fig1_BOW_50times_iter.jpg}}
 \caption{Performance of the BOW feature based on different optimization method}
 \label{fig:Fig15}
 \end{figure}
@@ -753,10 +753,10 @@ The following plots show the experimental results of different optimization meth
 \centering
 \subfigure[Elude feature with PSO]{
 \label{fig:sub1}
-\includegraphics[width=0.4\textwidth]{PSO_fig1_Lumi_mk.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/PSO_fig1_Lumi_mk.jpg}}
 \subfigure[Elude feature with CG]{
 \label{Fig.sub.2}
-\includegraphics[width=0.4\textwidth]{CG_fig1_Lumi_50times_iter.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/CG_fig1_Lumi_50times_iter.jpg}}
 \caption{Performance of the Elude feature based on different optimization method}
 \label{fig:Fig16}
 \end{figure}
@@ -786,10 +786,10 @@ About the optimization methods, apart from having a impression of the general pe
 \centering
 \subfigure[BOW feature with CG]{
 \label{fig:sub1}
-\includegraphics[width=0.4\textwidth]{CG_fig2_bow_cp.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/CG_fig2_bow_cp.jpg}}
 \subfigure[Elude feature with CG]{
 \label{Fig.sub.2}
-\includegraphics[width=0.4\textwidth]{CG_fig2_lumi_cp.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/CG_fig2_lumi_cp.jpg}}
 \caption{Comparison of different number of evaluating functions}
 \label{fig:Fig17}
 \end{figure}
@@ -804,10 +804,10 @@ Following this, we will now try to find out the influence of the number of gener
 \centering
 \subfigure[BOW feature with 5 generation]{
 \label{fig:sub1}
-\includegraphics[width=0.5\textwidth]{PSO_bow_5generation.jpg}}
+\includegraphics[width=0.5\textwidth]{./figures/PSO_bow_5generation.jpg}}
 \subfigure[BOW feature with 30 generation]{
 \label{Fig.sub.2}
-\includegraphics[width=0.5\textwidth]{PSO_fig2_BOW_mk_30generation.jpg}}
+\includegraphics[width=0.5\textwidth]{./figures/PSO_fig2_BOW_mk_30generation.jpg}}
 \caption{Comparison of different number of generation}
 \label{fig:Fig18}
 \end{figure}
@@ -817,7 +817,7 @@ The fig.\ref{fig:Fig18} shows that the number of generation actually have slight
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.5\textwidth]{zoom_in_30generation.jpg}
+\includegraphics[width=0.5\textwidth]{./figures/zoom_in_30generation.jpg}
 \caption{Detail changes of 30 generation}
 \label{fig:Fig19}
 \end{figure}
@@ -850,10 +850,10 @@ Now, we will take a look at the effect of different number of particles and each
 \centering
 \subfigure[Trend of correlation coefficient of each particle]{
 \label{Fig.sub.201}
-\includegraphics[width=0.4\textwidth]{PSO_fig3_Lumi.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/PSO_fig3_Lumi.jpg}}
 \subfigure[Trend of minimal time window of each particle ]{
 \label{Fig.sub.202}
-\includegraphics[width=0.4\textwidth]{PSO_fig4_Lumi.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/PSO_fig4_Lumi.jpg}}
 \caption{The evolution trend of each particle during 5 generations with 5 particles}
 \label{fig:Fig20}
 \end{figure}
@@ -862,10 +862,10 @@ Now, we will take a look at the effect of different number of particles and each
 \centering
 \subfigure[Trend of correlation coefficient of each particle]{
 \label{Fig.sub.211}
-\includegraphics[width=0.4\textwidth]{changing_trend_of_coef_30par.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/changing_trend_of_coef_30par.jpg}}
 \subfigure[Trend of minimal time window of each particle ]{
 \label{Fig.sub.212}
-\includegraphics[width=0.4\textwidth]{changing_trend_of_mtw_30par.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/changing_trend_of_mtw_30par.jpg}}
 \caption{The evolution trend of each particle during 5 generations with 30 particles}
 \label{fig:Fig21}
 \end{figure}
