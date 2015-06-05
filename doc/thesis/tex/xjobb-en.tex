@@ -188,17 +188,25 @@ To predict the peptide's retention time, there are mainly three things we need t
 
 \subsection{Bag of Word}
 
+\todo[inline]{Start the other way, We are describing (not introducing) the bag-of-words feature extraction (not selection) method. This method has shown excellent performance in other .... [Expand this a bit] }
+
 As mentioned in Chapter 2, few of the new features which have excellent performance in other fields have been implemented to address this problem so far. Therefore, we would like to introduce the Bag of Word method for feature selection.\\
 
-\noindent
-The peptide could be considered as a string where each letter is a type of amino acid. Therefore, one alternative way is to extract the features from the peptide is to implement string-analyzed method. Bag of Word model is one of most popular method in string-analyzed. This method is widely used in computer science and data mining technique.
-The idea of feature selection by Bag of Word method is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\\
+\todo[inline]{Change every string-analyzed to analysing strings.}
+\todo[inline]{Make sure you fix this everywhere, it is bag-of-words not bag-of-word. Also bag-of-words does feature extraction not feature selection.}
 
 \noindent
-To be more specific, the peptide sequence is characterized by a predefined set of strings which is considered as the embedding language $L$ and each of the strings in this set is a word $w$ of $L$. In general, there are two ways to define the embedding language $L$ and its words $w$. Here we only discuss one method called $n-grams$.\\
+The peptide could be considered as a string \textcolor{red}{where each letter is a type of amino acid}\todo{it is the other way, each amino acid is a letter}. Therefore, one alternative way is to extract the features from the peptide is to implement \textcolor{red}{string-analyzed method}\todo{a method used for analysing strings.}. Bag of Word model is one of \todo{the} most popular method\textcolor{red}{s} in \textcolor{red}{string-analyzed}. This method is widely used in computer science and data mining \textcolor{red}{technique}\todo{remove}.
+The idea of \textcolor{red}{feature selection} by \textcolor{red}{Bag of Word method} is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\todo{Re-write this sentence. BOW enables us to compare strings by embedding them into a vector space.}\\
+
+\todo[inline]{If you want to write italic don't write $n-grams$, this is the math mode. Write \textit{n-grams}, fix these everywhere in the thesis. Only use \$\$ if you are writing math.}
 
 \noindent
-The $n-grams$ method simply shifts a small window with fixed length $n$ along all of the peptide sequences to extract substrings with length $n$. The language $L$ then consist of all the possible substrings that have been extracted.\\
+To be more specific, the peptide sequence is characterized by a predefined set of \textcolor{red}{strings}\todo{sub-strings} which is considered as the embedding language $L$ and each of the strings\todo{sub-strings} in this set is a word $w$ of $L$. \textcolor{red}{In general,}\todo{remove} there are two ways to define the embedding language $L$ and its words $w$. Here we only discuss one method called $n-grams$.\todo{Don't say that there are two ways, just say that we defining this using n-grams}\\
+
+
+\noindent
+The $n-grams$ method simply \textcolor{red}{shifts}\todo{Slides} a small window with fixed length $n$ along all of the peptide sequences to extract substrings with length $n$. The language $L$ then consist of all the possible substrings that have been extracted.\\
 
 \noindent
 After establishing the embedding language $L$, we try to project each peptide $p_{i}$ into a vector space composed by the words of $L$ using a function $\phi$
@@ -211,7 +219,7 @@ defined as
 where the return of $\phi_{w}(p_{i})$ is defined as frequency for the occurrences of $w$ in $p_{i}$.\\
 
 \noindent
-In our case, we use the $2-grams$ method to build our embedding language $L$ then each $w$ in $L$ is a 2-amino-acid group and since we have 20 different amino acid in total, each of the peptide will be represented by the frequencies of occurrences of 400 words. A graphical flow of the bag-of-word method can be seen as Fig.\ref{fig:Fig5}:
+In our case, we use \textcolor{red}{the 2-grams method}\todo{We extract features based on 2-grams} to build our embedding language $L$ then each $w$ in $L$ is a 2-amino-acid group and since we have 20 different amino acid in total, each of the peptide will be represented by the frequencies of occurrences of 400 words. A graphical flow of the bag-of-word method can be seen as Fig.\ref{fig:Fig5}\textcolor{red}{:}\todo{Remove}
 
 \begin{figure}[h!]
   \centering
@@ -219,8 +227,10 @@ In our case, we use the $2-grams$ method to build our embedding language $L$ the
   \caption{Bag of Word}\label{fig:Fig5}
 \end{figure}
 
+\todo[inline]{I don't understand the following two paragraphs. Please re-write both of them. Say that to give more meaning to the features, we can include some biological features that are not captured by BOW. The first feature is ... and the second feature is ... . adding these will result in a 402 dimensional feature   }
+
 \noindent
-Since the number of the words $w$ in $L$ is directly related to the length of the peptide sequence, the length of the peptide will be used as a feature to characterize the peptide.\\
+\textcolor{red}{Since the number of the words $w$ in $L$ is directly related to the length of the peptide sequence, the length of the peptide will be used as a feature to characterize the peptide.}\\
 
 \noindent
 In addition, knowing that the hydrophobicity is one of the determinative factor of the retention time of the peptide, it is reasonable to include the hydrophobicity of the peptide in the features set too. As the result, we will get the feature matric as fig.\ref{fig:Fig_feature} showed. Each peptide $p_{i}$ is then represented by 402 features as fig.\ref{fig:feature_sub1} and all of them together form the feature matrix as fig.\ref{fig:feature_sub2}.\\
@@ -239,10 +249,10 @@ In addition, knowing that the hydrophobicity is one of the determinative factor 
 
 
 \noindent
-The advantages of the Bag-of-Word method are mainly showed in two aspects: complexity and flexibility.\\
+The advantages of the Bag-of-Word method are mainly \textcolor{red}{showed}\todo{discussed} in two aspects: complexity and flexibility.\\
 
 \noindent
-In terms of complexity, the most popular features that have been used nowadays are mainly biochemical features. However, in order to calculate these features, a large amount of time is required. What's worse, some particular facilities are needed to calculate some of them, for example, if we use the structure descriptor as a feature, we need to use some structure analyzer to produce them which is quite expensive and time consuming. Comparing with computing these features, the computational cost of our method is very low. According to \cite{foo17}, the run-time complexity of Bag-of-Word is only $O(|x|+|y|)$ when it is  $O(|x|\cdot |y|)$  for another benchmark method where $x$ and $y$ are the peptide sequences while $|x|$ and $|y|$ are the maximal nonzero dimensions of $\phi_{w}(x)$ and $\phi_{w}(y)$.\\
+In terms of complexity, the most popular features that have been used \textcolor{red}{nowadays}\todo{so far} are mainly biochemical features. However, in order to calculate these features, a large amount of time is required. What's worse, some particular facilities are needed to calculate some of them, for example, if we use the structure descriptor as a feature, we need to use some structure analyzer to produce them which is quite expensive and time consuming. Comparing with computing these features, the computational cost of our method is very low. According to \cite{foo17}, the run-time complexity of Bag-of-Word is only $O(|x|+|y|)$ when it is  $O(|x|\cdot |y|)$  for another benchmark method where $x$ and $y$ are the peptide sequences while $|x|$ and $|y|$ are the maximal nonzero dimensions of $\phi_{w}(x)$ and $\phi_{w}(y)$.\\
 
 \noindent
 As for the flexibility, since the embedding language $L$ is constituted by the words that are directly and simply extracted from the samples, this method could easily change the language set $L$ for particular context of the task. This property implies a wider applicability in other field of biological research.\\
@@ -250,21 +260,25 @@ As for the flexibility, since the embedding language $L$ is constituted by the w
 \section{Gaussian Processes}
 \fontsize{12pt}{16pt}\selectfont
 
-By implementing the Bag of Word model, we now have the features to present the peptides in hand. The next step is to establish a nonlinear regression model to find out the relation between the peptide and their retention time. In this thesis, we use GP regression model to make the prediction.\\
+By implementing the Bag of Word model, we now have the features to present the peptides in hand. The next step is to establish a nonlinear regression model to find out the relation between the peptide\textcolor{red}{s} and their retention time. In this thesis, we use GP regression model to make \textcolor{red}{the}\todo{this} prediction.\\
 
 \noindent
-Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind and build an appropriate Gaussian Process model, this chapter starts with a brief introduction of the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain the properties of it. Finally, we will make a comparison between Gaussian Process and the other two methods: ANN and SVR so that we could see the difference of Gaussian Process.
+Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind \todo{it} and build an appropriate \textcolor{red}{Gaussian Process}\todo{remove} model, this chapter starts with a brief introduction \textcolor{red}{of}\todo{brief introduction to the ..} the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation\textcolor{red}{s}. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain \textcolor{red}{the properties of it}\todo{its properties}. Finally, we will make a comparison between Gaussian Process and the other two methods\textcolor{red}{:}\todo{such as ANN and SVR} ANN and SVR \textcolor{red}{so that we could see the difference of Gaussian Process.}\todo{Remove}
 
 \subsection{Standard Bayesian linear Regression}
 
-Let's first consider a set of input $x = \{(x_{i},y_{i}) | i =1,2...n\}$ along with some noise $\epsilon$. In the regression setting, the targets are real values but the observations are with additive noise. We are interested in inferring the relationship between inputs and targets, i.e. the conditional distribution of the targets given the inputs.\\
+Let's first consider a set of \textcolor{red}{input}\todo{observations or samples or data points} $x = \{(x_{i},y_{i}) | i =1,2...n\}$ along with some noise $\epsilon$. In the regression setting, the targets \textcolor{red}{are real values but the observations are with additive noise}\todo{are real values with additive noise.}. We are interested in inferring the relationship between inputs and targets, i.e. the conditional distribution of the targets given the inputs.\\
 
 \noindent
-In supervised learning, one way to decide this relationship is using parametric regression which determine a set of $w$ as the best descriptors of the model between the inputs and outputs. Now, the problem comes to how to define if the model is good enough.\\
+In supervised learning, one way to decide this relationship is using parametric regression which \textcolor{red}{a determines a set of $w$ as the best descriptors of the model between the inputs and outputs}\todo{Re-write}. \textcolor{red}{Now,}\todo{Remove} the problem comes to how to \textcolor{red}{define}\todo{evaluate} if the \todo{trained} model is good enough.\todo{or write : evaluate how the trained model fits the observations.}\\
 
+\todo[inline]{There are two methods for performing this evaluation, loss function and maximum likelihood.}
+   
 \noindent
-To solve this problem, two possible methods have been carried out. Loss Function Method and Maximum Likelihood Method. The first one is achieved by optimizing the parameters $w$ that minimizing the predefined loss function, such as minimal squared error function (MSE). However, one of the obvious shortages of this method is the over-fitting. To minimize the error of the model, one would increase the complexity of the model that might easily result in the over-fitting problem. Even though the precision of the model in terms of training data could be high enough, its predictive capacity for unknown data could be really bad and unacceptable. In addition, making a simpler model by ignoring the noise could avoid the over-fitting problem but could also lead to lower accuracy for prediction.\\
+\textcolor{red}{To solve this problem, two possible methods have been carried out. Loss Function Method and Maximum Likelihood Method.} The first one is achieved by optimizing the parameters $w$ that minimizing the predefined loss function, such as minimal squared error function (MSE). However, one of the obvious shortages of this method is the over-fitting. To minimize the error of the model, one would increase the complexity of the model that might easily \textcolor{red}{result in the over-fitting problem}\todo{over fit to the training set.}. \todo{This means that} Even though the precision of the model in terms of training data could be high enough, its predictive capacity for unknown data could be really bad and unacceptable. In addition, making a simpler model by ignoring the noise could avoid the over-fitting problem but could also lead to lower accuracy for prediction.\\
 
+
+\todo[inline]{The main difference between Bayesian regression and loss function is the fact that Bayesian regression considers a prior distribution for $w$, having this distribution prevents the model from over-fitting and forces it to be smooth.}
 \noindent
 An alternative way to identify the quality of model is Maximum Likelihood, also known as Bayesian regression. The idea of this method is replacing the loss function by the jointly probability distribution with predefined noise (Likelihood function) and search for the parameters $w$ that maximize the likelihood function to build the model.\\
 
@@ -455,6 +469,7 @@ We want to take the advantages from the kernel function and eliminate its weakne
 \noindent
 where $m$ is the weight between two kernel functions. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will also explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
 
+\todo[inline]{Properties of Gaussian Process}
 \subsection{Property of Gaussian Processes}
 
 As a supervised learning algorithm, the Gaussian Processes is also based on the idea that similar input result in similar outputs or output distributions. But it also have its unique strengths compare with ANN (Backpropagation (BP) algorithm as example) and SVR. \\
