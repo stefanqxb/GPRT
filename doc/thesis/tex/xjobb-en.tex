@@ -36,8 +36,8 @@ Examiner: Stefan Carlsson}
 \selectlanguage{english}
 \begin{abstract}
  \todo[inline]{Re-write the abstract with respect to things we have corrected in the thesis.}
-  Retention time (RT) as an important evidence can be used to analysis the peptide's properties. Because of the interactions among peptides, the retention time prediction of peptide has low accuracy,
-  and thus is less effective in the validation of peptide identifications. Besides, the large amount of time on generating features also need to be reduced. This thesis presents a alternative machine learning methods to predict the retention time of a set of peptide in hand. In order to address the precision and computational cost problem, we introduce Gaussian Processes as the trained model and use a new feature extraction method called BOW to generate the features for training the model. We also investigate the effect of different types of kernel function and their parameters. The results show high precision of the prediction and relatively low time cost.
+  Retention time (RT) as an important evidence can be used to analysis the peptide's properties \todo{LK: I do not get the meaning of this statement.}. Because of the interactions among peptides, the retention time prediction of peptide has low accuracy,
+  and thus is less effective in the validation of peptide identifications\todo{Write that while the chromatography pårocess is highly reproducible, the retentyion time is hard to predict. The reasons for that is not weel described.}. Besides, the large amount of time on generating features also need to be reduced\todo{Why?}. This thesis presents a alternative machine learning methods to predict the retention time of a set of peptide in hand. In order to address the precision and computational cost problem, we introduce Gaussian Processes as the trained model and use a new feature extraction method called BOW to generate the features for training the model. We also investigate the effect of different types of kernel function and their parameters. The results show high precision of the prediction and relatively low time cost.
 \end{abstract}
 
 \clearpage
@@ -50,7 +50,7 @@ Examiner: Stefan Carlsson}
 
 \section{Introduction}
 
-Protein, the most essential component of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. Functions of different biological organisms are determined by the proteins that are presented in them. For this reason, it is important and necessary for us to know what proteins are in different organisms. As a result, this leads us to the problem of large-scale identification of proteins in complex mixtures.
+Proteins, the most essential components of all the cells and organisms, plays an irreplaceable role in people's daily lives including providing energy, strengthening the immune system and catalyzing metabolic reactions within the body. The functions of different biological organisms are determined by the proteins that are presented in them. For this reason, it is important and necessary for us to know what proteins are in different organisms. As a result, this leads us to the problem of large-scale identification of proteins in complex mixtures.
 
 \begin{figure}[h!]
   \centering
@@ -65,10 +65,10 @@ Protein, the most essential component of all the cells and organisms, plays an i
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
 \noindent
-Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique for identifying proteins in complex mixtures. The main part of this technique is high performance liquid chromatography (HPLC). HPLC has three main steps, firstly, the protein in the mixture of interest will be broken into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. The hydrophobicity is the physical property of a molecule that is seemingly repelled from a mass of water. To be more specific, a specific solvent will be pumped through the column with increasing concentration. Peptide with different hydrophobicity will gradually digest in the solvent due to their hydrophobicity and then wash out from the column.\\
+Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique for identifying proteins in complex mixtures. The main part of this technique is high performance liquid chromatography (HPLC). HPLC has three main steps, firstly, the protein in the mixture of interest will be broken \todo{LK: I would use the term enzymatically digested} into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. The hydrophobicity is the physical property of a molecule that is seemingly repelled from a mass of water. To be more specific, a specific solvent will be pumped through the column with increasing concentration. Peptide with different hydrophobicity will gradually digest \todo{write: elute} in the solvent due to their hydrophobicity and then wash out from the column.\\
 
 \noindent
-In the end, those peptides will separated from the column and ionized by electrospray ionization and then tossed into mass spectrometer. The result is a set of spectra. Each spectra corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
+In the end, those peptides will separated from the column and ionized by electrospray ionization and then tossed \todo{injected} into a mass spectrometer. The result is a set of spectra. Each spectrum corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
 
 \begin{figure}[h!]
   \centering
@@ -1019,7 +1019,7 @@ To overcome this, there are many variations of CG. They could improve the perfor
 \section{Conclusion}
 
 \noindent
-In this thesis, GP model has been proposed for the prediction of peptide retention time has been proposed and tested in different datasets. The importance of kernel function has been investigated and comparison has been made between single kernel function and multi-kernel function. The multi-kernel function combines the strengths of two kernel functions and improves the accuracy of the prediction results significantly.\\
+In this thesis, GP model has been proposed for the prediction of peptides' retention time has been proposed and tested in different datasets. The importance of kernel functions has been investigated and comparison has been made between single kernel function and multi-kernel function. The multi-kernel function combines the strengths of two kernel functions and improves the accuracy of the prediction results significantly.\\
 
 \noindent
 Secondly, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is almost as good as the biochemical features. Although the performance of these less-biochemical features are still slightly worse than the biochemical features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique and powerful advantages.\\
