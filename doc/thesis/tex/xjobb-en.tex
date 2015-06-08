@@ -163,7 +163,7 @@ In general, most of the features that are widely used have strong biological mea
 
 \noindent
 From the perspective of computer science, anything that can represent an object could be considered as a feature of this object. Therefore, it is worth to believe that some less-biological meaning features could give the same performance in this case. It might be a breakthrough to introduce some new features instead of just using the biochemical features. In this thesis,  some features with less biological meaning will be utilized and compared to the traditional biochemical features.
-
+2
 
 \chapter{Methodology}
 
@@ -172,19 +172,27 @@ To predict the peptide's retention time, there are mainly three things we need t
 \section{Feature selection}
 \fontsize{12pt}{16pt}\selectfont
 
-\subsection{Bag of Word}
+\subsection{Bag of Words}
+
+We are describing the bag-of-words feature extraction method. This method has shown excellent performance in other aspects of computer vision, such as image analysis and image recognition.
 
 As mentioned in Chapter 2, few of the new features which have excellent performance in other fields have been implemented to address this problem so far. Therefore, we would like to introduce the Bag of Word method for feature selection.\\
 
-\noindent
-The peptide could be considered as a string where each letter is a type of amino acid. Therefore, one alternative way is to extract the features from the peptide is to implement string-analyzed method. Bag of Word model is one of most popular method in string-analyzed. This method is widely used in computer science and data mining technique.
-The idea of feature selection by Bag of Word method is to implement a comparison of strings by embedding sequential data in a vector space.\cite{foo17}.\\
+\todo[inline]{Change every string-analyzed to analysing strings.}
+\todo[inline]{Make sure you fix this everywhere, it is bag-of-words not bag-of-word. Also bag-of-words does feature extraction not feature selection.}
 
 \noindent
-To be more specific, the peptide sequence is characterized by a predefined set of strings which is considered as the embedding language $L$ and each of the strings in this set is a word $w$ of $L$. In general, there are two ways to define the embedding language $L$ and its words $w$. Here we only discuss one method called $n-grams$.\\
+The peptide could be considered as a string where each amino acid is a letter. Therefore, one alternative way is to extract the features from the peptide is to implement a method used for analysing strings. Bag of Word model is one of the most popular methods in analysing strings. This method is widely used in computer science and data mining.
+BOW enables us to compare strings by embedding them into a vector space.\cite{foo17}.\\
+
+\todo[inline]{If you want to write italic don't write $n-grams$, this is the math mode. Write \textit{n-grams}, fix these everywhere in the thesis. Only use \$\$ if you are writing math.}
 
 \noindent
-The $n-grams$ method simply shifts a small window with fixed length $n$ along all of the peptide sequences to extract substrings with length $n$. The language $L$ then consist of all the possible substrings that have been extracted.\\
+To be more specific, the peptide sequence is characterized by a predefined set of sub-strings which is considered as the embedding language $L$ and each of the sub-strings in this set is a word $w$ of $L$. We use \textit{n-grams} to define the embedding language $L$ and its words $w$. \\
+
+
+\noindent
+The \textit{n-grams} method simply slides a small window with fixed length $n$ along all of the peptide sequences to extract substrings with length $n$. The language $L$ then consist of all the possible substrings that have been extracted.\\
 
 \noindent
 After establishing the embedding language $L$, we try to project each peptide $p_{i}$ into a vector space composed by the words of $L$ using a function $\phi$
@@ -197,7 +205,7 @@ defined as
 where the return of $\phi_{w}(p_{i})$ is defined as frequency for the occurrences of $w$ in $p_{i}$.\\
 
 \noindent
-In our case, we use the $2-grams$ method to build our embedding language $L$ then each $w$ in $L$ is a 2-amino-acid group and since we have 20 different amino acid in total, each of the peptide will be represented by the frequencies of occurrences of 400 words. A graphical flow of the bag-of-word method can be seen as Fig.\ref{fig:Fig5}:
+In our case, we extract features based on \textit{2-grams} to build our embedding language $L$ then each $w$ in $L$ is a 2-amino-acid group. Since we have 20 different amino acid in total, each of the peptide will be represented by the frequencies of occurrences of 400 words. A graphical flow of the bag-of-word method can be seen as Fig.\ref{fig:Fig5}
 
 \begin{figure}[h!]
   \centering
@@ -206,10 +214,10 @@ In our case, we use the $2-grams$ method to build our embedding language $L$ the
 \end{figure}
 
 \noindent
-Since the number of the words $w$ in $L$ is directly related to the length of the peptide sequence, the length of the peptide will be used as a feature to characterize the peptide.\\
+To give more meaning to the features, we can include some biological features that are not captured by BOW. The first feature is the length of the peptide since Since the number of the words $w$ in $L$ is directly related to it and the second feature is the hydrophobicity because it is one of the determinative factor of the retention time of the peptide. Adding these will result in a 402 dimensional feature as fig.\ref{fig:Fig_feature} showed. 
 
 \noindent
-In addition, knowing that the hydrophobicity is one of the determinative factor of the retention time of the peptide, it is reasonable to include the hydrophobicity of the peptide in the features set too. As the result, we will get the feature matric as fig.\ref{fig:Fig_feature} showed. Each peptide $p_{i}$ is then represented by 402 features as fig.\ref{fig:feature_sub1} and all of them together form the feature matrix as fig.\ref{fig:feature_sub2}.\\
+Each peptide $p_{i}$ is then represented by 402 features as fig.\ref{fig:feature_sub1} and all of them together form the feature matrix as fig.\ref{fig:feature_sub2}.\\
 
 \begin{figure}[h!]
 \centering
@@ -225,10 +233,10 @@ In addition, knowing that the hydrophobicity is one of the determinative factor 
 
 
 \noindent
-The advantages of the Bag-of-Word method are mainly showed in two aspects: complexity and flexibility.\\
+The advantages of the Bag-of-Word method are mainly discussed in two aspects: complexity and flexibility.\\
 
 \noindent
-In terms of complexity, the most popular features that have been used nowadays are mainly biochemical features. However, in order to calculate these features, a large amount of time is required. What's worse, some particular facilities are needed to calculate some of them, for example, if we use the structure descriptor as a feature, we need to use some structure analyzer to produce them which is quite expensive and time consuming. Comparing with computing these features, the computational cost of our method is very low. According to \cite{foo17}, the run-time complexity of Bag-of-Word is only $O(|x|+|y|)$ when it is  $O(|x|\cdot |y|)$  for another benchmark method where $x$ and $y$ are the peptide sequences while $|x|$ and $|y|$ are the maximal nonzero dimensions of $\phi_{w}(x)$ and $\phi_{w}(y)$.\\
+In terms of complexity, the most popular features that have been used so far are mainly biochemical features. However, in order to calculate these features, a large amount of time is required. What's worse, some particular facilities are needed to calculate some of them, for example, if we use the structure descriptor as a feature, we need to use some structure analyzer to produce them which is quite expensive and time consuming. Comparing with computing these features, the computational cost of our method is very low. According to \cite{foo17}, the run-time complexity of Bag-of-Word is only $O(|x|+|y|)$ when it is  $O(|x|\cdot |y|)$  for another benchmark method where $x$ and $y$ are the peptide sequences while $|x|$ and $|y|$ are the maximal nonzero dimensions of $\phi_{w}(x)$ and $\phi_{w}(y)$.\\
 
 \noindent
 As for the flexibility, since the embedding language $L$ is constituted by the words that are directly and simply extracted from the samples, this method could easily change the language set $L$ for particular context of the task. This property implies a wider applicability in other field of biological research.\\
@@ -236,32 +244,39 @@ As for the flexibility, since the embedding language $L$ is constituted by the w
 \section{Gaussian Processes}
 \fontsize{12pt}{16pt}\selectfont
 
-By implementing the Bag of Word model, we now have the features to present the peptides in hand. The next step is to establish a nonlinear regression model to find out the relation between the peptide and their retention time. In this thesis, we use GP regression model to make the prediction.\\
+By implementing the Bag of Word model, we now have the features to present the peptides in hand. The next step is to establish a nonlinear regression model to find out the relation between the peptides and their retention time. In this thesis, we use GP regression model to make this prediction.\\
 
 \noindent
-Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind and build an appropriate Gaussian Process model, this chapter starts with a brief introduction of the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivation. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain the properties of it. Finally, we will make a comparison between Gaussian Process and the other two methods: ANN and SVR so that we could see the difference of Gaussian Process.
+Gaussian Processes is a supervised machine learning method based on Bayesian theory and statistical learning. In order to understand the theory behind it and build an appropriate model, this chapter starts with brief introduction to the supervised learning method as well as the specification of Standard Bayesian linear Regression. Then we will specify the Gaussian Process in our case along with the detailed mathematical derivations. After that, we will specify the concept of multi-kernel functions in Gaussian Process and explain its properties. Finally, we will make a comparison between Gaussian Process and the other two methods, such as ANN and SVR.
 
 \subsection{Standard Bayesian linear Regression}
 
-Let's first consider a set of input $x = \{(x_{i},y_{i}) | i =1,2...n\}$ along with some noise $\epsilon$. In the regression setting, the targets are real values but the observations are with additive noise. We are interested in inferring the relationship between inputs and targets, i.e. the conditional distribution of the targets given the inputs.\\
+\todo[inline]{ Here $x = \{(x_{i},y_{i}) | i =1,2...n\}$, $x$ and $x_i$ are not distinguishable. Write it like this $\mathcal{D}=\{(x_{i},y_{i}) | i =1,2...n\}$. When you are writing math for matrices use capital letters $X$, for vectors use bold letters $\mathbf{x}$ and for scalars use normal letters $x$. If you are using a set use the mathcal form $\mathcal{X}$. This way the reader will know about the properties of the variable you are using. Fix these every where.}
+
+
+Let's first consider a set of observations $\mathcal{D}=\{(x_{i},y_{i}) | i =1,2...n\}$ along with some noise $\epsilon$. In the regression setting, the targets are real values with additive noise. We are interested in inferring the relationship between inputs and targets, i.e. the conditional distribution of the targets given the inputs.\\
 
 \noindent
-In supervised learning, one way to decide this relationship is using parametric regression which determine a set of $w$ as the best descriptors of the model between the inputs and outputs. Now, the problem comes to how to define if the model is good enough.\\
+In supervised learning, one way to decide this relationship is using non-parametric regression. It uses a set of $w$ as the best descriptors of the model to describe the relationship between the inputs and outputs. The problem now comes to how to evaluate if the trained model fits the observations.\\
 
 \noindent
-To solve this problem, two possible methods have been carried out. Loss Function Method and Maximum Likelihood Method. The first one is achieved by optimizing the parameters $w$ that minimizing the predefined loss function, such as minimal squared error function (MSE). However, one of the obvious shortages of this method is the over-fitting. To minimize the error of the model, one would increase the complexity of the model that might easily result in the over-fitting problem. Even though the precision of the model in terms of training data could be high enough, its predictive capacity for unknown data could be really bad and unacceptable. In addition, making a simpler model by ignoring the noise could avoid the over-fitting problem but could also lead to lower accuracy for prediction.\\
+There are two methods for performing this evaluation, loss function and maximum likelihood. The first one is achieved by optimizing the parameters $w$ that minimizing the predefined loss function, such as minimal squared error function (MSE). However, one of the obvious shortages of this method is the over-fitting. To minimize the error of the model, one would increase the complexity of the model that might easily over fit to the training set. This means that \textcolor{red}{Even though the precision of the model in terms of training data could be high enough, its predictive capacity for unknown data could be really bad and unacceptable.}\todo{Re-write} In addition, making a simpler model by ignoring the noise could avoid the over-fitting problem but could also lead to lower accuracy for prediction.\\
 
+\todo[inline]{The main difference between Bayesian regression and loss function is the fact that Bayesian regression considers a prior distribution for $w$, having this distribution prevents the model from over-fitting and forces it to be smooth. Re-write this to show this fact.}
 \noindent
 An alternative way to identify the quality of model is Maximum Likelihood, also known as Bayesian regression. The idea of this method is replacing the loss function by the jointly probability distribution with predefined noise (Likelihood function) and search for the parameters $w$ that maximize the likelihood function to build the model.\\
 
 \noindent
-Let's consider the dataset $x = \{(x_{i},y_{i}) | i =1,2...n\}$ mentioned before as the input. The Bayesian analysis of the linear regression model can be written as :
+The Bayesian analysis of the linear regression model can be written as :
+
+\todo[inline]{Since $f$ is a function maybe $f(\mathbf{x})$ is a better choice rather than $f_{\mathbf{x}}$.}
+
 \begin{equation} \label{eq:2}
-f_{x}=x^{T}w, \quad  y = f_{x}+\epsilon ,
+f(\mathbf{x})=x^{T}w, \quad  y = f(\mathbf{x})+\epsilon ,
 \end{equation}
 
 \noindent
-where $x$ is the input vector, $w$ is the parameters(weights) of the input for the linear model. The function value is represented by $ f_{x}$ and a bias (noise) is included. We assume that the $\epsilon$ is independent identically distributed Gaussian noise with zero mean and variance $\sigma_{n} ^{2}$.
+where $x$ is the input vector, $w$ is the parameters of the model. The function value is represented by $ f_{x}$ and a bias (noise) is included. We assume that the $\epsilon$ is independent identically distributed Gaussian noise with zero mean and variance $\sigma_{n} ^{2}$.
 \begin{equation} \label{eq:3}
 \epsilon \sim N(0, \sigma_{n} ^{2}) ,
 \end{equation}
@@ -423,7 +438,7 @@ As we could seen from \ref{eq:17}, the accuracy of the estimation of our retenti
 \end{itemize}
 
 \noindent
-Different covariance function has different properties and generates different similarity measures between pairs of data points. The RBF covariance in \ref{eq:kr5} is the most popular kernel function. In Gaussian process, all these covariance function are weighted by a smoothness factor $\delta_{ab}$ as showed in \ref{eq:14}. This variable together with the parameters in each covariance function are known as the hyperparameters. These hyperparameters will need to be optimized to allow the model to have better performance, This is achieved by maximizing the objective function (marginal log-likelihood function) of GP model. The detail of how to achieve it will be covered in the section of optimization.\\
+Different covariance functions has different properties and generates different similarity measures between pairs of data points. The RBF covariance in \ref{eq:kr5} is the most popular kernel function. In Gaussian process, all these covariance function are weighted by a smoothness factor $\delta_{ab}$ as showed in \ref{eq:14}. This variable together with the parameters in each covariance function are known as the hyperparameters. These hyperparameters will need to be optimized to allow the model to have better performance, This is achieved by maximizing the objective function (marginal log-likelihood function) of GP model. The detail of how to achieve it will be covered in the section of optimization.\\
 
 \noindent
 Another interesting thing of these kernel functions is that they could be divided into two types: global kernel function and local kernel function. The RBF kernel function is considered as a typical local kernel while the Polynomial kernel is a global one\cite{foo21}.\\
@@ -432,27 +447,29 @@ Another interesting thing of these kernel functions is that they could be divide
 Both types of kernel functions have their own strengths and limitations in different aspects. The local kernel function has strength in terms of approximation but the generalization ability is weak while the global one has stronger generalization ability but weaker approximation capacity.\\
 
 \noindent
-We want to take the advantages from the kernel function and eliminate its weakness as much as possible. Therefore, to overcome the weakness of the single kernel function, one simple way is combining those two types of kernel function together as a multi-kernel function, such as the RBF and the Polynomial one.
+Since we want the kernel function to have stronger capacity, we would like to overcome the weakness of the single kernel function. Therefore, one simple way to achieve this is combining those two types of kernel function together as a multi-kernel function as \ref{eq:222}.
+
 
 \begin{equation}\label{eq:222}
   k_{mix} = m*k_{poly} + (1-m)*k_{rbf}  ( 0 \leq m \leq 1)
 \end{equation}
 
 \noindent
-where $m$ is the weight between two kernel functions. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will also explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
+where $m$ is the weight between two kernel functions. We create a multi-kernel function by combining two different types of kernel linearly. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will also explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
 
-\subsection{Property of Gaussian Processes}
 
-As a supervised learning algorithm, the Gaussian Processes is also based on the idea that similar input result in similar outputs or output distributions. But it also have its unique strengths compare with ANN (Backpropagation (BP) algorithm as example) and SVR. \\
+\subsection{Properties of Gaussian Processes}
+
+As a supervised learning algorithm, the Gaussian Processes is also based on the idea that similar inputs result in similar outputs or output distributions. But it also have its unique strengths compare with ANN (Back-propagation (BP) algorithm as example) and SVR. \\
 
 \noindent
-Since BP algorithm is based on the Empirical risk minimization, it is minimizing the expected error of the model by minimizing the differences between the output of training data and their corresponding true value. This will lead to a serious overfitting problem and poor generalization for new data since it only optimizes the parameters based on training set without considering the test set. Secondly, for a particular BP model, the number of layers of hidden units and the number of units in each layers play an irreplaceable role in ANN algorithm but how to decide these value still remain as a series problem and need to solved. Besides, the BP model adjusted the weights by iteratively calculating the difference between the predicted value and the true ones and giving feedbacks to the system, this principle is in fact similar to the idea of gradient descending. As a result, it will have a low convergence rate and could not guarantee to find the global optima every time.\\
+Since BP algorithm is based on the Empirical risk minimization, it is minimizing the expected error of the model by minimizing the differences between the output of training data and their corresponding true value. This will lead to a serious overfitting problem and poor generalization for new data, since it only optimizes the parameters based on training set without considering the test set. Secondly, for a particular BP model, the number of layers of hidden units and the number of units in each layers play an irreplaceable role in ANN algorithm but how to decide these value still remain as a series problem and need to solved. Besides, the BP model adjusted the weights by iteratively calculating the difference between the predicted value and the true ones and giving feedbacks to the system, this principle is in fact similar to the idea of gradient descending. As a result, it will have a low convergence rate and could not guarantee to find the global optima every time.\\
 
 \noindent
 As for the SVR, it improves this situation by using structure risk minimization and introducing the penalty coefficient. The structure risk minimization describes the minimization of the sum of the empirical risk and VC confidence which is caused by the complexity of the function space. The VC confidence is related to the amount of training data and could be considered as a reflection of generalization ability of the model. The more training data it has, the smaller the VC confidence will be and the stronger generalization the model will have. These principles could avoid the overfitting problem efficiently and allow the model to have a better generalization capacity. However, the SVR still has many obvious problems such as the choice of the type of kernel function and its parameters and the proper value for the penalty coefficient. In addition, the output of SVR lacks probabilistic meaning.\\
 
 \noindent
-The Gaussian Processes is based on the Gaussian distribution and Bayesian theory which implies a solid foundation of probabilistic and statistic. For example, the Gaussian Process not only give the predicted value but also the uncertainty of the prediction. This property makes the prediction easier to interpret and understand. What's more, since Gaussian Processes make the prediction based on the distribution of all data and weaken the contribution of single outlier, it prevents the overfitting problem and gives better generalization capacity than SVR. In addition, in terms of the choice of hyperparameters, the Gaussian Processes is self-adaptive. In other words, the Gaussian Process choose the optimal hyperparameters during its process of training a model while SVR could only choose them by using cross-validation method or based on the pervious experiences. Besides, compared with the BP and SVR model, the number of parameters of Gaussian Processes is quite small which makes the optimization easier to implement.\\
+The Gaussian Processes is based on the Gaussian distribution and Bayesian theory which implies a solid foundation of probabilistic and statistic. For example, the Gaussian Process not only give\textcolor{red}{s} the predicted value but also the uncertainty of the prediction. This property makes the prediction easier to interpret and understand. What's more, since Gaussian Processes make the prediction based on the distribution of all data and weaken the contribution of single outlier, it prevents the overfitting problem and gives better generalization capacity than SVR. In addition, in terms of the choice of hyperparameters, the Gaussian Processes is self-adaptive. In other words, the Gaussian Process choose the optimal hyperparameters during its process of training a model while SVR could only choose them by using cross-validation method or based on the pervious experiences. Besides, compared with the BP and SVR model, the number of parameters of Gaussian Processes is quite small which makes the optimization easier to implement.\\
 
 \section{Optimization}
 \fontsize{12pt}{16pt}\selectfont
