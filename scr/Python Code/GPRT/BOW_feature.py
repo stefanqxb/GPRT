@@ -104,8 +104,6 @@ def grab_word(aaAlphabet,num2):
                sub_word.append(temp)
     return sub_word
 
-
-
 def bowindexSum(aas,index):
     sum_ind = 0
     for aa in aas:

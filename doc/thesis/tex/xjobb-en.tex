@@ -115,65 +115,51 @@ The structure of the thesis is as following: Chapter 2, introduces the related w
 \chapter{Related Work}
 \fontsize{12pt}{16pt}\selectfont
 \noindent
-Prediction of the retention time for a given peptide could help to improve the confidence of peptide identification. \textcolor{red}{Therefore, developing efficient algorithms and establishing proper models to generate the prediction of peptide has become more important and necessary.}\\
-\todo[inline]{Therefore, it is import and necessary to develop .... to ...}
+Prediction of the retention time for a given peptide could help to improve the confidence of peptide identification. Therefore, it is important and necessary to develop efficient algorithms and establishing proper models to generate the prediction of peptide.\\
 
-
-\todo[inline]{To design a successful predictor for our task, one would has the following questions. (not two problems) - Rewrite this paragraph}
 \noindent
-\textcolor{red}{However,}\todo{remove} to make the prediction successfully, there are two problems needed to be considered. Firstly, what kind of model will have better performance of the prediction\todo{this is a question so end it with ?}. Secondly, what factors will have a great impact on the retention time\todo{same here end with ?}. \textcolor{red}{Unfortunately, both of these two questions remain open so far. Therefore,}\todo{Remove} in order to answer the questions, a number of models based on different features have been proposed to characterize \textcolor{red}{quantitatively the peptide}\todo{This is strange find a better wording.} and to predict its retention time.\\
+To design a successful predictor for our task, one would has the following questions. Firstly, what kind of model will have better performance of the prediction? Secondly, what factors will have a great impact on the retention time? In order to answer the questions, a number of models based on different features have been proposed to characterize the peptide and to predict its retention time.\\
 
 \section{Models / Methods}
 \noindent
-\todo[inline]{Maybe : Different machine learning models have been applied to the task of predicting peptide retention time. In \cite{?},  Baczek T \textit{et al.} have implemented }
 
-\todo[inline]{Re-write this section with this format : In [paper citation], First author \textit{et al.} have implemented [ this model ]. Then describe the properties of what they have done. }
-
-
-\textcolor{red}{There are}\todo{remove} different kinds of \textcolor{red}{machine-learned models}\todo{machine learning models} \textcolor{red}{that}\todo{remove} have been implemented. One of the model is the multiple linear regression (MLR) model. This model was implemented by Baczek T, Wiczling P, Marszall M, et al in \cite{foo1} to predict the peptide retention time at different HPLC conditions and shows high precision. However, the linear regression model mainly depends on the chromatographic condition and thus prediction bias could be a serious problem when the model is used under different circumstances. \\
+Different kinds of machine learning models have been implemented. One of the model is the multiple linear regression (MLR) model. In \cite{foo1}, Baczek T, Wiczling P, Marszall M \textit{et al.} has implemented this model to predict the peptide retention time at different HPLC conditions and shows high precision. However, the linear regression model mainly depends on the chromatographic condition and thus prediction bias could be a serious problem when the model is used under different circumstances. \\
 
 \noindent
-Another model is the artificial neural network(ANN) proposed by Petritis K et al. in \cite{foo2}. The ANN model was based on the contributions of individual amino acids taken the neighborhood effect into account and a data set of 7000 was used for the training. The large amount of experimental data provided by this approach produced high accuracy of the retention time prediction and enhance the confidence of the peptide identification. In \cite{foo3}, Petritis K, Kangas LJ, Yan B, et al have improved the ANN model by adding more descriptors, such as peptide length, sequence, hydrophobicity as well as nearest-neighbor amino acid. Each of the peptide is characterized by 1052 features instead of 20. The new model was trained by 345,000 peptide and tested using another 1303 confidently identified peptide which reported excellent performance.\\
-
-
-\todo[inline]{It is not clear at all what model you are talking about in the next paragraph!}
-\noindent
-Although a great deal of effort has been made \textcolor{red}{to improve the model}\todo{into improving the models}, there are still some remaining issues. One of the main weaknesses of this model is its time consumption. In order to train this model, a large amount of training data is required which will result in a high cost in terms of both time and resources. What's worse, its high computational cost also implies its weakness in terms of repeatability and comparability which are essential to laboratory research. It also limits its development for commercial purpose.\\
-
-\noindent
-In order to solve this problem, another alternative machine-learning method, support vector machine(SVMs) has been implemented. Klammer et al. in \cite{foo4} proposed a predictor based on this method. \textcolor{red}{SVMs requires fewer data to train the model than ANNs}\todo{Compared to ANNs, SVMs require a smaller training set which can reduce the ...} and reduce the computational cost dramatically. Besides, dynamic SVR (support vector machine for regression problem) model avoids the RT variation between different chromatographic conditions which could have better performance than the linear regression model in terms of adaptability. However, using small dataset with low complexity to train the model also leads to the poor performance in terms of accurate regression and gives lower quality prediction compared to the ANNs. \textcolor{red}{If we simply use the same amount of the training data as in ANNs, the SVR model could have better performance but with extremely high computational cost which might even worse than ANNs.}\todo{Re-write this sentence.}\\
+In \cite{foo2}, Petritis K \textit{et al.} has proposed another model based on artificial neural network (ANN). The ANN model was based on the contributions of individual amino acids taken the neighborhood effect into account and a data set of 7000 was used for the training. The large amount of experimental data provided by this approach produced high accuracy of the retention time prediction and enhance the confidence of the peptide identification. In \cite{foo3}, Petritis K \textit{et al.} have improved the ANN model by adding more descriptors, such as peptide length, sequence, hydrophobicity as well as nearest-neighbor amino acid. Each of the peptide is characterized by 1052 features instead of 20. The new model was trained by 345,000 peptide and tested using another 1303 confidently identified peptide which reported excellent performance.\\
 
 
 \noindent
-To enhance the capacity of the predictor and raise the predicted accuracy, Luminita Moruz\todo{ \textit{et al.} } in \cite{foo5} has developed a new predictor, ELUDE, \todo{which is based}  based on support vector regression (SVR). The predictor firstly derives a retention time index for the condition at hand. Then by using those indices, the predictor creates 60 peptide features which are optimally combined during a second training procedure. After that, $\epsilon-SVR$, \textcolor{red}{a popular kind of SVR model}\todo{remove}, is used to train the model based on the features. The resulting retention model can be subsequently used to predict the retention time of other peptides of interest. \\
+Although a great deal of effort has been made into improving the models, there are still some remaining issues. One of the main weaknesses of ANN is its time consumption. In order to train ANN, a large amount of training data is required which will result in a high cost in terms of both time and resources. What's worse, its high computational cost also implies its weakness in terms of repeatability and comparability which are essential to laboratory research. It also limits its development for commercial purpose.\\
 
 \noindent
-The performance of Elude is excellent and considered as one of the state-of-the-art retention time predictors. However, one of the shortcomings of the Elude algorithm is the rather limited use of positional information. The positional information here is mainly about the relative position of different amino acids in the peptide. \textcolor{red}{The retention index trained in-house on which many of the other features are based is calculated using only the amino acid composition.}\todo{Re-write} Adding positional data is likely to capture more information, and thus lead to higher prediction accuracies\todo{accuracy} \cite{foo6}.\\
+In order to solve this problem, another alternative machine-learning method, support vector machine(SVM) has been implemented. In \cite{foo4}, Klammer \textit{et al.} proposed a predictor based on this method. Compared to ANN, SVM require a smaller training set which can reduce the computational cost dramatically. Besides, dynamic SVR (support vector machine for regression problem) model avoids the RT variation between different chromatographic conditions which could have better performance than the linear regression model in terms of adaptability. However, using small dataset with low complexity to train the model also leads to the poor performance in terms of accurate regression and gives lower quality prediction compared to ANN. If we simply use the same amount of training data as in ANN, the SVR model could have extremely high computational cost which might be even higher than ANN.\\
 
 
-\todo[inline]{Re-write the following paragraph. If this happens then the results will be bad.}
 \noindent
-However, even with the proper models, the prediction could fail or the precision could be extremely low if the selected features are improper or unrepresentative. So the features selection is also a essential part of an successful prediction.\\
+To enhance the capacity of the predictor and raise the predicted accuracy, Luminita Moruz\textit{et al.} in \cite{foo5} has developed a new predictor, ELUDE, which is based on support vector regression (SVR). The predictor firstly derives a retention time index for the condition at hand. Then by using those indices, the predictor creates 60 peptide features which are optimally combined during a second training procedure. After that, $\epsilon-SVR$ is used to train the model based on the features. The resulting retention model can be subsequently used to predict the retention time of other peptides of interest. \\
+
+\noindent
+The performance of Elude is excellent and considered as one of the state-of-the-art retention time predictors. However, one of the shortcomings of the Elude algorithm is the rather limited use of positional information. The positional information here is mainly about the relative position of different amino acids in the peptide. The retention index used for computing features is calculated by only using the amino acid composition. Adding positional data is likely to capture more information, and thus lead to higher prediction accuracy \cite{foo6}.\\
+
+\noindent
+However, even with the proper models, the prediction precision could be extremely low if the selected features are improper. So the features selection is also a essential part of an successful prediction.\\
 
 \section{Features}
 \noindent
-The effect of an individual amino acid was firstly taken into account when building the model because \textcolor{red}{evidences implied}\todo{evidence has implied} that the inclusion of this type of additional information could increase the confidence of \textcolor{red}{protein identification of the peptide}\todo{peptide indetification} \cite{foo1} and the chromatographic behavior of a peptide is mainly dependent on its amino acid composition \cite{foo7}\todo{reverse these, peptides are composed of amino acids and it can increase the performance}. A set of retention time coefficients were generated from only different amino-acid composition by using iterative regression methods \cite{foo8} \cite{foo9} \cite{foo10} \todo{explain the last sentence more.}.\\
-
-\todo[inline]{In \cite{foo9}, it is pointed out that ... }
-\todo[inline]{change every thing below that you have, the author of ..., write them like Author \textit{et al.} in \cite{?} have also emphasized .. }
-\noindent
-However, the author of \cite{foo9} pointed out that the relative location of different amino acid\todo{amino acids} in a peptide could affect the behavior of the peptide too. The author of \cite{foo11} has also emphasized the relation between the chromatographic behavior of peptides and their amino acid composition. \textcolor{red}{It is for sure that different values of retention coefficients of the same amino acid need to be assigned according to different peptides and different neighborhoods.}\todo{Re-write} Besides, \textcolor{red}{the}\todo{remove} other biological characters, such as hydrophobicity \cite{foo12}, ion-pairing reagents \cite{foo13}, stationary phase \cite{foo14} and even the length of the peptide could influence the peptide retention \textcolor{red}{behavior}\todo{time}. \\
+The effect of an individual amino acid was firstly taken into account when building the model because evidence has implied that the inclusion of this type of additional information could increase the confidence of peptide identification \cite{foo1}. Since peptides are composed of amino acids, it can increase the performance the chromatographic behavior \cite{foo7}. A set of retention time coefficients were generated from only different amino-acid composition by using iterative regression methods \cite{foo8} \cite{foo9} \cite{foo10} \todo{explain the last sentence more.}.\\
 
 \noindent
-\textcolor{red}{Thus,}\todo{remove} in \cite{foo15}, O.V. Krokhin and R. Craig have developed an improved model, Sequence-Specific Retention Calculator(SSRC), for prediction of retention times in ion pair reversed-phase based on a database of 346 peptides. The ability of this model for prediction can assist detailed peptide mapping significantly, thus increase confidence in peptide identification and the protein characterization. However, the model is not completed and has not included amino acid modification that may occur during the sample preparation. In addition, the prediction capacity becomes worse for \todo{an experimental condition} experimental condition which \textcolor{red}{is diverging}\todo{diverges} from the setup.\\
-
-\todo[inline]{Again write, In \cite{?}, the authors have ... }
+However,  Author Houghten RA \textit{et al.} in \cite{foo9} pointed out that the relative location of different amino acids in a peptide could affect the behavior of the peptide too. In\cite{foo11}, author Zhou NE \textit{et al.} has also emphasized the relation between the chromatographic behavior of peptides and their amino acid composition. Retention coefficient of one amino acid need to be assigned different value according to its neighborhoods amino acid and the type of peptide. Besides, other biological characters, such as hydrophobicity \cite{foo12}, ion-pairing reagents \cite{foo13}, stationary phase \cite{foo14} and even the length of the peptide could influence the peptide retention time.\\
 
 \noindent
-After SSRC, several different kinds of factors have been used. One of them is the structural descriptors. The author \todo{who is the autho?} has employed the Quantitative structure-retention relationships with the information of the peptide's chemical characters and its structure in article \cite{foo16}. The predictor implemented in \textcolor{red}{article}\todo{Remove} \cite{foo1} is also based on three types of chemical structural descriptors and both of them showed good results with the experimental data.\\
+In \cite{foo15}, O.V. Krokhin and R. Craig have developed an improved model, Sequence-Specific Retention Calculator(SSRC), for prediction of retention times in ion pair reversed-phase based on a database of 346 peptides. The ability of this model for prediction can assist detailed peptide mapping significantly, thus increase confidence in peptide identification and the protein characterization. However, the model is not completed and has not included amino acid modification that may occur during the sample preparation. In addition, the prediction capacity becomes worse for an experimental condition which diverges from the setup.\\
 
 \noindent
-In general, most of the features that are widely used \textcolor{red}{now}\todo{remove} have strong biological meaning, such as amino acid composition, hydrophobicity of the peptide and some other chemical structural descriptors and the performances of these features could fulfill the requirement. However, few of the less-biological meaning features have been tried so far. \\
+After SSRC, several different kinds of factors have been used. One of them is the structural descriptors. Author  Kaliszan R, Baczek T, Cimochowska A \textit{et al.} in \cite{foo16} has employed the Quantitative structure-retention relationships with the information of the peptide's chemical characters and its structure . In \cite{foo1}, Baczek T, Wiczling P, Marszall M \textit{et al.} has also developed a predictor based on three types of chemical structural descriptors and both of them showed good results with the experimental data.\\
+
+\noindent
+In general, most of the features that are widely used have strong biological meaning, such as amino acid composition, hydrophobicity of the peptide and some other chemical structural descriptors and the performances of these features could fulfill the requirement. However, few of the less-biological meaning features have been tried so far. \\
 
 \noindent
 From the perspective of computer science, anything that can represent an object could be considered as a feature of this object. Therefore, it is worth to believe that some less-biological meaning features could give the same performance in this case. It might be a breakthrough to introduce some new features instead of just using the biochemical features. In this thesis,  some features with less biological meaning will be utilized and compared to the traditional biochemical features.
@@ -181,7 +167,7 @@ From the perspective of computer science, anything that can represent an object 
 
 \chapter{Methodology}
 
-To predict the peptide's retention time, there are mainly three things we need to cover: feature selection, model building and parameter optimization. The idea is \todo{that} we first extract some representative features from the peptides, then we train \textcolor{red}{the}\todo{remove} GP regression model by using these features. \textcolor{red}{At the} meanwhile, we try to optimize the parameters of the model so that it can gives better predictions\todo{it can better fit the data}. In this chapter, we will introduce each of these steps and explain them in details.
+To predict the peptide's retention time, there are mainly three things we need to cover: feature selection, model building and parameter optimization. The idea is that we first extract some representative features from the peptides, then we train GP regression model by using these features. At the meanwhile, we try to optimize the parameters of the model so that it can better fit the data. In this chapter, we will introduce each of these steps and explain them in details.
 
 \section{Feature selection}
 \fontsize{12pt}{16pt}\selectfont
@@ -957,9 +943,7 @@ What's more, our GP model gives similar performance as Elude which is considered
 
 \section{Limitation and Discussion}
 
-As we discussed in the previous chapter, GP outperforms most other models. However, there are still some limitations \textcolor{red}{of}\todo{on} this model that needs to be improved.
-
-\todo[inline]{Maybe : However, in this chapter we will discuss several limitations of this model. Solving these limitations can have a significant impact on the accuracy of our method.}
+As we discussed in the previous chapter, GP outperforms most other models. However, there are still some limitations on this model that needs to be improved. Solving these limitations can have a significant impact on the accuracy of our method.
 
 \subsection{Model limitation}
 
