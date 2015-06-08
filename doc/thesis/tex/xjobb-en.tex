@@ -65,10 +65,10 @@ Proteins, the most essential components of all the cells and organisms, plays an
   \caption{Peptide model}\label{fig:Fig3}
 \end{figure}
 \noindent
-Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique for identifying proteins in complex mixtures. The main part of this technique is high performance liquid chromatography (HPLC). HPLC has three main steps, firstly, the protein in the mixture of interest will be broken \todo{LK: I would use the term enzymatically digested} into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. The hydrophobicity is the physical property of a molecule that is seemingly repelled from a mass of water. To be more specific, a specific solvent will be pumped through the column with increasing concentration. Peptide with different hydrophobicity will gradually digest \todo{write: elute} in the solvent due to their hydrophobicity and then wash out from the column.\\
+Shotgun proteomics \cite{fooa}\cite{foob} is the most popular technique for identifying proteins in complex mixtures. The main part of this technique is high performance liquid chromatography (HPLC). HPLC has three main steps, firstly, the protein in the mixture of interest will be enzymatically digested into peptides. A peptide is a short sequence (chain) of amino acid as in Fig.\ref{fig:Fig3}. Then the resulting peptides are separated according to their hydrophobicity on a thin tube called liquid chromatography (LC) column. The hydrophobicity is the physical property of a molecule that is seemingly repelled from a mass of water. To be more specific, a specific solvent will be pumped through the column with increasing concentration. Peptide with different hydrophobicity will gradually elute in the solvent due to their hydrophobicity and then wash out from the column.\\
 
 \noindent
-In the end, those peptides will separated from the column and ionized by electrospray ionization and then tossed \todo{injected} into a mass spectrometer. The result is a set of spectra. Each spectrum corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
+In the end, those peptides will separated from the column and ionized by electrospray ionization and then injected into a mass spectrometer. The result is a set of spectra. Each spectrum corresponds to only one or at most a few specific peptides. The fig.\ref{fig:HPLC} shows the general process of HPLC method.\\
 
 \begin{figure}[h!]
   \centering
@@ -176,16 +176,12 @@ To predict the peptide's retention time, there are mainly three things we need t
 
 We are describing the bag-of-words feature extraction method. This method has shown excellent performance in other aspects of computer vision, such as image analysis and image recognition.
 
-As mentioned in Chapter 2, few of the new features which have excellent performance in other fields have been implemented to address this problem so far. Therefore, we would like to introduce the Bag of Word method for feature selection.\\
-
-\todo[inline]{Change every string-analyzed to analysing strings.}
-\todo[inline]{Make sure you fix this everywhere, it is bag-of-words not bag-of-word. Also bag-of-words does feature extraction not feature selection.}
+As mentioned in Chapter 2, few of the new features which have excellent performance in other fields have been implemented to address this problem so far. Therefore, we would like to introduce the Bag-of-words method for feature selection.\\
 
 \noindent
-The peptide could be considered as a string where each amino acid is a letter. Therefore, one alternative way is to extract the features from the peptide is to implement a method used for analysing strings. Bag of Word model is one of the most popular methods in analysing strings. This method is widely used in computer science and data mining.
-BOW enables us to compare strings by embedding them into a vector space.\cite{foo17}.\\
+The peptide could be considered as a string where each amino acid is a letter. Therefore, one alternative way is to extract the features from the peptide is to implement a method used for analysing strings. Bag-of-words model is one of the most popular methods for analysing strings. This method is widely used in computer science and data mining.
+Bag-of-words enables us to compare strings by embedding them into a vector space.\cite{foo17}.\\
 
-\todo[inline]{If you want to write italic don't write $n-grams$, this is the math mode. Write \textit{n-grams}, fix these everywhere in the thesis. Only use \$\$ if you are writing math.}
 
 \noindent
 To be more specific, the peptide sequence is characterized by a predefined set of sub-strings which is considered as the embedding language $L$ and each of the sub-strings in this set is a word $w$ of $L$. We use \textit{n-grams} to define the embedding language $L$ and its words $w$. \\
@@ -214,7 +210,7 @@ In our case, we extract features based on \textit{2-grams} to build our embeddin
 \end{figure}
 
 \noindent
-To give more meaning to the features, we can include some biological features that are not captured by BOW. The first feature is the length of the peptide since Since the number of the words $w$ in $L$ is directly related to it and the second feature is the hydrophobicity because it is one of the determinative factor of the retention time of the peptide. Adding these will result in a 402 dimensional feature as fig.\ref{fig:Fig_feature} showed. 
+To give more meaning to the features, we can include some biological features that are not captured by Bag-of-words. The first feature is the length of the peptide since Since the number of the words $w$ in $L$ is directly related to it and the second feature is the hydrophobicity because it is one of the determinative factors of the retention time. Adding these will result in a 402 dimensional feature as fig.\ref{fig:Fig_feature} showed.
 
 \noindent
 Each peptide $p_{i}$ is then represented by 402 features as fig.\ref{fig:feature_sub1} and all of them together form the feature matrix as fig.\ref{fig:feature_sub2}.\\
@@ -233,10 +229,10 @@ Each peptide $p_{i}$ is then represented by 402 features as fig.\ref{fig:feature
 
 
 \noindent
-The advantages of the Bag-of-Word method are mainly discussed in two aspects: complexity and flexibility.\\
+The advantages of the Bag-of-words method are mainly discussed in two aspects: complexity and flexibility.\\
 
 \noindent
-In terms of complexity, the most popular features that have been used so far are mainly biochemical features. However, in order to calculate these features, a large amount of time is required. What's worse, some particular facilities are needed to calculate some of them, for example, if we use the structure descriptor as a feature, we need to use some structure analyzer to produce them which is quite expensive and time consuming. Comparing with computing these features, the computational cost of our method is very low. According to \cite{foo17}, the run-time complexity of Bag-of-Word is only $O(|x|+|y|)$ when it is  $O(|x|\cdot |y|)$  for another benchmark method where $x$ and $y$ are the peptide sequences while $|x|$ and $|y|$ are the maximal nonzero dimensions of $\phi_{w}(x)$ and $\phi_{w}(y)$.\\
+In terms of complexity, the most popular features that have been used so far are mainly biochemical features. However, in order to calculate these features, a large amount of time is required. What's worse, some particular facilities are needed to calculate some of them, for example, if we use the structure descriptor as a feature, we need to use some structure analyzer to produce them which is quite expensive and time consuming. Comparing with computing these features, the computational cost of our method is very low. According to \cite{foo17}, the run-time complexity of Bag-of-Words is only $O(|x|+|y|)$ when it is  $O(|x|\cdot |y|)$  for another benchmark method where $x$ and $y$ are the peptide sequences while $|x|$ and $|y|$ are the maximal nonzero dimensions of $\phi_{w}(x)$ and $\phi_{w}(y)$.\\
 
 \noindent
 As for the flexibility, since the embedding language $L$ is constituted by the words that are directly and simply extracted from the samples, this method could easily change the language set $L$ for particular context of the task. This property implies a wider applicability in other field of biological research.\\
@@ -251,8 +247,6 @@ Gaussian Processes is a supervised machine learning method based on Bayesian the
 
 \subsection{Standard Bayesian linear Regression}
 
-\todo[inline]{ Here $x = \{(x_{i},y_{i}) | i =1,2...n\}$, $x$ and $x_i$ are not distinguishable. Write it like this $\mathcal{D}=\{(x_{i},y_{i}) | i =1,2...n\}$. When you are writing math for matrices use capital letters $X$, for vectors use bold letters $\mathbf{x}$ and for scalars use normal letters $x$. If you are using a set use the mathcal form $\mathcal{X}$. This way the reader will know about the properties of the variable you are using. Fix these every where.}
-
 
 Let's first consider a set of observations $\mathcal{D}=\{(x_{i},y_{i}) | i =1,2...n\}$ along with some noise $\epsilon$. In the regression setting, the targets are real values with additive noise. We are interested in inferring the relationship between inputs and targets, i.e. the conditional distribution of the targets given the inputs.\\
 
@@ -260,23 +254,21 @@ Let's first consider a set of observations $\mathcal{D}=\{(x_{i},y_{i}) | i =1,2
 In supervised learning, one way to decide this relationship is using non-parametric regression. It uses a set of $w$ as the best descriptors of the model to describe the relationship between the inputs and outputs. The problem now comes to how to evaluate if the trained model fits the observations.\\
 
 \noindent
-There are two methods for performing this evaluation, loss function and maximum likelihood. The first one is achieved by optimizing the parameters $w$ that minimizing the predefined loss function, such as minimal squared error function (MSE). However, one of the obvious shortages of this method is the over-fitting. To minimize the error of the model, one would increase the complexity of the model that might easily over fit to the training set. This means that \textcolor{red}{Even though the precision of the model in terms of training data could be high enough, its predictive capacity for unknown data could be really bad and unacceptable.}\todo{Re-write} In addition, making a simpler model by ignoring the noise could avoid the over-fitting problem but could also lead to lower accuracy for prediction.\\
+There are two methods for performing this evaluation, loss function and maximum likelihood. The first one is achieved by optimizing the parameters $w$ that minimizing the predefined loss function, such as minimal squared error function (MSE). However, one of the obvious shortages of this method is the over-fitting. To minimize the error of the model, one would increase the complexity of the model that might easily over fit to the training set. This means the model's predictive capacity for unknown (testing) data could be really bad even though it has high predicted precision in terms of training data. In addition, making a simpler model by ignoring the noise could avoid the over-fitting problem but could also lead to lower accuracy for prediction.\\
 
-\todo[inline]{The main difference between Bayesian regression and loss function is the fact that Bayesian regression considers a prior distribution for $w$, having this distribution prevents the model from over-fitting and forces it to be smooth. Re-write this to show this fact.}
 \noindent
-An alternative way to identify the quality of model is Maximum Likelihood, also known as Bayesian regression. The idea of this method is replacing the loss function by the jointly probability distribution with predefined noise (Likelihood function) and search for the parameters $w$ that maximize the likelihood function to build the model.\\
+An alternative way to identify the quality of model is Maximum Likelihood, also known as Bayesian regression. The idea of Bayesian regression is finding the optimal parameters $w$ that maximizes the likelihood function. The main difference between Bayesian regression and loss function is the fact that Bayesian regression considers a prior distribution for $w$, having this distribution prevents the model from over-fitting and forces it to be smooth.\\
 
 \noindent
 The Bayesian analysis of the linear regression model can be written as :
 
-\todo[inline]{Since $f$ is a function maybe $f(\mathbf{x})$ is a better choice rather than $f_{\mathbf{x}}$.}
 
 \begin{equation} \label{eq:2}
 f(\mathbf{x})=x^{T}w, \quad  y = f(\mathbf{x})+\epsilon ,
 \end{equation}
 
 \noindent
-where $x$ is the input vector, $w$ is the parameters of the model. The function value is represented by $ f_{x}$ and a bias (noise) is included. We assume that the $\epsilon$ is independent identically distributed Gaussian noise with zero mean and variance $\sigma_{n} ^{2}$.
+where $x$ is the input vector, $w$ is the parameters of the model. The function value is represented by $ f(\mathbf{x})$ and a bias (noise) is included. We assume that the $\epsilon$ is independent identically distributed Gaussian noise with zero mean and variance $\sigma_{n} ^{2}$.
 \begin{equation} \label{eq:3}
 \epsilon \sim N(0, \sigma_{n} ^{2}) ,
 \end{equation}
@@ -284,46 +276,45 @@ where $x$ is the input vector, $w$ is the parameters of the model. The function 
 \noindent
 The likelihood function, the probability density of the observation given the parameters, will then have the following form:
 \begin{equation} \label{eq:4}
-p(y|x,w) = \prod_{i=1}^{n}p(y_{i}|x_{i},w) = \prod_{i=1}^{n}\frac{1}{\sqrt{2\pi}\sigma_{n}}exp(-\frac{(y_{i}-x_{i}^{T}w)^{2}}{2\sigma_{n}^{2}})
+p(y|\mathbf{x},\mathbf{w}) = \prod_{i=1}^{n}p(y_{i}|x_{i},\mathbf{w}) = \prod_{i=1}^{n}\frac{1}{\sqrt{2\pi}\sigma_{n}}exp(-\frac{(y_{i}-x_{i}^{T}\mathbf{w})^{2}}{2\sigma_{n}^{2}})
 \end{equation}
 
 \noindent
 The idea of Bayesian linear model is mainly based on the posterior distribution computed by Bayes' rule:
 \begin{equation} \label{eq:5}
-p(w|y,x) = \frac{p(y|x,w)p(w)}{p(y|x)}
+p(\mathbf{w}|y,\mathbf{x}) = \frac{p(y|\mathbf{x},\mathbf{w})p(\mathbf{w})}{p(y|\mathbf{x})}
 \end{equation}
 
 \noindent
 To calculate the posterior, we also need a prior over the parameters. The prior is normally considered to represent our prior beliefs over the distribution of the parameters we expect to observe before seeing any data. Therefore, we put a zero mean Gaussian prior with covariance matrix $\Sigma$ on the weights:
 \begin{equation} \label{eq:6}
-w \sim N(0,\Sigma)
+\mathbf{w} \sim N(0,\Sigma)
 \end{equation}
 
 \noindent
-Another essential part is the marginal likelihood function $p(y|x)$. The marginal likelihood,(normalizing constant), gives the likelihood of the output by considering only one specific kind of input and is independent of the other factors. To be specific, the marginal likelihood of expected output here only consider the effect of the input $x$ without taking the effect of the weights $w$ into account. Therefore, it is given by
+Another essential part is the marginal likelihood function $p(y|\mathbf{x})$. The marginal likelihood,(normalizing constant), gives the likelihood of the output by considering only one specific kind of input and is independent of the other factors. To be specific, the marginal likelihood of expected output here only consider the effect of the input $\mathbf{x}$ without taking the effect of the weights $\mathbf{w}$ into account. Therefore, it is given by
 \begin{equation} \label{eq:7}
-p(y|x) = \int p(y|x,w)p(w)dw
+p(y|\mathbf{x}) = \int p(y|\mathbf{x},\mathbf{w})p(\mathbf{w})dw
 \end{equation}
 
 \noindent
-By combining the likelihood function in \ref{eq:4} with the prior in \ref{eq:6} and marginal likelihood function in \ref{eq:7}, we could obtain the actual form of the posterior $p(w|x,y)$ in \ref{eq:5}
+By combining the likelihood function in \ref{eq:4} with the prior in \ref{eq:6} and marginal likelihood function in \ref{eq:7}, we could obtain the actual form of the posterior $p(\mathbf{w}|\mathbf{x},y)$ in \ref{eq:5}
 \begin{equation} \label{eq:8}
-p(w|y,x) = \frac{p(y|x,w)p(w)}{p(y|x)} \sim exp(-\frac{1}{2}(w-\bar w)^{T}(\frac{1}{\sigma_{n}^{2}}xx^{T}+\Sigma^{-1})(w-\bar w))
+p(\mathbf{w}|y,\mathbf{x}) = \frac{p(y|\mathbf{x},\mathbf{w})p(\mathbf{w})}{p(y|\mathbf{x})} \sim exp(-\frac{1}{2}(\mathbf{w}-\bar w)^{T}(\frac{1}{\sigma_{n}^{2}}\mathbf{x}\mathbf{x}^{T}+\Sigma^{-1})(\mathbf{w}-\bar w))
 \end{equation}
 
 \noindent
 From \ref{eq:8}, it can be seen that the posterior is actually another Gaussian distribution with the new mean and new covariance matrix.\\
 \begin{align}\label{eq.9}
-    &\bar w= \sigma_{n}^{-2}(\frac{1}{\sigma_{n}^{2}}xx^{T}+\Sigma^{-1})^{-1}xy\notag \\
-    &\Sigma_{new} = \frac{1}{\sigma_{n}^{2}}xx^{T}+\Sigma^{-1}
+    &\bar w= \sigma_{n}^{-2}(\frac{1}{\sigma_{n}^{2}}\mathbf{x}\mathbf{x}^{T}+\Sigma^{-1})^{-1}\mathbf{x}y\notag \\
+    &\Sigma_{new} = \frac{1}{\sigma_{n}^{2}}\mathbf{x}\mathbf{x}^{T}+\Sigma^{-1}
 \end{align}
 
 \noindent
-For Bayesian linear regression, the prediction is made by all possible parameters along with corresponding posterior probability. Thus, we could conclude the predictive jointly distribution of the output $f_{new}$ of a new data point $x_{new}$ based on the training dataset $x$ along with their weights $w$ and their outputs $y$ as follows :
+For Bayesian linear regression, the prediction is made by all possible parameters along with corresponding posterior probability. Thus, we could conclude the predictive jointly distribution of the output $f(x_{new})$ of a new data point $x_{new}$ based on the training dataset $\mathbf{x}$ along with their weights $\mathbf{w}$ and their outputs $y$ as follows :
 \begin{align} \label{eq:10}
-p(f_{new}|x_{new},y,x) = \int p(f_{new}|x_{new},w)p(w|x,y)dw \notag \\ \sim N(\frac{1}{\sigma_{n}^{2}}x_{new}^{T}(\sigma_{n}^{2}xx^{T}+\Sigma^{-1})^{-1}xy,x_{new}^{T}(\sigma_{n}^{2}xx^{T}+\Sigma^{-1})^{-1}x_{new})
+p(f(x_{new})|x_{new},y,\mathbf{x}) = \int p(f(x_{new})|x_{new},\mathbf{w})p(\mathbf{w}|\mathbf{x},y)dw \notag \\ \sim N(\frac{1}{\sigma_{n}^{2}}x_{new}^{T}(\sigma_{n}^{2}\mathbf{x}\mathbf{x}^{T}+\Sigma^{-1})^{-1}\mathbf{x}y,x_{new}^{T}(\sigma_{n}^{2}\mathbf{x}\mathbf{x}^{T}+\Sigma^{-1})^{-1}x_{new})
 \end{align}
-
 
 
 \subsection{Gaussian Processes Regression}
@@ -333,14 +324,14 @@ A Gaussian Process regression model inherits the Bayesian theorem and compute th
 \noindent
 A Gaussian Process, a distribution over a set of functions, is fully specified by its mean function and covariance function as \ref{eq:11}
 \begin{equation} \label{eq:11}
-  f(x) \sim GP(m(x), k(x,x'))
+  f(\mathbf{x}) \sim GP(m(\mathbf{x}), k(\mathbf{x},\mathbf{x}'))
 \end{equation}
-where the mean function m(x) and the covariance function $k(x, x')$ are:
+where the mean function $m(\mathbf{x})$ and the covariance function $k(\mathbf{x}, \mathbf{x}')$ are:
 \begin{equation} \label{eq:12}
-  m(x) =  E[(f(x))]
+  m(\mathbf{x}) =  E[(f(\mathbf{x}))]
 \end{equation}
 \begin{equation} \label{eq:13}
-k(x,x') = E[(f(x)-m(x))(f(x')-m(x'))]
+k(\mathbf{x},\mathbf{x}') = E[(f(\mathbf{x})-m(\mathbf{x}))(f(\mathbf{x}')-m(\mathbf{x}'))]
 \end{equation}
 
 \noindent
@@ -365,36 +356,34 @@ To be more specific, the Gaussian Process specifies the covariance function as t
 \end{equation}
 
 \noindent
-where the $k(x_{a},x_{b})$ is a general form of kernel function and $\delta_{ab}$ is a Kronecker delta which is one iff $a\equiv b$ and zero otherwise.\\
+where the $k(\mathbf{x}_{a},\mathbf{x}_{b})$ is a general form of kernel function and $\delta_{ab}$ is a Kronecker delta which is one iff $a\equiv b$ and zero otherwise.\\
 
 \noindent
 Then, we could generate the joint distribution of the observations $y$ and the predicted value $f_{new}$ under the prior as
 \begin{equation}\label{eq:16}
    \left[
     \begin{array}{c}
-     y \\ f_{new}
+     y \\ f(x_{new})
     \end{array}
    \right] \sim N
    \left(
     \begin{array}{cc}
       0 ,& \left[
            \begin{array}{cc}
-            k(x,x)+\sigma_{n}^{2}I & k(x,x_{new})\\
-            k(x_{new},x) & k(x_{new},x_{new})\\
+            k(\mathbf{x},\mathbf{x})+\sigma_{n}^{2}I & k(\mathbf{x},x_{new})\\
+            k(x_{new},\mathbf{x}) & k(x_{new},x_{new})\\
            \end{array}
           \right]
     \end{array}
    \right)
 \end{equation}
 
-
-
 \noindent
 Deriving the conditional distribution, we finally arrive at the key predictive equations for Gaussian process regression
 \begin{align}\label{eq:17}
-   f_{new}|x,y,x_{new} &\sim N(\bar f_{new}, cov(f_{new})), \quad where\\
-   \bar f_{new} &= k(x_{new},x)[k(x,x)+\sigma_{n}^{2}I]^{-1}y\\
-   cov(f_{new}) &= k(x_{new},x_{new})-k(x_{new},x)[k(x,x)+\sigma_{n}^{2}I]^{-1}k(x,x_{new})
+   f_{new}|\mathbf{x},y,x_{new} &\sim N(\bar f(x_{new}), cov(f(x_{new}))), \quad where\\
+   \bar f(x_{new}) &= k(x_{new},\mathbf{x})[k(\mathbf{x},\mathbf{x})+\sigma_{n}^{2}I]^{-1}y\\
+   cov(f(x_{new})) &= k(x_{new},x_{new})-k(x_{new},\mathbf{x})[k(\mathbf{x},\mathbf{x})+\sigma_{n}^{2}I]^{-1}k(\mathbf{x},x_{new})
 \end{align}
 
 \noindent
@@ -455,7 +444,7 @@ Since we want the kernel function to have stronger capacity, we would like to ov
 \end{equation}
 
 \noindent
-where $m$ is the weight between two kernel functions. We create a multi-kernel function by combining two different types of kernel linearly. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will also explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
+where $m$ is the weight between two kernel functions. We create a multi-kernel function by combining RBF kernel function with Polynomial kernel function linearly. We can see that if $ m = 0$, the multi-kernel is actually a RBF kernel and it is a polynomial kernel when $m = 1$. By combining two kernels as a new one and find a proper weight between them, we could achieve our goal. As for how to find the proper weight factor $m$, we will also explain in the section of optimization. The performance of this multi-kernel function will also be evaluated and compared to the single kernel function later.
 
 
 \subsection{Properties of Gaussian Processes}
