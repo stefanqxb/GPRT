@@ -35,7 +35,7 @@ Examiner: Stefan Carlsson}
 \maketitle
 \selectlanguage{english}
 \begin{abstract}
-  The Shotgun Proteomics is the leading technique for protein identification. However, this process produces a large amount of data need to be generated which results in a extremely high computational cost. Retention time (RT) is an important factor to be used to enhance the efficiency of protein identification. By predicting the retention time successfully, we could decrease the computational cost dramatically. This thesis presents a machine learning method, Gaussian Processes, to predict the retention time of a set of peptide in hand. We also implement a feature extraction method called BOW to generate the features for training the model. In addition, we also investigate the effect of different types of optimization methods to the model's parameters. The results show comparable precision of the prediction and relatively low time cost when comparing with the state-of-art prediction model.
+  The Shotgun Proteomics is the leading technique for protein identification. However, this process produces a large amount of data need to be generated which results in a extremely high computational cost. Retention time (RT) is an important factor to be used to enhance the efficiency of protein identification. By predicting the retention time successfully, we could decrease the computational cost dramatically. This thesis presents a machine learning method, Gaussian Processes, to predict the retention time of a set of peptide in hand. We also implement a feature extraction method called BOW to generate the features for training the model. In addition, we also investigate the effect of different types of optimization methods to the model's parameters. The results show comparable precision of the prediction and relatively low computational cost when comparing with the state-of-art prediction model.
 \end{abstract}
 
 \clearpage
@@ -119,7 +119,7 @@ Prediction of the retention time for a given peptide could help to improve the c
 To design a successful predictor for our task, one would has the following questions. Firstly, what kind of model will have better performance of the prediction? Secondly, what factors will have a great impact on the retention time? In order to answer the questions, a number of models based on different features have been proposed to characterize the peptide and to predict its retention time.\\
 
 \section{Models / Methods}
-\noindent
+
 
 Different kinds of machine learning models have been implemented. One of the model is the multiple linear regression (MLR) model. In \cite{foo1}, Baczek T, Wiczling P, Marszall M \textit{et al.} has implemented this model to predict the peptide retention time at different HPLC conditions and shows high precision. However, the linear regression model mainly depends on the chromatographic condition and thus prediction bias could be a serious problem when the model is used under different circumstances. \\
 
@@ -145,7 +145,7 @@ However, even with the proper models, the prediction precision could be extremel
 
 \section{Features}
 \noindent
-The effect of an individual amino acid was firstly taken into account when building the model because evidence has implied that the inclusion of this type of additional information could increase the confidence of peptide identification \cite{foo1}. Since peptides are composed of amino acids, it can increase the performance the chromatographic behavior \cite{foo7}. A set of retention time coefficients were generated from only different amino-acid composition by using iterative regression methods \cite{foo8} \cite{foo9} \cite{foo10} \todo{explain the last sentence more.}.\\
+The effect of an individual amino acid was firstly taken into account when building the model because evidence has implied that the inclusion of this type of additional information could increase the confidence of peptide identification \cite{foo1}. Since peptides are composed of amino acids, it can increase the performance the chromatographic behavior \cite{foo7}. A set of retention time coefficients were generated from only different amino-acid composition by using iterative regression methods \cite{foo8} \cite{foo9} \cite{foo10}. To be specific, the regression model was trained by amino-acid with different compositions and their corresponding retention time. As a result, the model gives a set of coefficient regarding the amino-acid composition and use them to represent the peptides. \\
 
 \noindent
 However,  Author Houghten RA \textit{et al.} in \cite{foo9} pointed out that the relative location of different amino acids in a peptide could affect the behavior of the peptide too. In\cite{foo11}, author Zhou NE \textit{et al.} has also emphasized the relation between the chromatographic behavior of peptides and their amino acid composition. Retention coefficient of one amino acid need to be assigned different value according to its neighborhoods amino acid and the type of peptide. Besides, other biological characters, such as hydrophobicity \cite{foo12}, ion-pairing reagents \cite{foo13}, stationary phase \cite{foo14} and even the length of the peptide could influence the peptide retention time.\\
@@ -498,6 +498,7 @@ where$g^{k+1}$ is the gradient of the current point and $\beta_{k}$ is some coef
 
 \noindent
 The process of Conjugate Gradient (CG) method could be described as Fig.\ref{fig:Fig7}
+
 \begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
@@ -937,10 +938,10 @@ In the end, as benchmark, we will summarize the performance of other popular ret
 The last two columns are empty because we do not know how long it takes to train the model for prediction.\\
 
 \noindent
-As we can seen form Table.\ref{table6}, our GP model gives much better performance than SSRC and BioLCCC. Our model successfully reduce the $\Delta_{t95\%}$ to a level of $0.1908$ while the BioLCCC only gives $0.3750$ and result of SSRC is $0.4028$. That means our model reduces almost 20 mins of the time window which enhance the parallelized processing ability dramatically. In addition, the $\rho$ of our GP model is also higher than the SSRC and BioLCCC which means our prediction is more precise than the other two methods.\\
+As we can seen form Table.\ref{table6}, our GP model gives much better performance than SSRC and BioLCCC. Our model successfully reduce the $\Delta_{t95\%}$ to a level of $0.1908$ while the BioLCCC only gives $0.3750$ and result of SSRC is $0.4028$. That means our model reduces almost 20 mins of the time window which enhance the parallelized processing ability dramatically. In addition, the $\rho$ of our GP model is also higher than the SSRC and BioLCCC which means our prediction is more precisely than the other two methods.\\
 
 \noindent
-What's more, our GP model gives similar performance as Elude which is considered to be the most popular and best model so far. Although the Elude gives better performance in both correlation coefficient and minimal time window, the computational cost of Elude is much higher than our GP model. In big data analysis, such high computational cost could be a very serious problem and we should make a balance between the accuracy and the efficiency. Considering that the computational cost of Elude is almost 10 times as our GP model, the $\rho$ and $\Delta_{t95\%}$ of our GP model are still good enough and our model has stronger practical ability than Elude.
+What's more, our GP model gives similar performance as Elude which is considered as the most popular and best model so far. Although the Elude gives better performance in both correlation coefficient and minimal time window, the computational cost of Elude is much higher than our GP model. In big data analysis, such high computational cost could be a very serious problem and we should make a balance between the accuracy and the efficiency. Considering that the computational cost of Elude is almost 10 times as our GP model, the $\rho$ and $\Delta_{t95\%}$ of our GP model are still good enough and our model has stronger practical ability than Elude in general.
 
 \chapter{Discussion and Conclusion}
 \fontsize{12pt}{16pt}\selectfont
