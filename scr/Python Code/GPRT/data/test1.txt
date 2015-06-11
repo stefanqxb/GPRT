@@ -1,2 +1,0 @@
-peptide	        rt
--.MFLYNLTLQR.A	185.362

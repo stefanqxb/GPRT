@@ -1,0 +1,33 @@
+\changetocdepth {2}
+\select@language {english}
+\select@language {english}
+\contentsline {chapter}{\chapternumberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}Introduction}{1}
+\contentsline {section}{\numberline {1.2}Problem Statement}{3}
+\contentsline {section}{\numberline {1.3}Outline}{4}
+\contentsline {chapter}{\chapternumberline {2}Related Work}{5}
+\contentsline {section}{\numberline {2.1}Models / Methods}{5}
+\contentsline {section}{\numberline {2.2}Features}{7}
+\contentsline {chapter}{\chapternumberline {3}Methodology}{9}
+\contentsline {section}{\numberline {3.1}Feature selection}{9}
+\contentsline {subsection}{\numberline {3.1.1}Bag of Words}{9}
+\contentsline {section}{\numberline {3.2}Gaussian Processes}{12}
+\contentsline {subsection}{\numberline {3.2.1}Standard Bayesian linear Regression}{12}
+\contentsline {subsection}{\numberline {3.2.2}Gaussian Processes Regression}{14}
+\contentsline {subsection}{\numberline {3.2.3}Kernel Function and Multi-Kernels}{17}
+\contentsline {subsection}{\numberline {3.2.4}Properties of Gaussian Processes}{18}
+\contentsline {section}{\numberline {3.3}Optimization}{19}
+\contentsline {subsection}{\numberline {3.3.1}The Conjugate Gradient}{20}
+\contentsline {subsection}{\numberline {3.3.2}The Particle Swarm Optimization}{23}
+\contentsline {section}{\numberline {3.4}Summarize of the Chapter}{24}
+\contentsline {chapter}{\chapternumberline {4}Results and Evaluation}{27}
+\contentsline {section}{\numberline {4.1}Experimental Setup}{29}
+\contentsline {section}{\numberline {4.2}Experimental Results}{29}
+\contentsline {chapter}{\chapternumberline {5}Discussion and Conclusion}{39}
+\contentsline {section}{\numberline {5.1}Limitation and Discussion}{39}
+\contentsline {subsection}{\numberline {5.1.1}Model limitation}{39}
+\contentsline {subsection}{\numberline {5.1.2}Feature limitation}{40}
+\contentsline {subsection}{\numberline {5.1.3}Optimization limitation}{40}
+\contentsline {section}{\numberline {5.2}Conclusion}{41}
+\contentsline {section}{\numberline {5.3}Future Work}{42}
+\contentsline {chapter}{Bibliography}{44}
