@@ -8,6 +8,10 @@ import BOW_feature as bf
 import math
 
 def feature_extra(File, num,num2,subset_num):
+    num = int(num)
+    num2 = int(num2)
+    subset_num = int(subset_num)
+
     if num == 1:
         # Bag of Word model
         psmDescriptions,feature_temp = bf.getBOWfeature(File,num2)

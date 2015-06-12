@@ -4,17 +4,21 @@ sys.path.append('elude/')
 import numpy as np
 from sklearn import grid_search, neighbors, svm
 import data_generator, feature_extraction
-import matplotlib.pyplot as plt
 import GPy
-import calc_mtw
-import pylab
+
 import time
-from scipy.stats.stats import pearsonr
+import Help_file
+import Pre_option
+import Evaluation_and_Ploting
+
+
+request1,request12,request2 = Pre_option.option()
 
 # feature selection
 print "selecting features....."
+
 File = 'data/retention_time_peptide.csv'
-feature,rt = feature_extraction.feature_extra(File,1,2,0) # num: 1--bow 2--elude num2 1--1gram word 2--2gram word  subset_num: subset
+feature,rt = feature_extraction.feature_extra(File,request1,request12,request2)
 
 row = len(feature)
 
@@ -27,59 +31,24 @@ svr = grid_search.GridSearchCV(svr1, param_grid ={"C":np.linspace(100,1000,num =
 svr.fit(train_set_svr,train_tag_svr)
 pv_svr = svr.predict(test_set_svr)
 t_svr = time.time()-t0
+
 #########  Gaussian Process model ############
 [train_set, train_tag, test_set, test_tag] = data_generator.processing_Data(feature, rt, row,'gp')
 t0 = time.time()
 kern = GPy.kern.RBF(train_set.shape[1])
 m = GPy.models.GPRegression(train_set, train_tag, kern)
+
 print "optimizing the hyperparameters....."
 m.optimize()
 pv_gp ,ps = m.predict(test_set)
 t_gp = time.time() - t0
 
 # result evaluation
-print "evaluating result...."
-step = 10
-diff_svr = abs(pv_svr - test_tag_svr)
-diff_gp = abs(pv_gp -test_tag)
-histo_svr = plt.hist(diff_svr,step)
-histo_gp = plt.hist(diff_gp,step)
+print "Evaluating result...."
 
-print "calculating the minimal time window and correlation coefficient......"
+diff_svr ,diff_gp,step, max_total_gp, max_total_svr = Evaluation_and_Ploting.evaluation(pv_svr,test_tag_svr,pv_gp,test_tag,t_gp,t_svr)
+Evaluation_and_Ploting.ploting(pv_svr,pv_gp,test_tag,max_total_svr,max_total_gp,diff_svr,diff_gp,step)
 
-
-max_total_gp = max(test_tag)
-max_total_svr = max(test_tag)
-
-mtw_gp =calc_mtw.mini_time_win(histo_gp[0],diff_gp,step,max_total_gp)
-corrcoef_gp = pearsonr(pv_gp,test_tag)
-mtw_svr = calc_mtw.mini_time_win(histo_svr[0],diff_svr,step,max_total_svr)
-corrcoef_svr = pearsonr(pv_svr,test_tag_svr)
-
-print 'corrcoef of GP = ',corrcoef_gp[0], '   corrcoef of SVR = ',corrcoef_svr[0]
-print 'mtw of GP = ',mtw_gp, '   mtw of SVR = ', mtw_svr
-print 'running time of GP = ',t_gp, '   running time of SVR = ',t_svr
-
-pylab.figure(1)
-plt.hold('on')
-plt.subplot(121)
-plt.plot(pv_svr,test_tag, 'g*')
-plt.plot([1,max_total_svr],[1,max_total_svr],'y-',linewidth = 2)
-plt.title('SVR')
-plt.subplot(122)
-plt.plot(pv_gp,test_tag, 'r*',label = "correlation coefficient of GP")
-plt.plot([1,max_total_gp],[1,max_total_gp],'b-',linewidth = 2)
-plt.title('GP')
-
-pylab.figure(2)
-plt.hold('on')
-plt.subplot(121)
-line1 = plt.hist(diff_gp,bins = step,label = 'GP histogram',color = 'red')
-plt.legend()
-plt.subplot(122)
-line2 = plt.hist(diff_svr,bins = step,label = 'SVR histogram',color = 'green')
-plt.legend()
-pylab.show()
 
 
 
