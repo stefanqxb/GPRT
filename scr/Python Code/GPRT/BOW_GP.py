@@ -2,22 +2,37 @@ __author__ = 'Administrator'
 import sys
 sys.path.append('elude/')
 import numpy as np
-from sklearn import grid_search, neighbors, svm
+from sklearn import grid_search, svm
 import data_generator, feature_extraction
 import GPy
-
 import time
-import Help_file
-import Pre_option
+from optparse import OptionParser
 import Evaluation_and_Ploting
 
+usage = "usage: %prog [-f 'input file path'][-w 'feature extraction method'][-s 'number of subset']"
+parser = OptionParser(usage=usage)
+parser.add_option("-w", "--request1",
+              type="int", dest="request1",
+              help="Choose feature extraction method: 1-Bag-of-Words , 2-Elude")
+parser.add_option("-g", "--request12",
+              type= "int", dest="request12",
+              help="Choose the number of gram for BOW, if request1==2, ignore this term")
+parser.add_option("-s", "--request2",
+              type = "int", dest="request2",
+              help="Number of subset, set 0 for the whole dataset")
+parser.add_option("-f", "--filename",
+              type = "string", dest="filename",
+              help="import the target file")
+parser.print_help()
 
-request1,request12,request2 = Pre_option.option()
+(options, args) = parser.parse_args()
+request1 = options.request1
+request12 = options.request12
+request2 = options.request2
+File = options.filename
 
-# feature selection
+
 print "selecting features....."
-
-File = 'data/retention_time_peptide.csv'
 feature,rt = feature_extraction.feature_extra(File,request1,request12,request2)
 
 row = len(feature)

@@ -35,11 +35,21 @@ Examiner: Stefan Carlsson}
 \maketitle
 \selectlanguage{english}
 \begin{abstract}
-  The Shotgun Proteomics is the leading technique for protein identification. However, this process produces a large amount of data need to be generated which results in a extremely high computational cost. Retention time (RT) is an important factor to be used to enhance the efficiency of protein identification. By predicting the retention time successfully, we could decrease the computational cost dramatically. This thesis presents a machine learning method, Gaussian Processes, to predict the retention time of a set of peptide in hand. We also implement a feature extraction method called BOW to generate the features for training the model. In addition, we also investigate the effect of different types of optimization methods to the model's parameters. The results show comparable precision of the prediction and relatively low computational cost when comparing with the state-of-art prediction model.
+  Shotgun Proteomics is the leading technique for protein identification in complex mixtures. However, it produces a large amount of data which results in a extremely high computational cost for identifying the protein. Retention time (RT) is an important factor to be used to enhance the efficiency of protein identification. By predicting the retention time successfully, we could decrease the computational cost dramatically. This thesis uses a machine learning method, Gaussian Processes, to predict the retention time of a set of peptide in hand. We also implement a feature extraction method called Bag-of-Words to generate the features for training the model. In addition, we also investigate the effect of different types of optimization methods to the model's parameters. The results show comparable precision of the prediction and relatively low time cost when comparing with the state-of-art prediction model.
+
 \end{abstract}
 
 \clearpage
+\selectlanguage{swedish}
+\begin{abstract}
+Shotgun Proteomics ?r den ledande tekniken f?r proteinidentifiering i komplexa blandningar. Den ger dock en stor m?ngd data som resulterar i en extremt h?g ber?kningskostnad f?r att identifiera proteinet. Retentionstid (RT) ?r en viktig faktor som anv?nds f?r att ?ka effektiviteten vid proteinidentifiering. Genom att f?rutse retentionstiden framg?ngsrikt, skulle vi kunna minska ber?kningskostnad dramatiskt. Denna avhandling anv?nder en maskininl?rningsmetod, Gaussian Processes, f?r att f?ruts?ga retentionstiden av en upps?ttning av peptider. Vi implementerar ocks? en metod som kallas bag-of-words f?r att generera data f?r tr?ning av modellen. Dessutom unders?ker vi ocks? effekten av olika typer av optimeringsmetoder f?r modellens parametrar. Resultaten visar j?mf?rbar precision i prediktionen och relativt l?g ber?kningskostnad j?mf?rt med state-of-art modeller.
+\end{abstract}
+
+
+\clearpage
+\selectlanguage{english}
 \tableofcontents*
+
 
 \mainmatter
 \pagestyle{newchap}
@@ -119,7 +129,7 @@ Prediction of the retention time for a given peptide could help to improve the c
 To design a successful predictor for our task, one would has the following questions. Firstly, what kind of model will have better performance of the prediction? Secondly, what factors will have a great impact on the retention time? In order to answer the questions, a number of models based on different features have been proposed to characterize the peptide and to predict its retention time.\\
 
 \section{Models / Methods}
-\noindent
+
 
 Different kinds of machine learning models have been implemented. One of the model is the multiple linear regression (MLR) model. In \cite{foo1}, Baczek T, Wiczling P, Marszall M \textit{et al.} has implemented this model to predict the peptide retention time at different HPLC conditions and shows high precision. However, the linear regression model mainly depends on the chromatographic condition and thus prediction bias could be a serious problem when the model is used under different circumstances. \\
 
@@ -145,7 +155,7 @@ However, even with the proper models, the prediction precision could be extremel
 
 \section{Features}
 \noindent
-The effect of an individual amino acid was firstly taken into account when building the model because evidence has implied that the inclusion of this type of additional information could increase the confidence of peptide identification \cite{foo1}. Since peptides are composed of amino acids, it can increase the performance the chromatographic behavior \cite{foo7}. A set of retention time coefficients were generated from only different amino-acid composition by using iterative regression methods \cite{foo8} \cite{foo9} \cite{foo10} \todo{explain the last sentence more.}.\\
+The effect of an individual amino acid was firstly taken into account when building the model because evidence has implied that the inclusion of this type of additional information could increase the confidence of peptide identification \cite{foo1}. Since peptides are composed of amino acids, it can increase the performance the chromatographic behavior \cite{foo7}. A set of retention time coefficients were generated from only different amino-acid composition by using iterative regression methods \cite{foo8} \cite{foo9} \cite{foo10}. To be specific, the regression model was trained by amino-acid with different compositions and their corresponding retention time. As a result, the model gives a set of coefficient regarding the amino-acid composition and use them to represent the peptides. \\
 
 \noindent
 However,  Author Houghten RA \textit{et al.} in \cite{foo9} pointed out that the relative location of different amino acids in a peptide could affect the behavior of the peptide too. In\cite{foo11}, author Zhou NE \textit{et al.} has also emphasized the relation between the chromatographic behavior of peptides and their amino acid composition. Retention coefficient of one amino acid need to be assigned different value according to its neighborhoods amino acid and the type of peptide. Besides, other biological characters, such as hydrophobicity \cite{foo12}, ion-pairing reagents \cite{foo13}, stationary phase \cite{foo14} and even the length of the peptide could influence the peptide retention time.\\
@@ -354,7 +364,7 @@ To be more specific, the Gaussian Process specifies the covariance function as t
 \end{equation}
 
 \noindent
-where the $k(\mathbf{x}_{a},\mathbf{x}_{b})$ is a general form of kernel function and $\delta_{ab}$ is a Kronecker delta which is one iff $a\equiv b$ and zero otherwise.\\
+where the $k(\mathbf{x}_{a},\mathbf{x}_{b})$ is a general form of kernel function, $\delta_{ab}$ is a Kronecker delta which is one iff $a\equiv b$ and zero otherwise.\\
 
 \noindent
 Then, we could generate the joint distribution of the observations $y$ and the predicted value $f_{new}$ under the prior as
@@ -405,12 +415,12 @@ As we could seen from \ref{eq:17}, the accuracy of the estimation of our retenti
 
   \item Linear covariance:\\
   \begin{equation}\label{eq:kr2}
-   k(x_{a},x_{b}) = x_{a}\Sigma x_{b}
+   k(x_{a},x_{b}) = x_{a}* x_{b}
   \end{equation}
 
   \item Polynomial covariance:\\
   \begin{equation}\label{eq:kr3}
-   k(x_{a},x_{b}) = (x_{a}- x_{b})^{k}
+   k(x_{a},x_{b}) = (x_{a}* x_{b}+1)^{k}
   \end{equation}
 
   \item Rational quadratic covariance:\\
@@ -425,7 +435,7 @@ As we could seen from \ref{eq:17}, the accuracy of the estimation of our retenti
 \end{itemize}
 
 \noindent
-Different covariance functions has different properties and generates different similarity measures between pairs of data points. The RBF covariance in \ref{eq:kr5} is the most popular kernel function. In Gaussian process, all these covariance function are weighted by a smoothness factor $\delta_{ab}$ as showed in \ref{eq:14}. This variable together with the parameters in each covariance function are known as the hyperparameters. These hyperparameters will need to be optimized to allow the model to have better performance, This is achieved by maximizing the objective function (marginal log-likelihood function) of GP model. The detail of how to achieve it will be covered in the section of optimization.\\
+Different covariance functions has different properties and generates different similarity measures between pairs of data points. The RBF covariance in \ref{eq:kr5} is the most popular kernel function. In Gaussian process, all these covariance function are weighted by a smoothness factor $\sigma_{f}$ in practical. This variable together with the $\sigma_{n}^{2}$ and other free parameters in each covariance function are known as the hyperparameters. These hyperparameters will need to be optimized to allow the model to have better performance. In this thesis, we simply set the weight $\sigma_{f}$ to be 1 and have not considered its effect. The optimization is achieved by maximizing the objective function (marginal log-likelihood function) of GP model.  The detail of how to achieve it will be covered in the section of optimization.\\
 
 \noindent
 Another interesting thing of these kernel functions is that they could be divided into two types: global kernel function and local kernel function. The RBF kernel function is considered as a typical local kernel while the Polynomial kernel is a global one\cite{foo21}.\\
@@ -456,18 +466,18 @@ Since BP algorithm is based on the Empirical risk minimization, it is minimizing
 As for the SVR, it improves this situation by using structure risk minimization and introducing the penalty coefficient. The structure risk minimization describes the minimization of the sum of the empirical risk and VC confidence which is caused by the complexity of the function space. The VC confidence is related to the amount of training data and could be considered as a reflection of generalization ability of the model. The more training data it has, the smaller the VC confidence will be and the stronger generalization the model will have. These principles could avoid the overfitting problem efficiently and allow the model to have a better generalization capacity. However, the SVR still has many obvious problems such as the choice of the type of kernel function and its parameters and the proper value for the penalty coefficient. In addition, the output of SVR lacks probabilistic meaning.\\
 
 \noindent
-The Gaussian Processes is based on the Gaussian distribution and Bayesian theory which implies a solid foundation of probabilistic and statistic. For example, the Gaussian Process not only give\textcolor{red}{s} the predicted value but also the uncertainty of the prediction. This property makes the prediction easier to interpret and understand. What's more, since Gaussian Processes make the prediction based on the distribution of all data and weaken the contribution of single outlier, it prevents the overfitting problem and gives better generalization capacity than SVR. In addition, in terms of the choice of hyperparameters, the Gaussian Processes is self-adaptive. In other words, the Gaussian Process choose the optimal hyperparameters during its process of training a model while SVR could only choose them by using cross-validation method or based on the pervious experiences. Besides, compared with the BP and SVR model, the number of parameters of Gaussian Processes is quite small which makes the optimization easier to implement.\\
+The Gaussian Processes is based on the Gaussian distribution and Bayesian theory which implies a solid foundation of probabilistic and statistic. For example, the Gaussian Process not only gives the predicted value but also the uncertainty of the prediction. This property makes the prediction easier to interpret and understand. What's more, since Gaussian Processes make the prediction based on the distribution of all data and weaken the contribution of single outlier, it prevents the overfitting problem and gives better generalization capacity than SVR. In addition, in terms of the choice of hyperparameters, the Gaussian Processes is self-adaptive. In other words, the Gaussian Process choose the optimal hyperparameters during its process of training a model while SVR could only choose them by using cross-validation method or based on the pervious experiences. Besides, compared with the BP and SVR model, the number of parameters of Gaussian Processes is quite small which makes the optimization easier to implement.\\
 
 \section{Optimization}
 \fontsize{12pt}{16pt}\selectfont
 
-In the Gaussian Process model, the most important part is the covariance function of the model since the Gaussian Process consider it as the kernel function. As we mentioned before, the smoothness factor $\delta_{ab}$ showed in \ref{eq:14} together with the parameters in each covariance function are known as the hyperparameters. These hyperparameters directly determine the properties of the covariance function and further the GP model. Thus, we want to optimize these hyperparameters to get the best combination of these hyperparameters so that we could have a better model for predicting the retention time.\\
+In the Gaussian Process model, the most important part is the covariance function of the model since the Gaussian Process consider it as the kernel function. As we mentioned before, the parameters in each covariance function are known as the hyperparameters. These hyperparameters directly determine the properties of the covariance function and further the GP model. Thus, we want to optimize these hyperparameters to get the best combination of these hyperparameters so that we could have a better model for predicting the retention time.\\
 
 \noindent
-As for the definition of best combination, we are simply looking for the combination of the hyperparameters that minimizes the value of the objective function. In this case, the objective function is the negative log marginal likelihood of Gaussian Processes as \ref{eq:20}
+As for the definition of best combination, we are simply looking for the combination of the hyperparameters that maximizes the value of the objective function. In this case, the objective function is the negative log marginal likelihood of Gaussian Processes as \ref{eq:20}
 
 \begin{equation}\label{eq:20}
-  min f(x) =-logp(y|x,\theta)
+  max f(x) =-logp(y|x,\theta)
    =\frac{1}{2}y^{T}(C)^{-1}y+\frac{1}{2}log|C|+\frac{n}{2}log(2\pi)
 \end{equation}
 where $C =k(x,x)+\sigma_{n}^{2}I_{n}$\\
@@ -498,6 +508,7 @@ where$g^{k+1}$ is the gradient of the current point and $\beta_{k}$ is some coef
 
 \noindent
 The process of Conjugate Gradient (CG) method could be described as Fig.\ref{fig:Fig7}
+
 \begin{figure}[h!]
   \centering
   % Requires \usepackage{graphicx}
@@ -540,7 +551,7 @@ After getting the new search direction $d^{(k+1)}$, the problem comes to define 
 
 
 \noindent
-We will then calculate the objective function value $f(x_{k}+a_{k}d_{k})$ and new slope $g_{k+1}^{T}d_{k}$ based on this new step size $\lambda_{k}$ and judge it by using the Wolfe-Powell conditions as \ref{eq:24}
+We will then calculate the objective function value $f(x_{k}+\lambda_{k}d_{k})$ and new slope $g_{k+1}^{T}d_{k}$ based on this new step size $\lambda_{k}$ and judge it by using the Wolfe-Powell conditions as \ref{eq:24}
 
 \begin{align}\label{eq:24}
    f(x_{k}+\lambda_{k}d_{k})&\leq f(x_{1})+\lambda_{1} \rho g_{1}^{T}d_{1}\notag\\
@@ -551,7 +562,7 @@ We will then calculate the objective function value $f(x_{k}+a_{k}d_{k})$ and ne
 If the current point objective function value and slope fulfill the Wolfe-Powell conditions, we could claim we find the proper step size that is calculated by the cubic extrapolation and stop searching.\\
 
 \noindent
-By doing these iteratively, we could minimize the objective function and eventually have the set of hyperparameters $[ w, \sigma , \mu]$ that gives the minimum value of the objective function or fulfills the required accuracy.
+By doing these iteratively, we could minimize the objective function and eventually have the set of hyperparameters that gives the minimum value of the objective function or fulfills the required accuracy.\\
 
 \noindent
 The CG method is based on the gradient descent and Newton method. It only uses the information provided by the first order derivative which means it does not need any further information and could be easily implemented in many aspects. \\
@@ -581,13 +592,13 @@ What's more, since the traditional gradient descent method will slow down the se
 The Particle Swarm Optimization (PSO) method is one of the new iterative methods for problem optimization. It improves the solution by iteratively searching for the best result in current circumstance. \\
 
 \noindent
-Initially, we have a branch of separated particles that represent the potential solution by their position, a group of the hyperparameters in our case. And for each parameter in the one particle, we assign different velocity for them. In each iteration, the particle updates its position simply by its velocity of each parameter. Then we use these parameter to calculate the model and evaluate the result by some predefined loss functions. After that, we record the best position for each particle(local optimal value) as well as the best position in the whole search space(global optimal value).\\
+Initially, we have a branch of separated particles that represent the potential solution by their position, a group of the hyperparameters in our case. And for each parameter in the one particle, we assign different velocity for them. In each iteration, the particle updates its position simply by its velocity of each parameter. Then we use these parameter to calculate the model and evaluate the result by the objective function we mentioned before. After that, we record the best position for each particle(local optimal value) as well as the best position in the whole search space(global optimal value).\\
 
 \noindent
 The smart part of this method is the update of the velocity of each particle. The individual velocity for each particle is influenced not only by its local best known position (local optimal value) but also the best known positions in the search-space (global optimal value), which are updated as better positions are found by other particles. This is expected to move the swarm toward the best solution.\\
 
 \noindent
-In the end, the iteration will be terminated by some criterion, such as the maximal number of iterations or a solution that gives the adequate loss function value is found. The following Fig. \ref{fig:Fig8} shows the basic algorithm of Particle Swarm Optimization \\
+In the end, the iteration will be terminated by some criterion, such as the maximal number of iterations or a solution that gives the adequate loss function value. The following Fig. \ref{fig:Fig8} shows the basic algorithm of Particle Swarm Optimization \\
 
 \begin{figure}[h!]
   \centering
@@ -633,14 +644,14 @@ Before introducing the experimental setup, we will first introduce some main con
         The value of Pearson Correlation Coefficient is between -1 and 1. A value of 1 (or -1)implies that a linear equation describes the relationship between X and Y perfectly, the sign implies whether the relationship is positive or negative. A value of 0 implies that there is no linear correlation between the variables. The closer the value is to 1, the stronger the linear relation they have, otherwise, the weaker the relation they have.\\
   \item Minimal Time Window:\\
         The minimal time window is a time window including the
-        deviations between observed and predicted retention times for 95\% of the peptides ($\Delta t95\%$). Given the time window, we could know the expected range of observing time in advance and thus enhanced paralleling generating ability of the retention time of peptide. In this case, the minimal time window will be showed as ratio of total time instead of a absolute value. The total time is defined as the time interval between the smallest observed retention time and largest one. The smaller the time window is, the more peptide we could generate at the same time.
+        deviations between observed and predicted retention times for 95\% of the peptides ($\Delta t95\%$). Given the time window, we could know the expected range of observing time in advance and thus reduce the number of peptide we need to compare and enhance matching accuracy of the peptides. In this case, the minimal time window will be showed as ratio of total time instead of a absolute value. The total time is defined as the time interval between the smallest observed retention time and largest one. The smaller the time window is, the more peptide we could generate at the same time.
   \item Computational Cost:\\
         The computational cost is a parameter reflects the efficiency of a model. A model with too large computational cost should be considered as a bad model since it is hard to implement and reproduce. The computational cost in this thesis stands for the total running time from importing raw peptide data to getting the predicted retention time of the peptide.
 
 \end{itemize}
 
 \noindent
-In this thesis, the top priority is given to minimize the minimal time window since we want to be able to generate as many peptide as possible and improve the parallelized processing capacity. Therefore, even if the Pearson coefficient coefficient of model A is sightly better than model B, we still claim the model B has better performance than A when the minimal time window of model B is smaller than A.
+In this thesis, the top priority is given to minimize the minimal time window since we want to reduce the number of peptide we need to match and improve the parallelized processing capacity. \\
 
 \section{Experimental Setup}
 \noindent
@@ -673,7 +684,7 @@ The experimental data we use in this thesis is a set of 15933 peptides generated
 The Gaussian Processes model is firstly built by $BOW feature$. The Fig.\ref{fig:Fig9} shows the performance of the GP model based on different kernel function. The left one is simply using RBF kernel while the right one is using a multiple kernel that consist of RBF and Poly kernel function. The blue line in the plot represents the ideal result of the correlation coefficient and the red one is the true results from the experiment.\\
 
 \noindent
-For each subplot, the top plot shows the correlation between the predicted retention time and the real retention time and tells how linear they are related to each other. The histogram in the bottom shows the the distribution of the deviation between the predicted retention time and the real one. \\
+For each subplot, the top plot shows the correlation between the predicted retention time and the real retention time and tells how linear they are related to each other. The histogram in the bottom shows the the distribution of the deviation between the predicted retention time and the observed one. \\
 
 \noindent
 As benchmark, we also test the model by using $Elude feature$. The fig.\ref{fig:Fig10} gives us the performance of the model based on this feature set.\\
@@ -700,9 +711,9 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
          & \multicolumn{2}{c|}{RBF kernel} & \multicolumn{2}{c}{RBF + Poly kernel}\\
          & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
         \hline
-         BOW feature & 0.8506 & 0.5080 &  0.9674 &  0.2474\\
+         BOW feature & 0.8506 & 0.5080 &  0.9674 &  0.2579\\
         \hline
-         Elude feature  & 0.9213 & 0.3912 &  0.9737 & 0.2052\\
+         Elude feature  & 0.9213 & 0.3912 &  0.9737 & 0.2469\\
         \hline
 \end{tabular}
 \caption{Comparison between Single kernel and multi-kernel}
@@ -713,7 +724,7 @@ The Table.\ref{table1} shows detail information in terms of the Pearson Correlat
 As we can see from the figures, the multi-kernel gives better performance than a single kernel in general. The multi-kernel function helps GP model to improve the correlation coefficient in both cases. The scatter plots in both cases become narrower and closer to the ideal blue line.\\
 
 \noindent
-More importantly, it also reduces the minimal time window dramatically, from 0.5080 to 0.2474 and 0.3912 to 0.2052 for $BOW feature$ and $Elude feature$ respectively. This also implies that the multi-kernel makes the prediction more precisely and narrow down the deviations between observed and predicted retention times.\\
+More importantly, it also reduces the minimal time window dramatically, from 0.5080 to 0.2579 and 0.3912 to 0.2052 for $BOW feature$ and $Elude feature$ respectively. This also implies that the multi-kernel makes the prediction more precisely and narrow down the deviations between observed and predicted retention times.\\
 
 \noindent
 After comparing the Gaussian Process with single kernel and multi-kernel, we will now investigate the effect of optimization. In this case, we only perform Particle Swarm Optimization method as an example. The following plots show the results\\
@@ -737,9 +748,9 @@ After comparing the Gaussian Process with single kernel and multi-kernel, we wil
 \begin{tabular}{p{1cm}|p{2cm}|p{3.5cm}|p{3.5cm}}
 \multicolumn{2}{c|}{} & Before Optimization & After Optimization \\
 \hline
-\multirow{2}{*}{GP} & BOW  & 0.9674 \quad 0.2474 & 0.9753 \quad 0.2379 \\
+\multirow{2}{*}{GP} & BOW  & 0.9674 \quad 0.2579 & 0.9740 \quad 0.2379 \\
 \cline{2-4}
- & Elude & 0.9737 \quad 0.2052 & 0.9741 \quad 0.1944 \\
+ & Elude & 0.9737 \quad 0.2469 & 0.9735 \quad 0.2065 \\
 \hline
 \end{tabular}
 \caption{Comparison of performance before and after PSO for GP}
@@ -747,16 +758,16 @@ After comparing the Gaussian Process with single kernel and multi-kernel, we wil
 \end{table}
 
 \noindent
-From Table.\ref{table2}, we could tell that the PSO optimization is useful and have improved the prediction result. Although the difference is only $0.01$, it is about 1 min of the deviations between observed and predicted retention times.\\
+From Table.\ref{table2}, we could tell that the PSO optimization is useful and have improved the prediction result. Although the difference is only $0.04$, it is actually about 4 min of the deviations between observed and predicted retention times.\\
 
 \noindent
 However, we could not deny that the optimization method in this case does not make a significant difference to the prediction results. The potential explanations for this phenomenon could be as follows: \\
 
 \noindent
-First of all, the initial parameters for the model is too prefect and the better solution that the optimization method have found could not make a significant improvements. Secondly, the PSO optimization method itself is not appropriate and could not find some much better solution. Thirdly, it has not found the optimal combination for the hyperparameters this time due to the fact that the PSO method does not guarantee to find the optimal solution every time.\\
+First of all, the initial parameters for the model is too good and the better solution that the optimization method have found could not make a significant improvements. Secondly, the PSO optimization method itself is not appropriate and could not find some much better solution. Thirdly, it has not found the optimal combination for the hyperparameters this time due to the fact that the PSO method does not guarantee to find the optimal solution every time.\\
 
 \noindent
-Among all these probabilities, the third second and the third explanations are probably the reasons for this phenomenon. To investigate more about the reasons, we will now try to compare the PSO method with another optimization method, Conjugate Gradient method, to see if our explanations are correct.\\
+Among all these probabilities, the second and the third explanations are probably the reasons for this phenomenon. To investigate more about the reasons, we will now try to compare the PSO method with another optimization method, Conjugate Gradient method, to see if our explanations are correct.\\
 
 \noindent
 The following plots show the experimental results of different optimization methods.\\
@@ -786,7 +797,7 @@ The following plots show the experimental results of different optimization meth
 \end{figure}
 
 \noindent
-As we can see from fig.\ref{fig:Fig15} and fig.\ref{fig:Fig16} , these two methods have similar performance in this case. However, when we look at the details of the comparison of these two optimization in Table.\ref{table3}, we could see that the CG method actually gives better performance than the PSO method. If we combine this with the Table.\ref{table2}, we could tell that the CG method is more appropriate than PSO method in this case. It reduces the $\Delta_{t95\%}$ of $Elude feature$ from $0.2052$ to $0.1908$ and the one of $BOW feature$ from $0.2474$ to $0.2326$. Another interesting thing to see is that the result of PSO method in two tables are different and the result in Table.\ref{table3} is better than table.\ref{table2}. This is exactly what we have guessed that the PSO does not guarantee to find the optimal solution every time.\\
+As we can see from fig.\ref{fig:Fig15} and fig.\ref{fig:Fig16} , these two methods have similar performance in this case. However, when we look at the details of the comparison of these two optimization in Table.\ref{table3}, we could see that the CG method actually gives better performance than the PSO method. If we combine this with the Table.\ref{table2}, we could tell that the CG method is more appropriate than PSO method in this case. It reduces the $\Delta_{t95\%}$ of $Elude feature$ from $0.2469$ to $0.2011$ and the one of $BOW feature$ from $0.2579$ to $0.2248$. Another interesting thing to see is that the result of PSO method in two tables are different and the result in Table.\ref{table3} is better than table.\ref{table2}. This is exactly what we have guessed that the PSO does not guarantee to find the optimal solution every time.\\
 
 \begin{table}[h!]
 \centering
@@ -794,9 +805,9 @@ As we can see from fig.\ref{fig:Fig15} and fig.\ref{fig:Fig16} , these two metho
    & \multicolumn{2}{c|}{Particle Swarm Optimization} & \multicolumn{2}{c}{Conjugate Gradient}\\
    & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
 \hline
- BOW  & 0.9740 & 0.2329 & 0.9760 & 0.2326 \\
+ BOW  & 0.9740 & 0.2329 & 0.9760 & 0.2248 \\
 \hline
- Elude & 0.9741 & 0.1944 & 0.9762 & 0.1908 \\
+ Elude & 0.9741 & 0.2061 & 0.9762 & 0.2011 \\
 \hline
 \end{tabular}
 \caption{Comparison of performance of GP based on PSO and CG optimization}
@@ -819,7 +830,7 @@ About the optimization methods, apart from having a impression of the general pe
 \end{figure}
 
 \noindent
-The fig.\ref{fig:Fig17} show the effect of different number of evaluating function in CG method based on different features. As we can see, increasing the number of evaluating function results in better performance in terms of correlation coefficient and minimal time window. However, when the number of evaluating function reaches to the level of 30 and above, the difference becomes small and can be ignored. These plots implies that we could set the number of evaluating function around 30 and no need to worry about not getting better prediction result. \\
+The fig.\ref{fig:Fig17} show the effect of different number of evaluating function (iteration) in CG method based on different features. As we can see, increasing the number of evaluating function results in better performance in terms of correlation coefficient and minimal time window. However, when the number of evaluating function reaches to the level of 30 and above, the difference becomes small and can be ignored. These plots implies that we could set the number of evaluating function around 30 and no need to worry about not getting much better prediction result. \\
 
 \noindent
 Following this, we will now try to find out the influence of the number of generation in PSO methods.\\
@@ -847,10 +858,10 @@ The fig.\ref{fig:Fig18} shows that the number of generation actually have slight
 \end{figure}
 
 \noindent
-The detail could be seen from fig.\ref{fig:Fig19}. The optimization has reduced the minimal time window from around 22\% to around 19\% in the second generation of evolution. Due to the fact that the prediction after the first few generation is already really good, the impact of increasing the number of generation seems to be ignorable. The Table.\ref{table4} shows the detail information based on different number of generation.\\
+The detail could be seen from fig.\ref{fig:Fig19}. The optimization has reduced the minimal time window from around 26\% to around 23\% in the second generation of evolution. Due to the fact that the prediction after the first few generation is already really good, the impact of increasing the number of generation seems to be ignorable. The Table.\ref{table4} shows the detail information based on different number of generation.\\
 
 \noindent
-Another problem comes along with increasing the number of the generation is that the computational cost becomes increasingly large. For example, the computational cost of a GP model with $BOW feature$ using 5 generation PSO method is $1701 sec$ while the one using 30 generation PSO is $5661 sec$ which is 3 times as much as before. The situation becomes even worse when the number of the features increase. Therefore, we could simply set the default number of generation around 5. \\
+Another problem comes along with increasing the number of the generation is that the computational cost becomes increasingly large. For example, the computational cost of a GP model with $Elude feature$ using 5 generation PSO method is $2687 sec$ while the one using 30 generation PSO is $15273 sec$ which is 5.7 times as much as before, but the improvement of $\Delta_{t95\%}$ is just slightly. The situation becomes even worse when the number of the features increase. Therefore, we could simply set the default number of generation around 5 if we want to limit the computation cost. \\
 
 \begin{table}[h!]
 \centering
@@ -858,9 +869,9 @@ Another problem comes along with increasing the number of the generation is that
    & \multicolumn{2}{c|}{5 generation} & \multicolumn{2}{c}{30 generation}\\
    & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
 \hline
- BOW  & 0.9740 & 0.2329 & 0.9760 & 0.2325 \\
+ BOW  & 0.9740 & 0.2329 & 0.9760 & 0.2105 \\
 \hline
- Elude & 0.9741 & 0.1944 & 0.9762 & 0.1933 \\
+ Elude & 0.9741 & 0.2076 & 0.9743 & 0.1995 \\
 \hline
 \end{tabular}
 \caption{Best performance of GP model based on PSO with different number of generation}
@@ -886,27 +897,27 @@ Now, we will take a look at the effect of different number of particles and each
 \centering
 \subfigure[Trend of correlation coefficient of each particle]{
 \label{Fig.sub.211}
-\includegraphics[width=0.4\textwidth]{./figures/changing_trend_of_coef_30par.jpg}}
+\includegraphics[width=0.4\textwidth]{./figures/changing_trend_of_coef_10par.jpg}}
 \subfigure[Trend of minimal time window of each particle ]{
 \label{Fig.sub.212}
-\includegraphics[width=0.4\textwidth]{./figures/changing_trend_of_mtw_30par.jpg}}
-\caption{The evolution trend of each particle during 5 generations with 30 particles}
+\includegraphics[width=0.4\textwidth]{./figures/changing_trend_of_mtw_10par.jpg}}
+\caption{The evolution trend of each particle during 5 generations with 10 particles}
 \label{fig:Fig21}
 \end{figure}
 
 \noindent
-As the Fig.\ref{Fig.sub.201} and Fig.\ref{Fig.sub.202} showed, the trend of all the particles in both cases are going towards the better situation and have influenced each other which totally follows the principle of PSO method. As comparison, we also display the results of using 30 particles instead of 5 particles. These plots show that each individual particle's evolution is basically random but most of the particles are going towards the same direction when seeing the main trend from a bigger picture. Besides, it can be seen from Table.\ref{table5}that increasing the number of particles do not contribute much to the improvement of both accuracy and minimal time window. One interesting thing is that we could also see the trend becomes more flat and stable after the third generation. This is also support evidence for the conclusion we draw form Fig.\ref{fig:Fig19} about the proper number of generation.\\
+As the Fig.\ref{Fig.sub.201} and Fig.\ref{Fig.sub.202} showed, the trend of all the particles in both cases are going towards the better situation and converging gradually. In addition, we could also see that all particles have influenced each other's trend which totally follows the principle of PSO method. As comparison, we also display the results of using 10 particles instead of 5 particles. These plots also show the same properties as before when seeing the main trend from a bigger picture. Besides, it can be seen from Table.\ref{table5} that increasing the number of particles do not contribute much to the improvement of both accuracy and minimal time window. One interesting thing is that we could also see the trend becomes more flat and stable after the third generation in \ref{fig:Fig20}. This is also support evidence for the conclusion we draw form Fig.\ref{fig:Fig19} about the proper number of generation.\\
 
 \begin{table}[h!]
 \normalsize
 \centering
 \begin{tabular}{l|cc|cc}
-   & \multicolumn{2}{c|}{5 particles of PSO} & \multicolumn{2}{c}{30 particles of PSO}\\
+   & \multicolumn{2}{c|}{5 particles of PSO} & \multicolumn{2}{c}{10 particles of PSO}\\
    & $\rho$ & $\Delta_{t95\%}$ & $\rho$ & $\Delta_{t95\%}$ \\
 \hline
- BOW  & 0.9740 & 0.2329 & 0.9747 & 0.1731 \\
+ BOW  & 0.9740 & 0.2329 & 0.9740 & 0.2283 \\
 \hline
- Elude & 0.9741 & 0.1944 & 0.9757 & 0.1537 \\
+ Elude & 0.9741 & 0.2076 & 0.9748 & 0.2060 \\
 \hline
 \end{tabular}
 \caption{Comparison of performance based on different number of particles}
@@ -914,7 +925,7 @@ As the Fig.\ref{Fig.sub.201} and Fig.\ref{Fig.sub.202} showed, the trend of all 
 \end{table}
 
 \noindent
-In the end, as benchmark, we will summarize the performance of other popular retention time prediction models and compare them with our GP model in terms of correlation coefficient$\rho$ , minimal time window($\Delta_{t95\%}$) and computational cost. The Table.\ref{table6} shows the result of different models.\\
+In the end, as benchmark, we will summarize the performance of other popular retention time prediction models and compare them with our GP model in terms of correlation coefficient $\rho$ , minimal time window($\Delta_{t95\%}$) and computational cost. The Table.\ref{table6} shows the result of different models.\\
 
 \begin{table}[h!]
 \normalsize
@@ -922,11 +933,11 @@ In the end, as benchmark, we will summarize the performance of other popular ret
 \begin{tabular}{l|c|c|c|c}
    & GP Model & Elude Model & SSRC  & BioLCCC \\
 \hline
- Pearson Correlation Coefficient($\rho$) & 0.9757 & 0.9879 & 0.9064 & 0.9153  \\
+ Pearson Correlation Coefficient($\rho$) & 0.9743 & 0.9707 & 0.8995 & 0.8849  \\
 \hline
- Minimal Time Window($\Delta_{t95\%}$) & 0.1908 & 0.1651 & 0.4028 & 0.3750 \\
+ Minimal Time Window($\Delta_{t95\%}$) & 0.1950 & 0.2172 & 0.4205 & 0.5841 \\
 \hline
- Computational Cost & 1731 sec & 16323 sec & \ & \ \\
+ Computational Cost & 3570 sec & 1 day + & \ & \ \\
 \hline
 \end{tabular}
 \caption{Comparison of performance based on different number of particles}
@@ -937,10 +948,10 @@ In the end, as benchmark, we will summarize the performance of other popular ret
 The last two columns are empty because we do not know how long it takes to train the model for prediction.\\
 
 \noindent
-As we can seen form Table.\ref{table6}, our GP model gives much better performance than SSRC and BioLCCC. Our model successfully reduce the $\Delta_{t95\%}$ to a level of $0.1908$ while the BioLCCC only gives $0.3750$ and result of SSRC is $0.4028$. That means our model reduces almost 20 mins of the time window which enhance the parallelized processing ability dramatically. In addition, the $\rho$ of our GP model is also higher than the SSRC and BioLCCC which means our prediction is more precise than the other two methods.\\
+As we can seen form Table.\ref{table6}, our GP model gives much better performance than SSRC and BioLCCC. Our model successfully reduce the $\Delta_{t95\%}$ to a level of $0.1950$ while the BioLCCC only gives $0.5841$ and result of SSRC is $0.4205$. That means our model reduces almost 20 mins of the time window which which reduce the computational cost and enhance the identification accuracy dramatically. In addition, the $\rho$ of our GP model is also higher than the SSRC and BioLCCC which means our prediction is more precisely than the other two methods.\\
 
 \noindent
-What's more, our GP model gives similar performance as Elude which is considered to be the most popular and best model so far. Although the Elude gives better performance in both correlation coefficient and minimal time window, the computational cost of Elude is much higher than our GP model. In big data analysis, such high computational cost could be a very serious problem and we should make a balance between the accuracy and the efficiency. Considering that the computational cost of Elude is almost 10 times as our GP model, the $\rho$ and $\Delta_{t95\%}$ of our GP model are still good enough and our model has stronger practical ability than Elude.
+What's more, our GP model gives better performance than Elude which is considered as the most popular and best model so far. Although the difference between Elude and our model are not so significant in terms of correlation coefficient and minimal time window, the computational cost of Elude is much higher than our GP model. In big data analysis, such high computational cost could be a very serious problem and we should make a balance between the accuracy and the efficiency. Considering that the computational cost of Elude is almost 24 times as our GP model's while the predicted results are similar, the practical ability of our model is much stronger than Elude.
 
 \chapter{Discussion and Conclusion}
 \fontsize{12pt}{16pt}\selectfont
@@ -974,7 +985,7 @@ Like most evolutionary algorithms, PSO usually requires a large number of fitnes
 Besides, as all other heuristic algorithms, PSO do not guarantee an optimal solution is ever found. In fact, the optimized result could be slightly different from time to time but always has the same trend. More specifically, PSO does not use the gradient of the problem being optimized, which means PSO does not require that the optimization problem be differentiable as is required by classic optimization methods such as gradient descent and quasi-newton methods. As a result, it might find the local optimal value instead of the optimal value in the whole search space and consider it as the "global optimal value" due to the its convergence. \\
 
 \noindent
-To overcome the shortages of the PSO method, a number of different methods based on the original PSO have been carried out, such as Gray-PSO, Chaos-PSO. Each of these methods has combined PSO with some other method so that it could overcome the problem of the original PSO and have their own advantages when dealing with some specific tasks. \\
+To overcome the shortages of the PSO method, a number of different methods based on the original PSO have been carried out, such as Gray-PSO, Chaos-PSO. Each of these methods has combined PSO with some other methods so that it could overcome the problem of the original PSO and have their own advantages when dealing with some specific tasks. \\
 
 \noindent
 As for the CG method, one of the most limitation of the CG method is its dependency on the initial point which would have a great influence on the final result. Due to this limitation, the CG method could not ensure to converge to the minimum value in the whole search space.\\
@@ -985,7 +996,7 @@ To overcome this, there are many variations of CG. They could improve the perfor
 \section{Conclusion}
 
 \noindent
-In this thesis, GP model has been proposed for the prediction of peptides' retention time has been proposed and tested in different datasets. The importance of kernel functions has been investigated and comparison has been made between single kernel function and multi-kernel function. The multi-kernel function combines the strengths of two kernel functions and improves the accuracy of the prediction results significantly.\\
+In this thesis, GP model has been proposed for the prediction of peptides' retention time and tested in different datasets. The importance of kernel functions has been investigated and comparison has been made between single kernel function and multi-kernel function. The multi-kernel function combines the strengths of two kernel functions and improves the accuracy of the prediction results significantly.\\
 
 \noindent
 Secondly, a new method of feature selection has been tested in this case. The feasibility of these features has been proved and their performance is almost as good as the biochemical features. Although the performance of these less-biochemical features are still slightly worse than the biochemical features due to the fact of lacking information, the efficiency of generating them and the flexibility of these features still imply the unique and powerful advantages.\\
@@ -994,14 +1005,13 @@ Secondly, a new method of feature selection has been tested in this case. The fe
 In addition, two optimization methods have been implemented and compared with each other. Although, we only utilize the original version of them, they still make a significant impact on the experimental results.\\
 
 \noindent
-Finally, the GP model was also compared with the other state-of-art prediction methods. The GP model has better performance than most of them in terms of the minimal time window ($\Delta_{t95\$}$) and correlation coefficient ($\rho$). Even compared with the best predicted model Elude, the predicted result of our model is still similar.\\
+Finally, the GP model was also compared with the other state-of-art prediction methods. The GP model has much better performance than most of them in terms of the minimal time window ($\Delta_{t95\%}$) and correlation coefficient ($\rho$). Even compared with the best predicted model Elude, the predicted result of our model is still a bit better.\\
 
 \noindent
-This implies our model in general has stronger processing capacity and could identify more peptide than the other models at the same time. Besides, the computational efficiency of our model is much higher than Elude model when having similar identification capacity. This is a significant and useful quality since a lot of biochemical experiments contain large amount of data that need to be processed.\\
+This implies a stronger and reliable processing capacity of our model when compared with the other models. More importantly, the computational efficiency of our model is much higher than Elude model which is a significant quality since a lot of biochemical experiments contain large amount of data that need to be processed.\\
 
 
 \section{Future Work}
-
 
 As we have analyzed before, one of the most important limitations of GP model is the computational cost. It is quite hard to overcome this problem since the Gaussian Process is non-parametric model. In the last 20 years, many new methods have been proposed to solve this problem. Tresp in \cite{foo22} proposes a Bayesian committee machine(BCM) method and Snelson in \cite{foo23} suggest a method based on sparse Gaussian Process using pseudo-input to enhance the computational efficiency. Therefore, one potential work in the future is to replace the original Gaussian Process with these new methods to investigate their performance. What's more, one could even implement some new machine learning methods, such as deep learning to address this problem and test their performance.\\
 
@@ -1012,7 +1022,7 @@ Another potential direction to go on is the feature selection method. Currently,
 One more interesting thing is about finding some more proper optimization method to overcome the shortages of current ones. Since we know that the original CG method has the weakness in terms of its dependency of the initial value and the Particle Swarm Optimization could not ensure the convergence to the minimal value of the entire search space, we could try to investigate some new optimization methods which could overcome these drawbacks.\\
 
 \noindent
-However, the theory of Gaussian Process is not complete and there are still a lot of aspects need to be fixed and improved. it has been proved to be a powerful and useful tool but the application of it in biotechnological field is still not as common as it is in the others. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory and the rapidly development of computer techniques, more sophisticated and practical Gaussian Process Regression models will be created and they will continually broaden their application fields in biotechnology. \\
+However, the theory of Gaussian Process is not complete and there are still a lot of aspects need to be fixed and improved. It has been proved to be a powerful and useful tool but the application of it in biotechnological field is still not as common as it is in the others. Thus, we strongly believe that with the further understanding of Bayesian theory and statistical learning theory and the rapidly development of computer techniques, more sophisticated and practical Gaussian Process Regression models will be created and they will continually broaden their application fields in biotechnology. \\
 
 \noindent
 Further, we should also see that the prediction of peptide's retention time is just another example of implementation of machine learning method in biochemical problem. From a long-term perspective, with the help of computer science and machine learning theories, more and more advanced machine learning methods will be utilized to solve biochemical problems and with the development of biotechnology, more and more biochemical problems will arise which will also motivate the development of machine learning methods. The connection between machine learning techniques and biotechnology will become increasing strong in the further.

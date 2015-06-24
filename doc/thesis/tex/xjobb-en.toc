@@ -1,6 +1,8 @@
 \changetocdepth {2}
 \select@language {english}
 \select@language {english}
+\select@language {swedish}
+\select@language {english}
 \contentsline {chapter}{\chapternumberline {1}Introduction}{1}
 \contentsline {section}{\numberline {1.1}Introduction}{1}
 \contentsline {section}{\numberline {1.2}Problem Statement}{3}
@@ -16,7 +18,7 @@
 \contentsline {subsection}{\numberline {3.2.2}Gaussian Processes Regression}{14}
 \contentsline {subsection}{\numberline {3.2.3}Kernel Function and Multi-Kernels}{17}
 \contentsline {subsection}{\numberline {3.2.4}Properties of Gaussian Processes}{18}
-\contentsline {section}{\numberline {3.3}Optimization}{19}
+\contentsline {section}{\numberline {3.3}Optimization}{20}
 \contentsline {subsection}{\numberline {3.3.1}The Conjugate Gradient}{20}
 \contentsline {subsection}{\numberline {3.3.2}The Particle Swarm Optimization}{23}
 \contentsline {section}{\numberline {3.4}Summarize of the Chapter}{24}
