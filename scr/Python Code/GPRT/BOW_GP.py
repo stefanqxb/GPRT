@@ -13,8 +13,9 @@ usage = "usage: %prog [-f 'input file path'][-w 'feature extraction method'][-s 
 parser = OptionParser(usage=usage)
 parser.add_option("-f", "--filename",type = "string", dest="filename",help="import the target file")
 parser.add_option("-w", "--request1",type="int", dest="request1",help="Choose feature extraction method: 1-Bag-of-Words , 2-Elude")
-parser.add_option("-g", "--request12",type= "int", dest="request12",help="Choose the number of gram for BOW, if request1==2, ignore this term")
+parser.add_option("-g", "--request12",type= "int", dest="request12",help="Choose the number of gram for BOW, if request1==2, set 0 to it")
 parser.add_option("-s", "--request2",type = "int", dest="request2",help="Number of subset, set 0 for the whole dataset")
+parser.add_option("-e", "--ef",type = "int", dest="ef",help="Number of iteration in CG")
 
 parser.print_help()
 
@@ -23,11 +24,13 @@ request1 = options.request1
 request12 = options.request12
 request2 = options.request2
 File = options.filename
+evn = options.ef
 
-#File = 'data/retention_time_peptide.csv'
-#request1 = 1
-#request12 = 2
-#request2 = 1000
+# File = 'data/retention_time_peptide.csv'
+# request1 = 2
+# request12 = 0
+# request2 = 2000
+# evn = 100
 
 print "selecting features....."
 peptide, feature,rt = feature_extraction.feature_extra(File,request1,request12,request2)
@@ -47,11 +50,11 @@ print "training model......."
 #########  Gaussian Process model ############
 [train_set, train_tag, test_set, test_tag] = data_generator.processing_Data(feature, rt, row,'gp')
 t0 = time.time()
-kern = GPy.kern.RBF(train_set.shape[1])
+kern = GPy.kern.Poly(train_set.shape[1],order = 5) + GPy.kern.RBF(train_set.shape[1], lengthscale = 3 )
 m = GPy.models.GPRegression(train_set, train_tag, kern)
 
 print "optimizing the hyperparameters....."
-m.optimize('scg')
+m.optimize('scg',max_iters = evn)
 pv_gp ,ps = m.predict(test_set)
 t_gp = time.time() - t0
 
@@ -60,6 +63,8 @@ print "Evaluating result...."
 
 diff_gp,step, max_total_gp = Evaluation_and_Ploting.evaluation(pv_gp,test_tag,t_gp)
 Evaluation_and_Ploting.ploting(pv_gp,test_tag,max_total_gp,diff_gp,step)
+
+
 
 
 
