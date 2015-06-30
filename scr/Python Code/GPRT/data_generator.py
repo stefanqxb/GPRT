@@ -3,6 +3,9 @@ import numpy as np
 import sys
 sys.path.append('elude/')
 import data_manager
+import csv
+import random
+
 
 class function_group:
         def __init__( self, keys):
@@ -98,7 +101,7 @@ def processing_Data(feature,rt,row,str):
     end = row #len(feature)
     if str =='svr':
        train_tag_temp = np.zeros([train_row])
-       test_tag_temp = np.zeros([end-train_row])
+       #test_tag_temp = np.zeros([end-train_row])
     elif str =='gp':
        train_tag_temp = np.zeros([train_row,1])
        test_tag_temp = np.zeros([end-train_row,1])
@@ -114,6 +117,28 @@ def processing_Data(feature,rt,row,str):
     test_tag = test_tag_temp
     return train_set,train_tag,test_set,test_tag
 
+def processing_Data_tt(train_fea, test_fea, train_rt, test_rt, str):
+
+    if str =='svr':
+       train_tag_temp = np.zeros([len(train_rt)])
+       test_tag_temp = np.zeros([len(test_rt)])
+    elif str =='gp':
+       train_tag_temp = np.zeros([len(train_rt),1])
+       test_tag_temp = np.zeros([len(test_rt),1])
+
+    for i in range(len(train_rt)):
+         train_tag_temp[i] = train_rt[i]
+    for i in range(len(test_rt)):
+         test_tag_temp[i] = test_rt[i]
+
+
+    train_set = train_fea
+    train_tag = train_tag_temp
+    test_set = test_fea
+    test_tag = test_tag_temp
+    return train_set,train_tag,test_set,test_tag
+
+
 def extract(inst,num):
     peptide =[]
     rt = []
@@ -124,3 +149,24 @@ def extract(inst,num):
             if len(rt) >= num:
                 break
     return peptide,rt
+
+def seal_data(peptide, rt, i):
+    peptide_final =[]
+    rt_final = []
+    if i == 0:
+       file_name = "data/test_set.csv"
+       set = zip(peptide, rt)
+    else:
+        file_name = "data/train_set"+ str(i) + ".csv"
+        total = range(len(peptide))
+        random.shuffle(total)
+        seed = total[0:i]
+        for item in seed:
+            peptide_final.append(peptide[item])
+            rt_final.append(rt[item])
+        set = zip(peptide_final, rt_final)
+    csvfile = file(file_name,'wb')
+    writer = csv.writer(csvfile)
+    writer.writerows(set)
+    csvfile.close()
+    return
