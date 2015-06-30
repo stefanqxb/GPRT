@@ -22,25 +22,25 @@ def evaluation(pv_gp,pv_svr,test_tag,test_tag_svr,t_gp,t_svr):
         print 'corrcoef of GP = ',corrcoef_gp[0],'corrcoef of SVR = ',corrcoef_svr[0]
         print 'mtw of GP = ',mtw_gp, 'mtw of SVR  =', mtw_svr
         print 'running time of GP = ',t_gp , 'sec', 'running time of SVR = ', t_svr
-        return diff_gp,diff_svr,step ,max_total_gp,max_total_svr
+        return step ,max_total_gp,max_total_svr
 
-def ploting(pv_gp,pv_svr, test_tag,test_tag_svr,max_total_gp,max_total_svr,diff_gp,diff_svr,step):
+def ploting(pv_gp,pv_svr, test_tag,test_tag_svr,max_total_gp,max_total_svr,step):
+        diff_svr = pv_svr - test_tag_svr
+        diff_gp = pv_gp - test_tag
         pylab.figure(1)
         plt.subplot(121)
         plt.plot(pv_svr,test_tag_svr, 'g*')
         plt.plot([1,max_total_svr],[1,max_total_svr],'y-',linewidth = 2)
         plt.title('SVR')
         plt.subplot(122)
-        plt.plot(pv_gp,test_tag, 'g*')
+        plt.plot(pv_gp,test_tag, 'r*')
         plt.plot([1,max_total_gp],[1,max_total_gp],'b-',linewidth = 2)
         plt.title('GP')
 
         pylab.figure(2)
         plt.hold('on')
-        plt.subplot(122)
         plt.hist(diff_gp,bins = step,label = 'GP histogram',color = 'red')
         plt.legend()
-        plt.subplot(122)
         plt.hist(diff_svr,bins = step,label = 'SVR histogram',color = 'green')
         plt.legend()
         pylab.show()
