@@ -6,7 +6,7 @@ import feature_extraction as extraction
 pp.ion()
 
 def read_data():
-	data_path = "/Users/heydar/Stuff/tmp/rt/20120126_EXQ5_KiSh_SA_LabelFree_HeLa_Phospho_Control_rep1_Fr3.rtimes.tsv"
+	data_path = "./data/20120126_EXQ5_KiSh_SA_LabelFree_HeLa_Phospho_Control_rep1_Fr3.rtimes.tsv"
 
 	# Loading Data
 	ff = open( data_path, 'r' )
