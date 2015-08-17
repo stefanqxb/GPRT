@@ -103,6 +103,9 @@ class peptide:
 		desc = desc / (np.linalg.norm( desc ) + 1e-12)
 		return desc
 
+	def elute_descriptor( self ):
+			
+
 class feature_extractor:
 	def __init__( self, peptides ):
 		self.peptides = peptides;
@@ -126,6 +129,9 @@ class feature_extractor:
 		words = list( words )
 		voc = vocabulary( words )
 		return voc
+
+	def elute_data( self ):
+
 
 	def gen_features_parallel( self, voc ):
 		num_cores = multiprocessing.cpu_count();
