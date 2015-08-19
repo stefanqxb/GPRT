@@ -83,7 +83,6 @@ def getFeaturesUnitTest():
     if errors == 0:
       print "Unit test succeeded"
 
-
 def getFeaturesPtmUnitTest():
   psmDescriptions, featureMatrix = getFeatures('../data/ptms.tsv')
   

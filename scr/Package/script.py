@@ -8,16 +8,15 @@ import data_tools
 import feature_extraction
 
 if __name__=="__main__":
-	peptides = data_tools.read_data()
-	fe = feature_extraction.feature_extractor(peptides)
-	voc = fe.bow_voc(35)
+	peptides = data_tools.read_data('elude') # elude or bow
+	#fe = feature_extraction.feature_extractor(peptides)
+	#voc = fe.bow_voc(20)
 
 temp = peptides[0]
 temp1 = peptides[1]
 temp2 = peptides[2]
-jully = feature_extraction.peptide.bow_descriptor(peptides[0], voc)
-print jully
-temp3 = peptides[3]
+#jully = feature_extraction.peptide.bow_descriptor(peptides[0], voc)
+
 
 
 

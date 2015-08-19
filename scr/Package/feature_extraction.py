@@ -2,9 +2,15 @@
 
 import numpy as np
 from matplotlib import pyplot as pp
+import sys
+sys.path.append('elude/')
+import retention_model as rm
+import data_manager as dm
+import random
 pp.ion()
 #from joblib import Parallel, delayed
 import multiprocessing
+
 
 def get_ith_descriptor( i,p, voc ):
 	print i
@@ -64,21 +70,24 @@ class feature_extractor:
 		voc = vocabulary( words )
 		return voc
 
-
-
-
     # def gen_features_parallel( self, voc ):
     # 	num_cores = multiprocessing.cpu_count();
     # 	res = Parallel( n_jobs=num_cores )( delayed(get_ith_descriptor)(i,self.peptides[i],voc) for i in range(5000) )
 
 class peptide:
-    def __init__(self, sequence, rt):
+    def __init__(self, sequence, rt, data_path):
         self.pre = sequence[0]
         self.post = sequence[-1]
         self.sequence = sequence[2:-2]
         self.rt = rt
         self.amino_acids = self.get_amino_acids()
         self.aa_indices = []
+        if data_path == " ":
+            self.aaAlphabet = []
+        else:
+            self.aaAlphabet = self.get_aaAlphabet(data_path)
+
+        self.psmDescriptions = []
 
     def build_amino_acid_indices(self, aa_list):
         self.aa_indices = []
@@ -133,8 +142,40 @@ class peptide:
         desc = desc / (np.linalg.norm(desc)+1e-12)
         return  desc
 
+    def get_aaAlphabet(self, data_path):
+         removeDuplicates = True
+         removeCommonPeptides = False # not implemented yet
+         removeInSourceFragments = False # not implemented yet
+         removeNonEnzymatic = False # not implemented yet
+         testFile = ""
+
+         trainPsms, trainAaAlphabet = dm.loadPeptides(data_path)
+         if removeDuplicates:
+              trainPsms = dm.removeDuplicates(trainPsms)
+         if len(testFile) > 0:
+              testPsms, testAaAlphabet = dm.loadPeptides(testFile)
+              if removeDuplicates:
+                  testPsms = dm.removeDuplicates(testPsms)
+              if removeCommonPeptides:
+                  print "removeCommonPeptides is not implemented yet"
+         if removeInSourceFragments:
+              print "removeInSourceFragments is not implemented yet"
+         if removeNonEnzymatic:
+              print "removeNonEnzymatic is not implemented yet"
+         rnd = random.Random(1)
+         rnd.shuffle(trainPsms)
+         self.psmDescriptions =  trainPsms
+         self.aaAlphabet = trainAaAlphabet
+
     def elude_descriptor(self):
-        pass
+        eludeFeature = self.trainRetentionModel(self.aaAlphabet, self.psmDescriptions)
+
+    def trainRetentionModel(aaAlphabet, psmDescriptions):
+         normalizeRetentionTimes = True
+         customIndex = rm.buildRetentionIndex(aaAlphabet, psmDescriptions, normalizeRetentionTimes)
+         customIndex =  dict(zip(aaAlphabet, customIndex))
+         featureMatrix = rm.computeRetentionFeatureMatrix(aaAlphabet, psmDescriptions, customIndex)
+         return  featureMatrix # elude feature
 
 
 

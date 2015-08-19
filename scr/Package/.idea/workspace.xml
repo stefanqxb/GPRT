@@ -23,30 +23,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="script.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="script.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/script.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42537314" vertical-offset="0" max-vertical-offset="570">
-              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="118" max-vertical-offset="570">
+              <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+              <folding>
+                <element signature="e#19#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data_tools.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data_tools.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="114" max-vertical-offset="874">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="feature_extraction.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="feature_extraction.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/feature_extraction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="406" max-vertical-offset="1805">
-              <caret line="114" column="48" selection-start-line="114" selection-start-column="48" selection-end-line="114" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.33211678" vertical-offset="42" max-vertical-offset="2698">
+              <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
               <folding>
                 <element signature="e#19#37#0" expanded="true" />
-                <element signature="e#237#486#0" expanded="false" />
-                <element signature="e#507#1076#0" expanded="false" />
-                <element signature="e#1311#1434#0" expanded="false" />
-                <element signature="e#2168#2278#0" expanded="false" />
-                <element signature="e#2319#2604#0" expanded="false" />
-                <element signature="e#3238#3379#0" expanded="false" />
-                <element signature="e#3425#3672#0" expanded="false" />
+                <element signature="e#344#593#0" expanded="false" />
+                <element signature="e#614#1183#0" expanded="false" />
+                <element signature="e#1211#1956#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -55,8 +63,8 @@
       <file leaf-file-name="training_tools.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/training_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="624" max-vertical-offset="1805">
-              <caret line="52" column="51" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="771" max-vertical-offset="1919">
+              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
               <folding>
                 <element signature="e#19#37#0" expanded="true" />
               </folding>
@@ -68,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/BOW_GP.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="859" max-vertical-offset="1672">
-              <caret line="48" column="67" selection-start-line="48" selection-start-column="54" selection-end-line="48" selection-end-column="67" />
+              <caret line="46" column="20" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -77,8 +85,8 @@
       <file leaf-file-name="feature_extraction.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/feature_extraction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="276" max-vertical-offset="988">
-              <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="988">
+              <caret line="18" column="66" selection-start-line="18" selection-start-column="66" selection-end-line="18" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -97,11 +105,27 @@
       <file leaf-file-name="data_generator.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/data_generator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2644" max-vertical-offset="3192">
-              <caret line="141" column="22" selection-start-line="141" selection-start-column="0" selection-end-line="150" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2633" max-vertical-offset="3363">
+              <caret line="141" column="22" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
               <folding>
                 <element signature="e#29#47#0" expanded="true" />
-                <element signature="e#4525#4785#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="elude_features.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/elude/elude_features.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="172" max-vertical-offset="684">
+              <caret line="54" column="81" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="92" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#349#983#0" expanded="false" />
+                <element signature="e#1019#1211#0" expanded="false" />
+                <element signature="e#1442#1771#0" expanded="false" />
+                <element signature="e#2089#4544#0" expanded="false" />
+                <element signature="e#4578#6944#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -119,9 +143,12 @@
       <list>
         <option value="$PROJECT_DIR$/../Python Code/GPRT/elude/data_manager.py" />
         <option value="$PROJECT_DIR$/../Python Code/GPRT/BOW_GP.py" />
+        <option value="$PROJECT_DIR$/evaluation_tools.py" />
         <option value="$PROJECT_DIR$/training_tools.py" />
-        <option value="$PROJECT_DIR$/feature_extraction.py" />
+        <option value="$PROJECT_DIR$/elude/elude_features.py" />
+        <option value="$PROJECT_DIR$/data_tools.py" />
         <option value="$PROJECT_DIR$/script.py" />
+        <option value="$PROJECT_DIR$/feature_extraction.py" />
       </list>
     </option>
   </component>
@@ -406,15 +433,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2980456" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18898809" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46742672" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -464,7 +491,14 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="15" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/script.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="29" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -486,13 +520,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/data_generator.py">
+    <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/Evaluation_and_Ploting.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2644" max-vertical-offset="3192">
-          <caret line="141" column="22" selection-start-line="141" selection-start-column="0" selection-end-line="150" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1045">
+          <caret line="1" column="22" selection-start-line="1" selection-start-column="0" selection-end-line="4" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/calc_mtw.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1005291" vertical-offset="0" max-vertical-offset="378">
+          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
           <folding>
-            <element signature="e#29#47#0" expanded="true" />
-            <element signature="e#4525#4785#0" expanded="false" />
+            <element signature="e#81#438#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/evaluation_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="59" max-vertical-offset="1064">
+          <caret line="43" column="21" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="21" />
+          <folding>
+            <element signature="e#18#56#0" expanded="false" />
+            <element signature="e#155#512#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/training_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="771" max-vertical-offset="1919">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding>
+            <element signature="e#19#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -508,61 +570,95 @@
     <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/BOW_GP.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="859" max-vertical-offset="1672">
-          <caret line="48" column="67" selection-start-line="48" selection-start-column="54" selection-end-line="48" selection-end-column="67" />
+          <caret line="46" column="20" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/training_tools.py">
+    <entry file="file://$PROJECT_DIR$/elude/retention_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="966" max-vertical-offset="1805">
-          <caret line="52" column="51" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="51" />
+        <state vertical-scroll-proportion="-7.211679" vertical-offset="3078" max-vertical-offset="3382">
+          <caret line="58" column="71" selection-start-line="58" selection-start-column="71" selection-end-line="58" selection-end-column="71" />
           <folding>
-            <element signature="e#19#37#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#2420#4269#0" expanded="false" />
+            <element signature="e#4307#4604#0" expanded="false" />
+            <element signature="e#4688#5942#0" expanded="false" />
+            <element signature="e#6037#6074#0" expanded="false" />
+            <element signature="e#6173#6211#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/feature_extraction.py">
+    <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/data_generator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="406" max-vertical-offset="1805">
-          <caret line="114" column="48" selection-start-line="114" selection-start-column="48" selection-end-line="114" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2633" max-vertical-offset="3363">
+          <caret line="141" column="22" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
           <folding>
-            <element signature="e#19#37#0" expanded="true" />
-            <element signature="e#237#486#0" expanded="false" />
-            <element signature="e#507#1076#0" expanded="false" />
-            <element signature="e#1311#1434#0" expanded="false" />
-            <element signature="e#2168#2278#0" expanded="false" />
-            <element signature="e#2319#2604#0" expanded="false" />
-            <element signature="e#3238#3379#0" expanded="false" />
-            <element signature="e#3425#3672#0" expanded="false" />
+            <element signature="e#29#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/elude/elude_features.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="684">
+          <caret line="54" column="81" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="92" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#349#983#0" expanded="false" />
+            <element signature="e#1019#1211#0" expanded="false" />
+            <element signature="e#1442#1771#0" expanded="false" />
+            <element signature="e#2089#4544#0" expanded="false" />
+            <element signature="e#4578#6944#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Python Code/GPRT/feature_extraction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="618" max-vertical-offset="988">
-          <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="988">
+          <caret line="18" column="66" selection-start-line="18" selection-start-column="66" selection-end-line="18" selection-end-column="66" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_tools.py">
+    <entry file="file://$PROJECT_DIR$/elude/data_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6111111" vertical-offset="149" max-vertical-offset="551">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.33211678" vertical-offset="840" max-vertical-offset="2014">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="118" max-vertical-offset="570">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
           <folding>
             <element signature="e#19#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script.py">
+    <entry file="file://$PROJECT_DIR$/data_tools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42537314" vertical-offset="0" max-vertical-offset="570">
-          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="342" max-vertical-offset="874">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feature_extraction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33211678" vertical-offset="42" max-vertical-offset="2698">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+          <folding>
+            <element signature="e#19#37#0" expanded="true" />
+            <element signature="e#344#593#0" expanded="false" />
+            <element signature="e#614#1183#0" expanded="false" />
+            <element signature="e#1211#1956#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
