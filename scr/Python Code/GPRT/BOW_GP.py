@@ -11,33 +11,33 @@ import Evaluation_and_Ploting
 import data_spilt
 
 
-usage = "usage: %prog [-f 'input file path'][-w 'feature extraction method'][-s 'number of subset']"
-parser = OptionParser(usage=usage)
-parser.add_option("-t", "--trafilename",type = "string", dest="trainfile",help="import the train file")
-parser.add_option("-e", "--testfilename",type = "string", dest="testfile",help="import the test file")
-parser.add_option("-w", "--request1",type="int", dest="request1",help="Choose feature extraction method: 1-Bag-of-Words , 2-Elude")
-parser.add_option("-b", "--request12",type= "int", dest="request12",help="Choose the number of gram for BOW, if request1==2, set 0 to it")
-parser.add_option("-s", "--request2",type = "int", dest="request2",help="Number of subset, set 0 for the whole dataset")
-parser.add_option("-g", "--ef",type = "int", dest="ge",help="Number of iteration in CG")
+# usage = "usage: %prog [-f 'input file path'][-w 'feature extraction method'][-s 'number of subset']"
+# parser = OptionParser(usage=usage)
+# parser.add_option("-t", "--trafilename",type = "string", dest="trainfile",help="import the train file")
+# parser.add_option("-e", "--testfilename",type = "string", dest="testfile",help="import the test file")
+# parser.add_option("-w", "--request1",type="int", dest="request1",help="Choose feature extraction method: 1-Bag-of-Words , 2-Elude")
+# parser.add_option("-b", "--request12",type= "int", dest="request12",help="Choose the number of gram for BOW, if request1==2, set 0 to it")
+# parser.add_option("-s", "--request2",type = "int", dest="request2",help="Number of subset, set 0 for the whole dataset")
+# parser.add_option("-g", "--ef",type = "int", dest="ge",help="Number of iteration in CG")
+#
+# parser.print_help()
+#
+# (options, args) = parser.parse_args()
+# request1 = options.request1
+# request12 = options.request12
+# request2 = options.request2
+# trainFile = options.trainfile
+# testFile = options.testfile
+# evn = options.ge
 
-parser.print_help()
-
-(options, args) = parser.parse_args()
-request1 = options.request1
-request12 = options.request12
-request2 = options.request2
-trainFile = options.trainfile
-testFile = options.testfile
-evn = options.ge
-
-# File = 'data/retention_time_peptide.csv'
-# trainFile = 'data/set1/train_set5000.csv'
-# testFile = 'data/set1/test_set.csv'
-# request1 = 2
-# request12 = 0
-# request2 = 0
-# evn = 50
-# model = 'gp'
+File = 'data/retention_time_peptide.csv'
+trainFile = 'data/set1/train_set5000.csv'
+testFile = 'data/set1/test_set.csv'
+request1 = 2
+request12 = 0
+request2 = 0
+evn = 10
+model = 'gp'
 
 #data_spilt.split_data(File)
 
