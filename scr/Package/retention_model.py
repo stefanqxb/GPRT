@@ -16,7 +16,18 @@ defaultAlphabet = set(["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N
 percentageAa = 0.25
 cos300 = np.cos(300 * np.pi / 180)
 cos400 = np.cos(400 * np.pi / 180)
-  
+
+class PSMDescription:
+	def __init__( self ):
+		self.sequence = ''
+		self.retentionTime = 0.0
+	def __eq__(self, other):
+		return (isinstance(other, self.__class__) and self.__dict__ == other.__dict__)
+	def __ne__(self, other):
+		return not self.__eq__(other)
+	def __lt__(self, other):
+		return self.peptide < other.peptide or (self.peptide == other.peptide and self.retentionTime < other.retentionTime)
+
 def buildRetentionIndex(aaAlphabet, psmDescriptions, 
       normalizeRetentionTimes):
   featureMatrix = computeRetentionIndexFeatureMatrix(aaAlphabet, psmDescriptions)
@@ -57,7 +68,16 @@ def normalizeFeatures(featureMatrix):
 
 def hasPtms(aaAlphabet):
   return sum([1 for aa in aaAlphabet if aa not in defaultAlphabet]) > 0
-  
+
+def computeRentationFeatureVector(aaAlphabet, sequence, customIndex ):
+	pep = PSMDescription()
+	pep.sequence = sequence;
+	arr = [];
+	arr.append( pep )
+
+	fM = computeRetentionFeatureMatrix( aaAlphabet, arr, customIndex )
+	return fM[0,:]
+
 def computeRetentionFeatureMatrix(aaAlphabet, psmDescriptions, customIndex):
   ptmsPresent = False
   if hasPtms(aaAlphabet):
@@ -96,7 +116,7 @@ def computeRetentionFeatureMatrix(aaAlphabet, psmDescriptions, customIndex):
   aaFeatureVector = computeRetentionIndexFeatureMatrix(aaAlphabet, psmDescriptions)
   featureMatrix = np.concatenate((featureMatrix, aaFeatureVector), axis = 1)
   
-  normalizeFeatures(featureMatrix)
+  #normalizeFeatures(featureMatrix)
   return featureMatrix
 
 def getExtremeRetentionAA(index):

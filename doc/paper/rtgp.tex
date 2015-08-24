@@ -5,7 +5,7 @@
 \begin{document}
 \firstpage{1}
 
-\title[short Title]{This is a title}
+\title[short Title]{Confidence Estimation for Peptide Retention-Time Prediction}
 \author[Sample \textit{et~al}]{Corresponding Author\,$^{1,*}$, Co-Author\,$^{2}$ and Co-Author\,$^2$\footnote{to whom correspondence should be addressed}}
 \address{$^{1}$Department of XXXXXXX, Address XXXX etc.\\
 $^{2}$Department of XXXXXXXX, Address XXXX etc.}
@@ -32,11 +32,9 @@ Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Tex
 \end{abstract}
 
 \section{Introduction}
+The task of retention time prediction, focuses on determining the retention time of a peptide given its amino acid sequence. Accurate peptide retention-time prediction in protein mass spectrometry can highly increase the efficiency of peptides spectrum matches in data-independent acquisition (DIA). Similar to many other machine learning methods, this prediction is done by training a model on a training set and using it to evaluate the unseen peptides. In previous studies, different models such as artificial neural networks (ANN) \cite{?} and support vector regression \cite{?} (SVR) have been applied to this task. These models have been originally designed to solve classifications tasks and they show certain limitations when they are applied to regression tasks.
 
-* Section describing the RT prediction (citing some relevant papers)
-
-The role of a machine learning framework is to learn the association between the inputs and the outputs in a training set. After this association is learnt, the model is used to predict the output of the unseen inputs. When addressing regression problems, a feature that is usually neglected by most frameworks is the certainty of the prediction. While most frameworks can predict an output for a given input, they do not provide the user with notion of how certain the framework is regarding this prediction. Inclusion of such notion can highly benefit many machine tasks by removing false positives that the method is uncertain about the decisions it has made. To address this problem, we will employ Gaussian Process (GP) framework \cite{Rasmussen:2006vza} to predict peptide retention time. We will show, how the property in assigning certainty to the predictions provide a ground for removing more faulty predictions. 
-Moreover, we will argue how this framework can provide us with a model with significantly higher performance compared to previously used frameworks for solving the retention time prediction task.
+When using machine learning to predict an entity, we are always interested in the confidence of this prediction. Ideally, this confidence to reflect certain properties of the observed data with respect to the trained model. As an example, this property can reflect how close is the observation to samples that the model is trained on. Such a confidence measure can be very useful at the evaluation stage, due to the fact that most machine learning methods can only generalize near the data points they have observed during the training.  
 
 \section{Approach}
 The task of retention time prediction, focuses on determining the retention time of a peptide given its amino acid sequence. To obtain a robust model for solving this task, one needs to address the following problems. Most machine learning frameworks require the inputs to come from a vector space. To map the peptide into a vector space by extracting biologically meaningful features \cite{elute}, collecting general statistical entities collected from the sequences \cite{Rieck:2011ed} or using different kernels such as spectrum kernel \cite{Leslie:2002tx} or string kernel \cite{Lodhi:2002ts}. Once the feature vectors are calculated, a machine learning framework should be selected for solving the prediction problem. The choice this method can highly affect the quality of the prediction. For example in \cite{elute}, the authors have chosen Support Vector Regression (SVR) framework \cite{Bishop:2006ui} to solve the regression problem.
