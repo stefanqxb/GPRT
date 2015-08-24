@@ -8,8 +8,8 @@ import data_tools
 import feature_extraction
 
 if __name__=="__main__":
+	# Loading the peptides from the file. We should give the filename to this function later.
 	peptides = data_tools.read_data() 
-
 
 	# The peptides that are supposed to be used for building feature extraction model are given to
 	# feature extractor. Later these peptides will be only the training set.
