@@ -64,7 +64,7 @@ class feature_extractor:
 			for a in p.amino_acids :
 				amino_list.add( a )
 	 	return list(amino_list)
-	def get_elute_model( self ):
+	def get_elude_model( self ):
 		aaAlphabet = self.amino_acid_list()
 		normalizeRetentionTimes = True
 		customIndex = rm.buildRetentionIndex(aaAlphabet, self.peptides, normalizeRetentionTimes)
