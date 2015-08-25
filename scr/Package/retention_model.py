@@ -65,7 +65,7 @@ def normalizeFeatures(featureMatrix):
 def hasPtms(aaAlphabet):
   return sum([1 for aa in aaAlphabet if aa not in defaultAlphabet]) > 0
   
-def computeRetentionFeatureMatrix(aaAlphabet, peptide, customIndex):
+def computeRetentionFeatureVector(aaAlphabet, peptide, customIndex):
   ptmsPresent = False
   if hasPtms(aaAlphabet):
     numFeatures = 20 + 1 + len(aaAlphabet)
@@ -147,7 +147,11 @@ def computeIndexFeatures(aaAlphabet, peptide, index, polarAa, hydrophobicAa):
 
 # calculate the sum of hydrophobicities of all aa in the peptide
 def indexSum(aas, index):
-  return sum([index[aa] for aa in aas])
+    temp = 0
+    for aa in aas:
+        g = index[aa]
+        temp = temp + g
+    return temp
 
 # calculate the average of hydrophobicities of all aa in the peptide
 def indexAvg(aas, index):
