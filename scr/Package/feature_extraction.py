@@ -52,7 +52,7 @@ class elute_model:
 	def compute_features( self, sequence ):
 		return rm.computeRentationFeatureVector( self.aaAlphabet[:-1], sequence, self.customIndex )
 
-class feature_extractor:
+class model_generator:
 	def __init__( self, peptides ):
 		self.peptides = peptides;
 		self.amino_list = self.amino_acid_list()
@@ -69,7 +69,6 @@ class feature_extractor:
 		normalizeRetentionTimes = True
 		customIndex = rm.buildRetentionIndex(aaAlphabet, self.peptides, normalizeRetentionTimes)
 		return elute_model( aaAlphabet, customIndex )
-
 	def get_bow_voc( self, k ):
 		words = set()
 		for p in self.peptides :
@@ -143,3 +142,29 @@ class peptide:
 
 	def elude_descriptor(self,em):
 		return em.compute_features( self.sequence )
+
+class normalizer:
+	def normalize_bow( self, mat ):
+		print mat.shape
+	def normalize_elude( self, mat ):
+		print mat.shape
+
+class feature_extractor:
+	def __init__( self ):
+		self.norm = normalizer();
+	def ext_bow( self, peptides, voc ):
+		mat = []
+		for p in peptides :
+			mat.append( p.bow_descriptor(voc) )
+		mat = np.matrix( mat )
+		print mat.shape
+
+	def ext_elude( self, peptides, em ):
+		mat = []
+		print peptides[352].elude_descriptor(em)
+#		for i,p in enumerate(peptides) :
+#			print i,p
+#			mat.append( p.elude_descriptor(em) )
+#		mat = np.matrix( mat )
+#		print mat.shape
+

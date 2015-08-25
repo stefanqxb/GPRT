@@ -162,7 +162,9 @@ def computeIndexFeatures(aaAlphabet, peptide, index, polarAa, hydrophobicAa):
 
 # calculate the sum of hydrophobicities of all aa in the peptide
 def indexSum(aas, index):
-  return sum([index[aa] for aa in aas])
+	print aas
+	print index
+	return sum([index[aa] for aa in aas])
 
 # calculate the average of hydrophobicities of all aa in the peptide
 def indexAvg(aas, index):
