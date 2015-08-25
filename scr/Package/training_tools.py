@@ -12,9 +12,9 @@ import feature_extraction as fe
 
 class rt_trainer:
     def __init__(self,peptide):
-        self.peptide = peptide
-        self.feature = []
-        self.rt = []
+        self.peptide = peptide.sequence
+        self.feature = self.getFeature()
+        self.rt = peptide.rt
         self.trainSet = []
         self.trainTag = []
         self.testSet = []
@@ -23,9 +23,9 @@ class rt_trainer:
         self.preUnc = []
         self.time = 0
 
-    def getFeature(self, voc):
+    def getFeature(self):
         for pp in self.peptide:
-            self.feature.append(fe.peptide.bow_descriptor(pp, voc))
+            self.feature.append(pp.feature)
             self.rt.append(pp.rt)
 
     def extract(inst, num):

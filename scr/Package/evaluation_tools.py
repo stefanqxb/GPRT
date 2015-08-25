@@ -20,8 +20,7 @@ def mini_time_win(hist,diff,step,max_total_t):
     time_interval = 2*counter * (max_t - min_t)/(step*max_total_t)
     return  time_interval
 
-class evaluation:
-    def evaluation(pv_gp,pv_svr,test_tag,test_tag_svr,t_gp,t_svr):
+def evaluation(pv_gp,pv_svr,test_tag,test_tag_svr,t_gp,t_svr):
         step = 10
         diff_svr = abs(pv_svr - test_tag_svr)
         diff_gp = abs(pv_gp -test_tag)
@@ -41,7 +40,7 @@ class evaluation:
         print 'running time of GP = ',t_gp , 'sec', 'running time of SVR = ', t_svr
         return step ,max_total_gp,max_total_svr
 
-    def ploting(pv_gp,pv_svr, test_tag,test_tag_svr,max_total_gp,max_total_svr,step):
+def ploting(pv_gp,pv_svr, test_tag,test_tag_svr,max_total_gp,max_total_svr,step):
         diff_svr = pv_svr - test_tag_svr
         diff_gp = pv_gp - test_tag
         pylab.figure(1)
