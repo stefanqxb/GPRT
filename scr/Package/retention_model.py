@@ -102,7 +102,7 @@ def computeRetentionFeatureVector(aaAlphabet, peptide, customIndex):
 
 
   normalizeFeatures(featureVector)
-  return featureVector
+  return np.array(featureVector[0])
 
 def getExtremeRetentionAA(index):
   numAa = int(np.ceil(percentageAa * len(index)))

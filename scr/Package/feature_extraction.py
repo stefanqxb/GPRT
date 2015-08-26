@@ -50,8 +50,7 @@ class elute_model:
 		self.indices = indices
 		self.customIndex = dict(zip(aaAlphabet,indices))
 	def compute_features( self, sequence ):
-		#return rm.computeRetentionFeatureVector( self.aaAlphabet[:-1], sequence, self.customIndex )
-         return rm.computeRetentionFeatureVector(self.aaAlphabet, sequence, self.customIndex)
+		return rm.computeRetentionFeatureVector(self.aaAlphabet, sequence, self.customIndex)
 
 class model_generator:
 	def __init__( self, peptides ):
@@ -124,6 +123,8 @@ class peptide:
 		for w in k_mers:
 			ind = voc.char_seq_index(w.char_seq)
 			desc[ind] = desc[ind]+1.0
+
+		desc = desc/(np.linalg.norm(desc) + 1e-12)
 		return  desc
 
 	def sim_score(self, str1, str2):
@@ -147,23 +148,54 @@ class peptide:
 class normalizer:
 	def __init__( self ):
 		self.mode = -1
-	def normalize_bow( self, mat ):
+	def normalize_maxmin( self, featureMatrix ):
 		self.mode = 0
-		for r in mat :
-			n = np.linalg.norm(r)
-			r /= ( n + 1e-12 )
-		return mat
+		rows, cols = featureMatrix.shape
 
-	def normalize_elude( self, mat ):
+		self.values1 = []; # Value 1 is Min
+		self.values2 = []; # Value 2 is Max
+
+		for i in range(cols):
+			minFeature = np.min(featureMatrix[:,i])
+			maxFeature = np.max(featureMatrix[:,i])
+	
+			self.values1.append( minFeature )
+			self.values2.append( maxFeature ) 
+	
+			featureMatrix[:,i] -= minFeature
+			featureMatrix[:,i] /= (maxFeature - minFeature + 1e-12)
+
+	def normalize_gaussian( self, featureMatrix ):
 		self.mode = 1
+		rows, cols = featureMatrix.shape
 
+		self.values1 = []; # Value 1 is Mean
+		self.values2 = []; # Value 2 is Std
+
+		for i in range( cols ):
+			meanFeat = np.mean( featureMatrix[:,i] )
+			stdFeat = np.std( featureMatrix[:,i] )
+
+			self.values1.append( meanFeat )
+			self.values2.append( stdFeat )
+			featureMatrix[:,i] -= meanFeat
+			featureMatrix[:,i] /= (stdFeat + 1e-12)
+    	
 	def normalize( self, v ):
 		if self.mode == 0 :
-			n = np.linalg.norm(v)
-			v /= ( n + 1e-12 )
+			assert len(v) == len( self.values1 )
+			assert len(v) == len( self.values2 )
+
+			for i in range(len(v)):
+				v[i] -= self.values1[i]
+				v[i] /= ( self.values2[i] - self.values1[i] + 1e-12 )
 		elif self.mode == 1 :
-			print "Not implemented!"
-		return v
+		  	assert len(v) == len( self.values1 )
+			assert len(v) == len( self.values2 )
+
+			for i in range(len(v)):
+				v[i] -= self.values1[i]
+				v[i] /= ( self.values2[i] + 1e-12 )
 
 class feature_extractor:
 	def __init__( self ):
@@ -173,14 +205,12 @@ class feature_extractor:
 		for p in peptides :
 			mat.append( p.bow_descriptor(voc) )
 		mat = np.matrix( mat )
-		print mat.shape
+		return mat
 
 	def ext_elude( self, peptides, em ):
 		mat = []
-		print peptides[0].elude_descriptor(em)
-#		for i,p in enumerate(peptides) :
-#			print i,p
-#			mat.append( p.elude_descriptor(em) )
-#		mat = np.matrix( mat )
-#		print mat.shape
+		for i,p in enumerate(peptides) :
+			mat.append( p.elude_descriptor(em) )
+		mat = np.matrix( mat )
+		return mat
 
