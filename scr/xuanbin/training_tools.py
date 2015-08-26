@@ -48,49 +48,42 @@ class partitions:
 			self.test_parts.append( test ); 
 
 class rt_trainer:
-    def __init__(self,peptide):
-        self.peptide = peptide
-        self.feature = []
-        self.rt = []
-        self.trainSet = []
-        self.trainTag = []
-        self.testSet = []
-        self.testTag = []
+    def __init__(self, peptide, str):
+
+        self.peptide = []
+        self.rt = np.zeros((len(peptide),1))
+        self.ef = np.zeros((len(peptide), len(peptide[0].elude_descriptor)))
+        self.bf = np.zeros((len(peptide), len(peptide[0].bow_descriptor)))
+
+        for i, pp in peptide:
+            self.peptide.append(pp.sequence)
+            self.rt[i] = pp.rt
+            self.ef[i][:] = pp.elude_descriptor
+            self.bf[i][:] = pp.bow_descriptor
+
+
+
+        if str == "svr":
+            self.trainSet = np.zeros((1,0))
+            self.testSet = np.zeros((1,0))
+        elif str =='gp':
+            self.trainSet = np.zeros([1,1])
+            self.testSet = np.zeros([1,1])
+
         self.preTag = []
         self.preUnc = []
         self.time = 0
 
-    def getFeature(self, voc):
-        for pp in self.peptide:
-            self.feature.append(fe.peptide.bow_descriptor(pp, voc))
-            self.rt.append(pp.rt)
 
-    def extract(inst, num):
-        peptide = []
-        rt = []
-        for item in inst:
-            if isinstance(item,dm.PSMDescription):
-                peptide.append(item.peptide)
-                rt.append(item.retentionTime)
-            if len(rt) >= num:
-                break
-        return peptide,rt
-
-    def dataSet_split(self, subset_num, str):
-        total = range(len(self.feature))
+    def dataSet_split(self, trainSetNum, str):
+        total = range(len(self.peptide))
         random.shuffle(total)
-        if subset_num != 0:
-            seed = total[0:subset_num]
-            temp = self.feature[seed]
-            peptide,rt = self.extract(dm.psmDescriptions,len(temp))
-        else:
-            seed = total
-            temp = self.feature[total]
-            peptide,rt = self.extract(dm.psmDescriptions,len(temp))
-
-        for item in seed:
-            self.trainSet.append(peptide[item])
-            self.trainTag.append(rt[item])
+        seed = total[0:trainSetNum]
+        nonseed = total[trainSetNum:]
+        self.trainSet.append(self.ef[seed])
+        self.trainTag.append(self.rt[seed])
+        self.testSet.append(self.ef[nonseed])
+        self.testTag.append(self.rt[nonseed])
 
         if str =='svr':
             train_tag_temp = np.zeros([len(self.trainSet)])
@@ -104,10 +97,6 @@ class rt_trainer:
         for i in range(len(self.testSet)):
             self.testTag[i] = self.testTag[i]
 
-        train_set = train_fea
-        train_tag = train_tag_temp
-        test_set = test_fea
-        test_tag = test_tag_temp
         return train_set,train_tag,test_set,test_tag
 
     def train_svr(self):

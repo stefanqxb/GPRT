@@ -20,11 +20,9 @@ cos400 = np.cos(400 * np.pi / 180)
 def buildRetentionIndex(aaAlphabet, psmDescriptions, 
       normalizeRetentionTimes):
   featureMatrix = computeRetentionIndexFeatureMatrix(aaAlphabet, psmDescriptions)
-  temp = featureMatrix[0]
-  temp1 = featureMatrix[1]
   normalizeFeatures(featureMatrix)
   
-  retentionTimes = [psmd.rt for psmd in psmDescriptions]
+  retentionTimes = [psmd.retentionTime for psmd in psmDescriptions]
   if normalizeRetentionTimes:
     retentionTimes -= np.mean(retentionTimes)
     retentionTimes /= np.std(retentionTimes)
@@ -34,12 +32,8 @@ def buildRetentionIndex(aaAlphabet, psmDescriptions,
 
 def computeRetentionIndexFeatureMatrix(aaAlphabet, psmDescriptions):
   featureMatrix = np.zeros((len(psmDescriptions), len(aaAlphabet)))
-  t = type(psmDescriptions)
-  if type(psmDescriptions) is str:
-      featureMatrix = computeRetentionIndexFeatures(aaAlphabet, psmDescriptions)
-  else:
-      for i, psmd in enumerate(psmDescriptions):
-          featureMatrix[i] = computeRetentionIndexFeatures(aaAlphabet, psmd.sequence)
+  for i, psmd in enumerate(psmDescriptions):
+    featureMatrix[i] = computeRetentionIndexFeatures(aaAlphabet, psmd.peptide)
   return featureMatrix
   
 def computeRetentionIndexFeatures(aaAlphabet, peptide):
@@ -53,56 +47,57 @@ def normalizeFeatures(featureMatrix):
   rows, cols = featureMatrix.shape
   colMean = list()
   colStd = list()
-  if rows != 1:
-      for i in range(cols):
-         #featureMatrix[:,i] -= np.mean(featureMatrix[:,i])
-         #featureMatrix[:,i] /= np.std(featureMatrix[:,i])
-          minFeature = np.min(featureMatrix[:,i])
-          maxFeature = np.max(featureMatrix[:,i])
-          featureMatrix[:,i] -= minFeature
-          featureMatrix[:,i] /= maxFeature - minFeature
+  for i in range(cols):
+    #featureMatrix[:,i] -= np.mean(featureMatrix[:,i])
+    #featureMatrix[:,i] /= np.std(featureMatrix[:,i])
+    minFeature = np.min(featureMatrix[:,i])
+    maxFeature = np.max(featureMatrix[:,i])
+    featureMatrix[:,i] -= minFeature
+    featureMatrix[:,i] /= maxFeature - minFeature
 
 def hasPtms(aaAlphabet):
   return sum([1 for aa in aaAlphabet if aa not in defaultAlphabet]) > 0
   
-def computeRetentionFeatureVector(aaAlphabet, peptide, customIndex):
+def computeRetentionFeatureMatrix(aaAlphabet, psmDescriptions, customIndex):
   ptmsPresent = False
   if hasPtms(aaAlphabet):
     numFeatures = 20 + 1 + len(aaAlphabet)
     ptmsPresent = True
   else:
     numFeatures = 20 + 20 + 2 + len(aaAlphabet)
-
-  featureVector = np.zeros((1,0))
+  
+  featureMatrix = np.zeros((len(psmDescriptions),0))
   if not ptmsPresent:
-    polarAa, hydrophobicAa = getExtremeRetentionAA(kyteDoolittleIndex)
-    kyteDoolittleFeatureVector = np.zeros((1, 20))
-    kyteDoolittleFeatureVector[:] = computeIndexFeatures(aaAlphabet, peptide, kyteDoolittleIndex, polarAa, hydrophobicAa)
-    featureVector = np.concatenate((featureVector, kyteDoolittleFeatureVector), axis = 1)
-
+    polarAa, hydrophobicAa = getExtremeRetentionAA(kyteDoolittleIndex) 
+    kyteDoolittleFeatureMatrix = np.zeros((len(psmDescriptions), 20))
+    for i, psmd in enumerate(psmDescriptions):
+      kyteDoolittleFeatureMatrix[i] = computeIndexFeatures(aaAlphabet, psmd.peptide, kyteDoolittleIndex, polarAa, hydrophobicAa)
+    featureMatrix = np.concatenate((featureMatrix, kyteDoolittleFeatureMatrix), axis = 1)
+  
   polarAa, hydrophobicAa = getExtremeRetentionAA(customIndex)
-  customFeatureVector = np.zeros((1, 20))
-  customFeatureVector[:] = computeIndexFeatures(aaAlphabet, peptide, customIndex, polarAa, hydrophobicAa)
-  featureVector = np.concatenate((featureVector, customFeatureVector), axis = 1)
-
+  customFeatureMatrix = np.zeros((len(psmDescriptions), 20))
+  for i, psmd in enumerate(psmDescriptions):
+    customFeatureMatrix[i] = computeIndexFeatures(aaAlphabet, psmd.peptide, customIndex, polarAa, hydrophobicAa)
+  featureMatrix = np.concatenate((featureMatrix, customFeatureMatrix), axis = 1)
+  
   if not ptmsPresent:
-    bulkinessFeatureVector = np.zeros((1, 1))
-    aas = dm.getAminoAcidList(peptide)
-    bulkinessFeatureVector[:] = indexSum(aas, bulkinessIndex)
-    featureVector = np.concatenate((featureVector, bulkinessFeatureVector), axis = 1)
-
-  lengthFeatureVector = np.zeros((1, 1))
-  aas = dm.getAminoAcidList(peptide)
-  lengthFeatureVector[:] = len(aas)
-  featureVector = np.concatenate((featureVector, lengthFeatureVector), axis = 1)
-
-
-  aaFeatureVector = computeRetentionIndexFeatureMatrix(aaAlphabet, peptide)
-  featureVector = np.concatenate((featureVector, aaFeatureVector), axis = 1)
-
-
-  normalizeFeatures(featureVector)
-  return featureVector
+    bulkinessFeatureVector = np.zeros((len(psmDescriptions), 1))
+    for i, psmd in enumerate(psmDescriptions):
+      aas = dm.getAminoAcidList(psmd.peptide)
+      bulkinessFeatureVector[i] = indexSum(aas, bulkinessIndex)
+    featureMatrix = np.concatenate((featureMatrix, bulkinessFeatureVector), axis = 1)
+    
+  lengthFeatureVector = np.zeros((len(psmDescriptions), 1))
+  for i, psmd in enumerate(psmDescriptions):
+    aas = dm.getAminoAcidList(psmd.peptide)
+    lengthFeatureVector[i] = len(aas)
+  featureMatrix = np.concatenate((featureMatrix, lengthFeatureVector), axis = 1)
+  
+  aaFeatureVector = computeRetentionIndexFeatureMatrix(aaAlphabet, psmDescriptions)
+  featureMatrix = np.concatenate((featureMatrix, aaFeatureVector), axis = 1)
+  
+  normalizeFeatures(featureMatrix)
+  return featureMatrix
 
 def getExtremeRetentionAA(index):
   numAa = int(np.ceil(percentageAa * len(index)))
@@ -147,11 +142,7 @@ def computeIndexFeatures(aaAlphabet, peptide, index, polarAa, hydrophobicAa):
 
 # calculate the sum of hydrophobicities of all aa in the peptide
 def indexSum(aas, index):
-    temp = 0
-    for aa in aas:
-        g = index[aa]
-        temp = temp + g
-    return temp
+  return sum([index[aa] for aa in aas])
 
 # calculate the average of hydrophobicities of all aa in the peptide
 def indexAvg(aas, index):

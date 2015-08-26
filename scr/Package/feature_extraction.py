@@ -50,7 +50,8 @@ class elute_model:
 		self.indices = indices
 		self.customIndex = dict(zip(aaAlphabet,indices))
 	def compute_features( self, sequence ):
-		return rm.computeRentationFeatureVector( self.aaAlphabet[:-1], sequence, self.customIndex )
+		#return rm.computeRetentionFeatureVector( self.aaAlphabet[:-1], sequence, self.customIndex )
+         return rm.computeRetentionFeatureVector(self.aaAlphabet, sequence, self.customIndex)
 
 class model_generator:
 	def __init__( self, peptides ):
@@ -176,7 +177,7 @@ class feature_extractor:
 
 	def ext_elude( self, peptides, em ):
 		mat = []
-		print peptides[352].elude_descriptor(em)
+		print peptides[0].elude_descriptor(em)
 #		for i,p in enumerate(peptides) :
 #			print i,p
 #			mat.append( p.elude_descriptor(em) )
