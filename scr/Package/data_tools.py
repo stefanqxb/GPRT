@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#train_inds train_inds !/usr/bin/python
 
 import numpy as np
 from matplotlib import pyplot as pp
@@ -18,7 +18,7 @@ def read_data():
 	for l in lines :
 		values = l[:-2].split('\t')
 		peptides.append(extraction.peptide(values[0], float(values[1])))
-	return peptides
+	return np.array(peptides)
 
 	#if str == 'bow':
 	#

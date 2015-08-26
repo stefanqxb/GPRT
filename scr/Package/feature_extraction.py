@@ -144,10 +144,25 @@ class peptide:
 		return em.compute_features( self.sequence )
 
 class normalizer:
+	def __init__( self ):
+		self.mode = -1
 	def normalize_bow( self, mat ):
-		print mat.shape
+		self.mode = 0
+		for r in mat :
+			n = np.linalg.norm(r)
+			r /= ( n + 1e-12 )
+		return mat
+
 	def normalize_elude( self, mat ):
-		print mat.shape
+		self.mode = 1
+
+	def normalize( self, v ):
+		if self.mode == 0 :
+			n = np.linalg.norm(v)
+			v /= ( n + 1e-12 )
+		elif self.mode == 1 :
+			print "Not implemented!"
+		return v
 
 class feature_extractor:
 	def __init__( self ):

@@ -10,6 +10,43 @@ import data_manager as dm
 import random
 import feature_extraction as fe
 
+class partitions:
+	def __init__( self, ndata, nfolds ):
+		self.ndata = ndata
+		self.nfolds = nfolds
+	def gen_cross_val( self ):
+		perm = np.random.permutation( self.ndata )
+		self.train_parts = [];
+		self.test_parts = [];
+		for i in range( self.nfolds ):
+			train = [];
+			test = [];
+			for j in range( self.ndata ):
+				if j % self.nfolds == 0 :
+					test.append(perm[j])
+				else :
+					train.append(perm[j])
+
+			print len( test )
+			print len( train )
+			self.train_parts.append( train )
+			self.test_parts.append( test ); 
+	def gen_rand_splits( self, ratio ):
+		self.train_parts = []
+		self.test_parts = []
+		for i in range( self.nfolds ):
+			perm = np.random.permutation( self.ndata )
+			train = []
+			test = []
+			for j in range( self.ndata ):
+				r = float(j) / self.ndata
+				if r < ratio :
+					train.append(perm[j])
+				else :
+					test.append(perm[j])
+			self.train_parts.append( train )
+			self.test_parts.append( test ); 
+
 class rt_trainer:
     def __init__(self,peptide):
         self.peptide = peptide
