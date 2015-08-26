@@ -162,7 +162,7 @@ class feature_extractor:
 
 	def ext_elude( self, peptides, em ):
 		mat = []
-		print peptides[352].elude_descriptor(em)
+		print peptides[0].elude_descriptor(em)
 #		for i,p in enumerate(peptides) :
 #			print i,p
 #			mat.append( p.elude_descriptor(em) )
