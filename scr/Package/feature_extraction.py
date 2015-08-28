@@ -146,7 +146,7 @@ class peptide:
 class normalizer:
 	def __init__( self ):
 		self.mode = -1
-	def normalize_maxmin( self, featuatrix ):
+	def normalize_maxmin( self, featureMatrix ):
 		self.mode = 0
 		rows, cols = featureMatrix.shape
 

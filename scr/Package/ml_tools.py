@@ -30,7 +30,7 @@ class partitions:
 					train.append(perm[j])
 
 			self.train_parts.append( np.array(train) )
-			self.test_parts.append( np.array(test) ); 
+			self.test_parts.append( np.array(test) )
 	def gen_rand_splits( self, ratio ):
 		self.train_parts = []
 		self.test_parts = []
