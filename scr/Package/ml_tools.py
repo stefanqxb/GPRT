@@ -4,6 +4,8 @@ import numpy as np
 import random
 import feature_extraction
 import GPy
+import matplotlib.pyplot as plt
+from scipy.stats.stats import pearsonr
 
 class partitions:
 	def __init__( self, ndata, nfolds ):
@@ -49,10 +51,41 @@ class partitions:
 	def get_test_part( self, ind ):
 		return self.test_parts[ind]
 
+
+
+
 class eval_tools:
-	def mean_square_error( self, actual, predicted ):
-		return np.sum(np.power( actual - predicted, 2 )) / len(actual)
-				
+    def mean_square_error(self, actual, predicted):
+        return np.sum(np.power(actual - predicted, 2)) / len(actual)
+
+    def mini_time_window(self, hist,diff,step,max_total):
+        max_t = max(diff)
+        min_t = min(diff)
+        total = sum(hist)
+        threshold = round(0.95 * total)
+        count = 0
+        counter = 0
+        for i in range(len(hist)):
+            count = hist[i] + count
+            if count >= threshold:
+                counter = i
+                break
+        time_interval = 2 * counter * (max_t - min_t)/(step*max_total)
+        return  time_interval
+
+    def delta_t(self, actual, predicted):
+         step = 10
+         diff = abs(actual - predicted)
+         histo = plt.hist(diff,step)
+
+         max_total = max(actual) - min(actual)
+
+         mtw = self.mini_time_window(histo[0],diff,step,max_total)
+         corrcoef = pearsonr(actual,predicted)
+
+         return mtw
+
+
 class rt_model:
 	def __init__( self, feature, model, norm, voc, em ):
 		self.feature = feature
@@ -74,7 +107,7 @@ class rt_model:
 
 class rt_benchmark:
 	def __init__( self, peptides, feature, ntrain=-1 ):
-		self.peptides = peptides;
+		self.peptides = peptides
 		self.feature = feature
 		self.ntrain = ntrain
 
@@ -86,9 +119,9 @@ class rt_benchmark:
 
 	def train_model( self, ind ):
 		train_peptides = self.peptides[ self.parts.get_train_part(ind) ]
-		mg = feature_extraction.model_generator( train_peptides );
-		voc = mg.get_bow_voc(2);
-		em = mg.get_elude_model();
+		mg = feature_extraction.model_generator( train_peptides )
+		voc = mg.get_bow_voc(2)
+		em = mg.get_elude_model()
 
 		Y = [];
 		X = [];
@@ -112,8 +145,8 @@ class rt_benchmark:
 
 	def eval_model( self, ind, model ):
 		test_peptides = self.peptides[ self.parts.get_test_part(ind) ]
-		actual = [];
-		predicted = [];
+		actual = []
+		predicted = []
 		for p in test_peptides : 
 			actual.append( p.rt )
    			v,s = model.eval(p)	
@@ -121,7 +154,8 @@ class rt_benchmark:
 		actual = np.array( actual )
 		predicted = np.array( predicted )
 		et = eval_tools()
-		return et.mean_square_error( actual, predicted )
+		return et.delta_t( actual, predicted )
+
 
 	def cross_validation( self ):
 		scores = []

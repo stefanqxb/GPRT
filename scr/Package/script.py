@@ -8,8 +8,11 @@ import data_tools
 import feature_extraction
 import ml_tools
 
-if __name__=="__main__":
-	# Loading the peptides from the file. We should give the filename to this function later.
-	peptides = data_tools.read_data()
-	benchmark = ml_tools.rt_benchmark( peptides, 'elude', 100 )
-	benchmark.cross_validation()
+
+
+if __name__== "__main__":
+    peptides = data_tools.read_data()
+    duplicated_message = data_tools.checked_duplicated(peptides)
+    print duplicated_message
+    benchmark = ml_tools.rt_benchmark(peptides, 'elude', 100)
+    benchmark.cross_validation()

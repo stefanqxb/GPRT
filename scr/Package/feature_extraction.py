@@ -2,9 +2,7 @@
 
 import numpy as np
 from matplotlib import pyplot as pp
-import sys
 import retention_model as rm
-import random
 pp.ion()
 #from joblib import Parallel, delayed
 import multiprocessing
@@ -148,7 +146,7 @@ class peptide:
 class normalizer:
 	def __init__( self ):
 		self.mode = -1
-	def normalize_maxmin( self, featureMatrix ):
+	def normalize_maxmin( self, featuatrix ):
 		self.mode = 0
 		rows, cols = featureMatrix.shape
 
