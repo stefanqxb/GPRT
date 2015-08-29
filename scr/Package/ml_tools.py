@@ -6,59 +6,65 @@ import feature_extraction
 import GPy
 import matplotlib.pyplot as plt
 from scipy.stats.stats import pearsonr
+from sklearn import svm, grid_search
+
 
 class partitions:
-	def __init__( self, ndata, nfolds ):
-		self.ndata = ndata
-		self.nfolds = nfolds
-		np.random.seed( 34 )
-	def n_train( self ):
-		return len(self.train_parts[0])
-	def n_test( self ):
-		return len(self.test_parts[0])
-	def gen_cross_val( self ):
-		perm = np.random.permutation( self.ndata )
-		self.train_parts = [];
-		self.test_parts = [];
-		for i in range( self.nfolds ):
-			train = [];
-			test = [];
-			for j in range( self.ndata ):
-				if j % self.nfolds == 0 :
-					test.append(perm[j])
-				else :
-					train.append(perm[j])
+    def __init__(self, ndata, nfolds):
+        self.ndata = ndata
+        self.nfolds = nfolds
+        np.random.seed(34)
 
-			self.train_parts.append( np.array(train) )
-			self.test_parts.append( np.array(test) )
-	def gen_rand_splits( self, ratio ):
-		self.train_parts = []
-		self.test_parts = []
-		for i in range( self.nfolds ):
-			perm = np.random.permutation( self.ndata )
-			train = []
-			test = []
-			for j in range( self.ndata ):
-				r = float(j) / self.ndata
-				if r < ratio :
-					train.append(perm[j])
-				else :
-					test.append(perm[j])
-			self.train_parts.append( np.array(train) )
-			self.test_parts.append( np.array(test) ); 
-	def get_train_part( self, ind ):
-		return self.train_parts[ind]
-	def get_test_part( self, ind ):
-		return self.test_parts[ind]
+    def n_train(self):
+        return len(self.train_parts[0])
 
+    def n_test(self):
+        return len(self.test_parts[0])
 
+    def gen_cross_val(self):
+        perm = np.random.permutation(self.ndata)
+        self.train_parts = [];
+        self.test_parts = [];
+        for i in range(self.nfolds):
+            train = []
+            test = []
+            for j in range(self.ndata):
+                if j % self.nfolds == 0:
+                    test.append(perm[j])
+                else:
+                    train.append(perm[j])
+
+            self.train_parts.append(np.array(train))
+            self.test_parts.append(np.array(test))
+
+    def gen_rand_splits(self, ratio):
+        self.train_parts = []
+        self.test_parts = []
+        for i in range(self.nfolds):
+            perm = np.random.permutation(self.ndata)
+            train = []
+            test = []
+            for j in range(self.ndata):
+                r = float(j) / self.ndata
+                if r < ratio:
+                    train.append(perm[j])
+                else:
+                    test.append(perm[j])
+            self.train_parts.append(np.array(train))
+            self.test_parts.append(np.array(test));
+
+    def get_train_part(self, ind):
+        return self.train_parts[ind]
+
+    def get_test_part(self, ind):
+        return self.test_parts[ind]
 
 
 class eval_tools:
     def mean_square_error(self, actual, predicted):
         return np.sum(np.power(actual - predicted, 2)) / len(actual)
 
-    def mini_time_window(self, hist,diff,step,max_total):
+    def mini_time_window(self, hist, diff, step, max_total):
         max_t = max(diff)
         min_t = min(diff)
         total = sum(hist)
@@ -70,100 +76,117 @@ class eval_tools:
             if count >= threshold:
                 counter = i
                 break
-        time_interval = 2 * counter * (max_t - min_t)/(step*max_total)
-        return  time_interval
+        time_interval = 2 * counter * (max_t - min_t) / (step * max_total)
+        return time_interval
 
     def delta_t(self, actual, predicted):
-         step = 10
-         diff = abs(actual - predicted)
-         histo = plt.hist(diff,step)
+        step = 10
+        diff = abs(actual - predicted)
+        histo = plt.hist(diff, step)
 
-         max_total = max(actual) - min(actual)
+        max_total = max(actual) - min(actual)
 
-         mtw = self.mini_time_window(histo[0],diff,step,max_total)
-         corrcoef = pearsonr(actual,predicted)
+        mtw = self.mini_time_window(histo[0], diff, step, max_total)
+        corrcoef = pearsonr(actual, predicted)
 
-         return mtw
+        return mtw
 
 
 class rt_model:
-	def __init__( self, feature, model, norm, voc, em ):
-		self.feature = feature
-		self.model = model
-		self.norm = norm
-		self.voc = voc
-		self.em = em
-	def eval( self, p ):
-		res = [];
-		if self.feature == "bow" :
-			vec = p.bow_descriptor( self.voc )
-		if self.feature == "elude" :
-			vec = p.elude_descriptor( self.em )
-		self.norm.normalize(vec)
-		vec = np.matrix(vec)
-		vals = self.model.predict( np.array( vec ) )
-		res = ( vals[0][0,0], vals[1][0,0] )
-		return res	
+    def __init__(self, feature,feature2, model, norm, voc, em):
+        self.feature = feature
+        self.feature2 = feature2
+        self.model = model
+        self.norm = norm
+        self.voc = voc
+        self.em = em
+
+    def eval(self, p):
+        res = [];
+        if self.feature == "bow":
+            vec = p.bow_descriptor(self.voc)
+        if self.feature == "elude":
+            vec = p.elude_descriptor(self.em)
+        self.norm.normalize(vec)
+        vec = np.matrix(vec)
+        vals = self.model.predict(np.array(vec))
+        if self.feature2 == 'gp':
+            res = ( vals[0][0, 0], vals[1][0, 0] )
+        elif self.feature2 == 'svr':
+            res = ( int(vals), 0)
+        return res
+
 
 class rt_benchmark:
-	def __init__( self, peptides, feature, ntrain=-1 ):
-		self.peptides = peptides
-		self.feature = feature
-		self.ntrain = ntrain
+    def __init__(self, peptides, feature, feature2, ntrain=-1):
+        self.peptides = peptides
+        self.feature = feature
+        self.feature2 = feature2
+        self.ntrain = ntrain
 
-		self.parts = partitions( len(peptides), 10 )
-		self.parts.gen_rand_splits( 0.80 )
-		
-		if ntrain < 0 or ntrain > self.parts.n_train() :
-			ntrain = self.parts.n_train()
+        self.parts = partitions(len(peptides), 10)
+        self.parts.gen_rand_splits(0.80)
 
-	def train_model( self, ind ):
-		train_peptides = self.peptides[ self.parts.get_train_part(ind) ]
-		mg = feature_extraction.model_generator( train_peptides )
-		voc = mg.get_bow_voc(2)
-		em = mg.get_elude_model()
+        if ntrain < 0 or ntrain > self.parts.n_train():
+            ntrain = self.parts.n_train()
 
-		Y = [];
-		X = [];
-		for p in train_peptides[0:self.ntrain] :
-			Y.append( p.rt )
-			if self.feature == 'bow' :
-				X.append( p.bow_descriptor(voc) )
-			elif self.feature == 'elude':
-				X.append( p.elude_descriptor(em) )
-		X = np.matrix(X)
-		Y = np.transpose( np.matrix(Y) )
+    def train_model(self, ind):
+        train_peptides = self.peptides[self.parts.get_train_part(ind)]
+        mg = feature_extraction.model_generator(train_peptides)
+        voc = mg.get_bow_voc(2)
+        em = mg.get_elude_model()
 
-		norm = feature_extraction.normalizer()	
-		if self.feature == "elude" :
-			norm.normalize_maxmin(X)
+        Y = [];
+        X = [];
+        for p in train_peptides[0:self.ntrain]:
+            Y.append(p.rt)
+            if self.feature == 'bow':
+                X.append(p.bow_descriptor(voc))
+            elif self.feature == 'elude':
+                X.append(p.elude_descriptor(em))
+        X = np.matrix(X)
+        if self.feature2 == 'gp':
+            Y = np.transpose(np.matrix(Y))
+        elif self.feature2 == 'svr':
+            Y = np.transpose(Y)
 
-		#kernel = GPy.kern.RBF(input_dim=X.shape[1], variance=1., lengthscale=1.)
-		m = GPy.models.GPRegression(X,Y)
-		m.optimize()
-		return rt_model( self.feature,m,norm,voc,em )
+        norm = feature_extraction.normalizer()
+        if self.feature == "elude":
+            norm.normalize_maxmin(X);
+            # kernel = GPy.kern.RBF(input_dim=X.shape[1], variance=1., lengthscale=1.)
+        if self.feature2 == "gp":
+            m = GPy.models.GPRegression(X, Y)
+            m.optimize()
+        elif self.feature2 == "svr":
+            m = svm.SVR(C=600, gamma=0.1, coef0=0.0, degree=3, epsilon=0.1, kernel='rbf', max_iter=-1, shrinking=True, tol=0.001, verbose=False)
+            m = grid_search.GridSearchCV(m, param_grid={"C": np.linspace(100, 1000, num=10), "gamma": np.linspace(0.01,10, num = 100)})
+            m.fit(X, Y)
 
-	def eval_model( self, ind, model ):
-		test_peptides = self.peptides[ self.parts.get_test_part(ind) ]
-		actual = []
-		predicted = []
-		for p in test_peptides : 
-			actual.append( p.rt )
-   			v,s = model.eval(p)	
-			predicted.append( v )
-		actual = np.array( actual )
-		predicted = np.array( predicted )
-		et = eval_tools()
-		return et.delta_t( actual, predicted )
+        return rt_model(self.feature,self.feature2, m, norm, voc, em)
+
+    def eval_model(self, ind, model):
+        test_peptides = self.peptides[self.parts.get_test_part(ind)]
+        actual = []
+        predicted = []
+        for p in test_peptides:
+            actual.append(p.rt)
+            v, s = model.eval(p)
+            predicted.append(v)
+        actual = np.array(actual)
+        predicted = np.array(predicted)
+        et = eval_tools()
+        return et.delta_t(actual, predicted)
+
+    def cross_validation(self):
+        scores = []
+
+        for i in range(self.parts.nfolds):
+            model = self.train_model(i)
+            score = self.eval_model(i, model)
+            print score
+            scores.append(score)
+
+        print np.mean(scores), np.std(scores)
 
 
-	def cross_validation( self ):
-		scores = []
 
-		for i in range( self.parts.nfolds ):
-			model = self.train_model(i)
-			score = self.eval_model(i,model)
-			print score
-			scores.append( score )
-
-		print np.mean( scores ), np.std( scores )
