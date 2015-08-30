@@ -163,7 +163,7 @@ class rt_benchmark:
             norm.normalize_maxmin(X);
         if self.model_type == "gp":
             m = GPy.models.GPRegression(X,Y)
-            m.optimize()
+            m.optimize_restarts(num_restarts=10,verbose=False)
         elif self.model_type == "svr":
             m = svm.SVR(C=600, gamma=0.1, coef0=0.0, degree=3, epsilon=0.1, kernel='rbf', max_iter=-1, shrinking=True, tol=0.001, verbose=False)
             m = grid_search.GridSearchCV(m, param_grid={"C": np.linspace(100, 1000, num=10), "gamma": np.linspace(0.01,10, num = 100)})
