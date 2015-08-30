@@ -13,6 +13,6 @@ if __name__== "__main__":
 	#print duplicated_message
 
 	for n in [ 100, 200, 300, 500, 1000, 2000, 3000, 4000, 5000, 10000 ]:
-		benchmark = ml_tools.rt_benchmark(peptides, 'elude','gp', n )
+		benchmark = ml_tools.rt_benchmark(peptides, 'elude','gp', n,10 )
 		m,s = ml_tools.parallel_cross_validataion(benchmark)
 		print "%d %g %g" % (n,m,s)

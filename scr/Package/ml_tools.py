@@ -132,8 +132,8 @@ class rt_benchmark:
 		self.model_type = model_type
 		self.ntrain = ntrain
 		self.parts = partitions(len(peptides), nfolds)
-		#self.parts.gen_rand_splits(0.80)
-		self.parts.gen_cross_val();
+		self.parts.gen_rand_splits(0.70)
+		#self.parts.gen_cross_val();
 		
 		if ntrain < 0 or ntrain > self.parts.n_train():
 			ntrain = self.parts.n_train()
