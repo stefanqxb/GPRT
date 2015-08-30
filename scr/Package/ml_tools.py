@@ -5,9 +5,22 @@ import random
 import feature_extraction
 import GPy
 import matplotlib.pyplot as plt
+
 from scipy.stats.stats import pearsonr
 from sklearn import svm, grid_search
 
+from joblib import Parallel, delayed  
+import multiprocessing
+
+def pcv_train(i,bench):
+	model = bench.train_model(i)
+	score = bench.eval_model(i,model)
+	return score
+
+def parallel_cross_validataion( bench ):
+	num_cores = multiprocessing.cpu_count()
+	results = Parallel(n_jobs=num_cores)( delayed(pcv_train)(i,bench) for i in range(bench.parts.nfolds) )
+	return np.mean( results ), np.std( results )
 
 class partitions:
     def __init__(self, ndata, nfolds):
@@ -29,11 +42,10 @@ class partitions:
             train = []
             test = []
             for j in range(self.ndata):
-                if j % self.nfolds == 0:
+                if j % self.nfolds == i:
                     test.append(perm[j])
                 else:
                     train.append(perm[j])
-
             self.train_parts.append(np.array(train))
             self.test_parts.append(np.array(test))
 
@@ -59,7 +71,6 @@ class partitions:
     def get_test_part(self, ind):
         return self.test_parts[ind]
 
-
 class eval_tools:
     def mean_square_error(self, actual, predicted):
         return np.sum(np.power(actual - predicted, 2)) / len(actual)
@@ -80,22 +91,19 @@ class eval_tools:
         return time_interval
 
     def delta_t(self, actual, predicted):
-        step = 10
-        diff = abs(actual - predicted)
-        histo = plt.hist(diff, step)
-
-        max_total = max(actual) - min(actual)
-
-        mtw = self.mini_time_window(histo[0], diff, step, max_total)
-        corrcoef = pearsonr(actual, predicted)
-
-        return mtw
-
+		step = 10
+		diff = abs(actual - predicted)	
+		histo = np.histogram(diff,step)
+		#histo = plt.hist(diff, step)
+		max_total = max(actual) - min(actual)
+		mtw = self.mini_time_window(histo[0], diff, step, max_total)
+		corrcoef = pearsonr(actual, predicted)
+		return mtw
 
 class rt_model:
-    def __init__(self, feature,feature2, model, norm, voc, em):
+    def __init__(self, feature,model_type, model, norm, voc, em):
         self.feature = feature
-        self.feature2 = feature2
+        self.model_type = model_type
         self.model = model
         self.norm = norm
         self.voc = voc
@@ -110,25 +118,25 @@ class rt_model:
         self.norm.normalize(vec)
         vec = np.matrix(vec)
         vals = self.model.predict(np.array(vec))
-        if self.feature2 == 'gp':
+        if self.model_type == 'gp':
             res = ( vals[0][0, 0], vals[1][0, 0] )
-        elif self.feature2 == 'svr':
+        elif self.model_type == 'svr':
             res = ( int(vals), 0)
         return res
 
 
 class rt_benchmark:
-    def __init__(self, peptides, feature, feature2, ntrain=-1):
-        self.peptides = peptides
-        self.feature = feature
-        self.feature2 = feature2
-        self.ntrain = ntrain
-
-        self.parts = partitions(len(peptides), 10)
-        self.parts.gen_rand_splits(0.80)
-
-        if ntrain < 0 or ntrain > self.parts.n_train():
-            ntrain = self.parts.n_train()
+    def __init__(self, peptides, feature, model_type, ntrain=-1, nfolds = 5 ):
+		self.peptides = peptides
+		self.feature = feature
+		self.model_type = model_type
+		self.ntrain = ntrain
+		self.parts = partitions(len(peptides), nfolds)
+		#self.parts.gen_rand_splits(0.80)
+		self.parts.gen_cross_val();
+		
+		if ntrain < 0 or ntrain > self.parts.n_train():
+			ntrain = self.parts.n_train()
 
     def train_model(self, ind):
         train_peptides = self.peptides[self.parts.get_train_part(ind)]
@@ -145,24 +153,22 @@ class rt_benchmark:
             elif self.feature == 'elude':
                 X.append(p.elude_descriptor(em))
         X = np.matrix(X)
-        if self.feature2 == 'gp':
+        if self.model_type == 'gp':
             Y = np.transpose(np.matrix(Y))
-        elif self.feature2 == 'svr':
+        elif self.model_type == 'svr':
             Y = np.transpose(Y)
 
         norm = feature_extraction.normalizer()
         if self.feature == "elude":
             norm.normalize_maxmin(X);
-            # kernel = GPy.kern.RBF(input_dim=X.shape[1], variance=1., lengthscale=1.)
-        if self.feature2 == "gp":
-            m = GPy.models.GPRegression(X, Y)
+        if self.model_type == "gp":
+            m = GPy.models.GPRegression(X,Y)
             m.optimize()
-        elif self.feature2 == "svr":
+        elif self.model_type == "svr":
             m = svm.SVR(C=600, gamma=0.1, coef0=0.0, degree=3, epsilon=0.1, kernel='rbf', max_iter=-1, shrinking=True, tol=0.001, verbose=False)
             m = grid_search.GridSearchCV(m, param_grid={"C": np.linspace(100, 1000, num=10), "gamma": np.linspace(0.01,10, num = 100)})
             m.fit(X, Y)
-
-        return rt_model(self.feature,self.feature2, m, norm, voc, em)
+        return rt_model(self.feature,self.model_type, m, norm, voc, em)
 
     def eval_model(self, ind, model):
         test_peptides = self.peptides[self.parts.get_test_part(ind)]
@@ -176,17 +182,3 @@ class rt_benchmark:
         predicted = np.array(predicted)
         et = eval_tools()
         return et.delta_t(actual, predicted)
-
-    def cross_validation(self):
-        scores = []
-
-        for i in range(self.parts.nfolds):
-            model = self.train_model(i)
-            score = self.eval_model(i, model)
-            print score
-            scores.append(score)
-
-        print np.mean(scores), np.std(scores)
-
-
-

@@ -8,8 +8,8 @@ import data_tools
 import ml_tools
 
 if __name__== "__main__":
-    peptides = data_tools.read_data()
-    duplicated_message = data_tools.checked_duplicated(peptides)
-    print duplicated_message
-    benchmark = ml_tools.rt_benchmark(peptides, 'elude','svr', 100)
-    benchmark.cross_validation()
+	peptides = data_tools.read_data()
+	#duplicated_message = data_tools.checked_duplicated(peptides)
+	#print duplicated_message
+	benchmark = ml_tools.rt_benchmark(peptides, 'elude','gp', 100)
+	print ml_tools.parallel_cross_validataion( benchmark )
