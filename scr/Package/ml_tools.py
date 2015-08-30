@@ -26,7 +26,7 @@ class partitions:
     def __init__(self, ndata, nfolds):
         self.ndata = ndata
         self.nfolds = nfolds
-        np.random.seed(34)
+        np.random.seed(8766)
 
     def n_train(self):
         return len(self.train_parts[0])
