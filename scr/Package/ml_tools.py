@@ -6,10 +6,11 @@ import feature_extraction
 import GPy
 import math
 import matplotlib.pyplot as plt
+import pickle as pk
 
 from scipy.stats.stats import pearsonr
 from sklearn import svm, grid_search
-from sklearn.cluster import KMeans as KM
+from sklearn.cluster import KMeans
 
 from joblib import Parallel, delayed
 import multiprocessing
@@ -133,81 +134,99 @@ class rt_model:
 
 
 class rt_benchmark:
-    def __init__(self, peptides, feature, model_type, ntrain=-1, nfolds=5):
-        self.peptides = peptides
-        self.feature = feature
-        self.model_type = model_type
-        self.ntrain = ntrain
-        self.parts = partitions(len(peptides), nfolds)
-        self.parts.gen_rand_splits(0.70)
-        # self.parts.gen_cross_val();
+	def __init__(self, peptides, feature, model_type, ntrain=-1, nfolds=5):
+		self.peptides = peptides
+		self.feature = feature
+		self.model_type = model_type
+		self.ntrain = ntrain
+		self.parts = partitions(len(peptides), nfolds)
+		self.parts.gen_rand_splits(0.70)
+		# self.parts.gen_cross_val();
 
-        if ntrain < 0 or ntrain > self.parts.n_train():
-            ntrain = self.parts.n_train()
+		if ntrain < 0 or ntrain > self.parts.n_train():
+			ntrain = self.parts.n_train()
 
-    def train_model(self, ind):
-        train_peptides = self.peptides[self.parts.get_train_part(ind)]
-        mg = feature_extraction.model_generator(train_peptides)
-        voc = mg.get_bow_voc(2)
-        em = mg.get_elude_model()
+	def train_model(self, ind):
+		train_peptides = self.peptides[self.parts.get_train_part(ind)]
+		mg = feature_extraction.model_generator(train_peptides)
+		voc = mg.get_bow_voc(2)
+		em = mg.get_elude_model()
 
-        Y = [];
-        X = [];
-        for p in train_peptides[0:self.ntrain]:
-            Y.append(p.rt)
-            if self.feature == 'bow':
-                X.append(p.bow_descriptor(voc))
-            elif self.feature == 'elude':
-                X.append(p.elude_descriptor(em))
-        X = np.matrix(X)
-        if self.model_type == 'gp':
-            Y = np.transpose(np.matrix(Y))
-        elif self.model_type == 'svr':
-            Y = np.transpose(Y)
+		Y = [];
+		X = [];
+		for p in train_peptides[0:self.ntrain]:
+			Y.append(p.rt)
+			if self.feature == 'bow':
+				X.append(p.bow_descriptor(voc))
+			elif self.feature == 'elude':
+				X.append(p.elude_descriptor(em))
+		X = np.matrix(X)
+		if self.model_type == 'gp':
+			Y = np.transpose(np.matrix(Y))
+		elif self.model_type == 'svr':
+			Y = np.transpose(Y)
 
-        norm = feature_extraction.normalizer()
+		norm = feature_extraction.normalizer()
 
-        if self.feature == "elude":
-            norm.normalize_maxmin(X);
-        if self.model_type == "gp":
-            m = GPy.models.GPRegression(X, Y)
-            m.optimize_restarts(num_restarts=10, verbose=False)
-        elif self.model_type == "svr":
-            m = svm.SVR(C=600, gamma=0.1, coef0=0.0, degree=3, epsilon=0.1, kernel='rbf', max_iter=-1, shrinking=True,
-                        tol=0.001, verbose=False)
-            m = grid_search.GridSearchCV(m, param_grid={"C": np.linspace(100, 1000, num=10),
-                                                        "gamma": np.linspace(0.01, 10, num=100)})
-            m.fit(X, Y)
-        return rt_model(self.feature, self.model_type, m, norm, voc, em)
+		if self.feature == "elude":
+			norm.normalize_maxmin(X);
+		if self.model_type == "gp":
+			m = GPy.models.GPRegression(X, Y)
+			m.optimize_restarts(num_restarts=10, verbose=False)
+		elif self.model_type == "svr":
+			m = svm.SVR(C=600, gamma=0.1, coef0=0.0, degree=3, epsilon=0.1, kernel='rbf', max_iter=-1, shrinking=True,tol=0.001, verbose=False)
+			m = grid_search.GridSearchCV(m, param_grid={"C": np.linspace(100, 1000, num=10),"gamma": np.linspace(0.01, 10, num=100)})
+			m.fit(X, Y)
+		return rt_model(self.feature, self.model_type, m, norm, voc, em)
 
+	def predict(self,ind,model):
+		test_peptides = self.peptides[self.parts.get_test_part(ind)]
+		actual = []
+		predicted = []
+		std = []
+		for p in test_peptides:
+			actual.append(p.rt)
+			v, s = model.eval(p)
+			predicted.append(v)
+			std.append(s)
+		actual = np.array(actual)
+		predicted = np.array(predicted)
+		std = np.array(std)
+		return actual,predicted,std
 
-    def eval_model(self, ind, model):
-        test_peptides = self.peptides[self.parts.get_test_part(ind)]
-        actual = []
-        predicted = []
-        std = []
-        for p in test_peptides:
-            actual.append(p.rt)
-            v, s = model.eval(p)
-            predicted.append(v)
-            std.append(s)
-        actual = np.array(actual)
-        predicted = np.array(predicted)
-        std = np.array(std)
-        et = eval_tools()
-        estimator = KM(n_clusters = 10)
-        estimator.fit(std)
-        labels = estimator.labels_
-        return et.delta_t(actual, predicted)
+	def eval_model(self, ind, model):
+		actual,predicted,std = self.predict( ind,model )
+		et = eval_tools()
+		return et.delta_t(actual, predicted)
 
+	def test_kmeans( self,ind,model ):
+		actual,predicted,std = self.predict( ind,model )
+		
+		std_mat = np.transpose( np.matrix( std ) )
 
+		nclusters = 5
+		KM = KMeans( nclusters )
+		KM.fit(std_mat)	
 
+		labels = KM.labels_
+		et = eval_tools()
 
+		dim1 = [];
+		dim2 = [];
 
+		for i in range( nclusters ):
+			inds = np.where( labels == i )[0]
+			a = actual[inds]
+			p = predicted[inds]
+			s = std[inds]
 
+			dim1.append( np.mean(s) )
+			dim2.append( et.mean_square_error(a,p) )
 
+		dim1 = np.array( dim1 )
+		dim2 = np.array( dim2 )
 
+		order = np.argsort( dim1 )
 
-
-
-
+		for o in order :
+			print dim1[o],dim2[o]
