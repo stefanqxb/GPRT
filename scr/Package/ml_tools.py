@@ -33,13 +33,10 @@ class partitions:
         self.ndata = ndata
         self.nfolds = nfolds
         np.random.seed(8766)
-
     def n_train(self):
         return len(self.train_parts[0])
-
     def n_test(self):
         return len(self.test_parts[0])
-
     def gen_cross_val(self):
         perm = np.random.permutation(self.ndata)
         self.train_parts = [];
@@ -54,7 +51,6 @@ class partitions:
                     train.append(perm[j])
             self.train_parts.append(np.array(train))
             self.test_parts.append(np.array(test))
-
     def gen_rand_splits(self, ratio):
         self.train_parts = []
         self.test_parts = []
@@ -70,13 +66,10 @@ class partitions:
                     test.append(perm[j])
             self.train_parts.append(np.array(train))
             self.test_parts.append(np.array(test));
-
     def get_train_part(self, ind):
         return self.train_parts[ind]
-
     def get_test_part(self, ind):
         return self.test_parts[ind]
-
 
 class eval_tools:
     def mean_square_error(self, actual, predicted):
@@ -205,8 +198,42 @@ class rt_benchmark:
         et = eval_tools()
         print et.delta_t(actual, predicted)
 
+    def save_scores( self, ind , model ):
+        actual, predicted, std = self.predict(ind, model)
+        with open('scores.pk','w') as ff :
+            pk.dump( [ actual, predicted, std ], ff )
+            ff.close()
 
     def test_kmeans(self, ind, model):
+        actual, predicted, std = self.predict(ind, model) 
+        std_mat = np.transpose(np.matrix(std))
+        nclusters = 10;
+        KM = KMeans(nclusters)
+        KM.fit(std_mat)
+
+        labels = KM.labels_
+        centers = KM.cluster_centers_.squeeze()
+        order = np.argsort( centers )
+
+        dummy = set()
+        indices = []
+        means = []
+
+        for o in order :
+            means.append( centers[o] )
+            inds = np.where( labels == o )[0]
+            inds = set(inds)
+            dummy = dummy.union( set(inds) ) 
+            indices.append( dummy.copy() )
+
+        et = eval_tools()
+        for i,s in enumerate(indices) :
+            inds = list(s)
+            a = actual[ inds ]
+            p = predicted[ inds ]
+            print means[i], et.delta_t(a, p), et.mean_square_error(a,p), float(len( inds ))/len( actual )
+            
+    def other( self ):
         actual, predicted, std = self.predict(ind, model)
 
         std_mat = np.transpose(np.matrix(std))
@@ -216,6 +243,7 @@ class rt_benchmark:
         KM.fit(std_mat)
 
         labels = KM.labels_
+        centers = KM.cluster_centers_.squeeze()
         et = eval_tools()
 
         dim1 = []
