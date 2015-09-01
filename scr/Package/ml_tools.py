@@ -75,6 +75,11 @@ class eval_tools:
         return np.sum(np.power(actual - predicted, 2)) / len(actual)
     def mean_absolute_error( self, actual, predicted ):
         return np.sum(np.abs(actual-predicted))/len(actual)
+    def delta_t(self,actual,predicted,ratio=0.95):
+        abs_diff = np.abs( actual - predicted )
+        abs_diff = np.sort( abs_diff )
+        ind = np.round(len( abs_diff ) * ratio)
+        return 2*abs_diff[ind]
     def mini_time_window(self, hist, diff, numGroup, max_total):
         max_t = max(diff)
         min_t = min(diff)
@@ -90,7 +95,7 @@ class eval_tools:
         time_interval = 2 * counter * (max_t - min_t) / (numGroup * max_total)
         return time_interval
 
-    def delta_t(self, actual, predicted):
+    def delta_t2(self, actual, predicted):
         diff = abs(actual - predicted)
         numGroup = 10
         histo = np.histogram(diff, numGroup)
