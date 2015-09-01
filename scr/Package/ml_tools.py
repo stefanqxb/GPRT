@@ -18,7 +18,7 @@ import multiprocessing
 
 def pcv_train(i, bench):
     model = bench.train_model(i)
-    score = bench.eval_model(i, model)
+    scores = bench.eval_model(i, model)
     return score
 
 
@@ -74,7 +74,8 @@ class partitions:
 class eval_tools:
     def mean_square_error(self, actual, predicted):
         return np.sum(np.power(actual - predicted, 2)) / len(actual)
-
+    def mean_absolute_error( self, actual, predicted ):
+        return np.sum(np.abs(actual-predicted))/len(actual)
     def mini_time_window(self, hist, diff, numGroup, max_total):
         max_t = max(diff)
         min_t = min(diff)
@@ -191,7 +192,7 @@ class rt_benchmark:
     def eval_model(self, ind, model):
         actual, predicted, std = self.predict(ind, model)
         et = eval_tools()
-        return et.delta_t(actual, predicted)
+        return et.delta_t(actual, predicted),et.mean_square_error(actual,predicted),et.mean_absolute_error(actual,predicted)
 
     def test_k(self, ind, model):
         actual, predicted, std = self.predict(ind, model)
