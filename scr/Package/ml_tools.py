@@ -25,7 +25,7 @@ def pcv_train(i, bench):
 def parallel_cross_validataion(bench):
     num_cores = multiprocessing.cpu_count()
     results = Parallel(n_jobs=num_cores)(delayed(pcv_train)(i, bench) for i in range(bench.parts.nfolds))
-    return np.mean(results), np.std(results)
+    return np.mean(results,axis=1), np.std(results,axis=1)
 
 
 class partitions:
