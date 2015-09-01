@@ -19,14 +19,13 @@ import multiprocessing
 def pcv_train(i, bench):
     model = bench.train_model(i)
     scores = bench.eval_model(i, model)
-    return score
-
+    return scores
 
 def parallel_cross_validataion(bench):
     num_cores = multiprocessing.cpu_count()
     results = Parallel(n_jobs=num_cores)(delayed(pcv_train)(i, bench) for i in range(bench.parts.nfolds))
-    return np.mean(results,axis=1), np.std(results,axis=1)
-
+    results = np.matrix( results )
+    return results
 
 class partitions:
     def __init__(self, ndata, nfolds):

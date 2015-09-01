@@ -16,7 +16,11 @@ if __name__ == "__main__":
 
     for n in [100, 200, 300, 500, 1000, 1500 ]:
         benchmark = ml_tools.rt_benchmark(peptides, 'elude', 'gp', n, 10)
-        m, s = ml_tools.parallel_cross_validataion(benchmark)
-        print "%d %g %g" % (200, m, s)
+        res = ml_tools.parallel_cross_validataion(benchmark)
+
+        means = np.mean( res, axis=0 ).tolist()[0]
+        stds = np.std( res, axis=0 ).tolist()[0]
+
+        print n,means,stds
 
 
