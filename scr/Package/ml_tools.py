@@ -178,6 +178,41 @@ class rt_benchmark:
             m.fit(X, Y)
         return rt_model(self.feature, self.model_type, m, norm, voc, em)
 
+    def train_multi_model( self, ind, nmodels ):
+        assert self.model_type == 'gp'
+
+        train_peptides = self.peptides[self.parts.get_train_part(ind)]
+        mg = feature_extraction.model_generator(train_peptides)
+        voc = mg.get_bow_voc(2)
+        em = mg.get_elude_model()
+
+        models = [];
+
+        for i in range( nmodels ):
+            perm = np.random.permutation( len(train_peptides ) )
+            Y = [];
+            X = [];
+            for rind in perm[0:self.ntrain]:
+                p = train_peptides[rind]
+                Y.append(p.rt)
+                if self.feature == 'bow':
+                    X.append(p.bow_descriptor(voc))
+                elif self.feature == 'elude':
+                    X.append(p.elude_descriptor(em))
+            X = np.matrix(X)
+            Y = np.transpose(np.matrix(Y))
+
+            print X.shape
+
+            norm = feature_extraction.normalizer()
+
+            if self.feature == "elude":
+                norm.normalize_maxmin(X);
+            m = GPy.models.GPRegression(X, Y)
+            m.optimize_restarts(num_restarts=10, verbose=False)
+            models.append( rt_model(self.feature, self.model_type, m, norm, voc, em) )
+        return models
+        
     def predict(self, ind, model):
         test_peptides = self.peptides[self.parts.get_test_part(ind)]
         actual = []
@@ -193,8 +228,36 @@ class rt_benchmark:
         std = np.array(std)
         return actual, predicted, std
 
+    def predict_multi_model( self, ind, models ):
+        test_peptides = self.peptides[self.parts.get_test_part(ind)]
+        actual = []
+        predicted = []
+        std = []
+        for p in test_peptides :
+            actual.append(p.rt)
+            
+            vs = [];
+            ss = [];
+            for m in models :
+                v,s = m.eval(p)
+                vs.append( vs )
+                ss.append( ss )
+
+            ind = np.argmin( ss )
+            predicted.append( vs[ind] )
+            std.append( ss[ind] )
+        actual = np.array(actual)
+        predicted = np.array(predicted)
+        std = np.array(std)
+        return actual,predicted,std
+
     def eval_model(self, ind, model):
         actual, predicted, std = self.predict(ind, model)
+        et = eval_tools()
+        return et.delta_t(actual, predicted),et.mean_square_error(actual,predicted),et.mean_absolute_error(actual,predicted)
+
+    def eval_multi_model(self,ind, model ):
+        actual, predicted, std = self.predict_multi_model(ind,model)
         et = eval_tools()
         return et.delta_t(actual, predicted),et.mean_square_error(actual,predicted),et.mean_absolute_error(actual,predicted)
 
