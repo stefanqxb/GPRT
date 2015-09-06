@@ -32,19 +32,24 @@ Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Tex
 \end{abstract}
 
 \section{Introduction}
-The task of retention time prediction, focuses on determining the retention time of a peptide given its amino acid sequence. Accurate peptide retention-time prediction in protein mass spectrometry can highly increase the efficiency of peptides spectrum matches in data-independent acquisition (DIA). Similar to many other machine learning methods, this prediction is done by training a model on a training set and using it to evaluate the unseen peptides. In previous studies, different models such as artificial neural networks (ANN) \cite{?} and support vector regression \cite{?} (SVR) have been applied to this task. These models have been originally designed to solve classifications tasks and they show certain limitations when they are applied to regression tasks.
+\label{sec::intro}
+The task of retention time prediction, focuses on determining the retention time of a peptide given its amino acid sequence. Accurate peptide retention-time prediction in protein mass spectrometry can highly increase the efficiency of peptides spectrum matches in data-independent acquisition (DIA). Similar to many other machine learning methods, this prediction is done by training a model on a training set and using it to evaluate the unseen peptides. In previous studies, different models such as artificial neural networks (ANN) \cite{Bishop:2006ui} and support vector regression (SVR) \cite{Bishop:2006ui} have been applied to this task. These models have been originally designed to solve classifications tasks and they show certain limitations when they are applied to regression tasks.
 
-When using machine learning to predict an entity, we are always interested in the confidence of this prediction. Ideally, this confidence to reflect certain properties of the observed data with respect to the trained model. As an example, this property can reflect how close is the observation to samples that the model is trained on. Such a confidence measure can be very useful at the evaluation stage, due to the fact that most machine learning methods can only generalize near the data points they have observed during the training.  
+When using machine learning to predict an entity, we are always interested in the confidence of this prediction. Ideally, this confidence to reflect certain properties of the observed data with respect to the trained model. As an example, this property can reflect how close is the observation to samples that the model is trained on. Such a confidence measure can be very useful at the evaluation stage, due to the fact that most machine learning methods can only generalize near the data points they have observed during the training.
 
 \section{Approach}
-The task of retention time prediction, focuses on determining the retention time of a peptide given its amino acid sequence. To obtain a robust model for solving this task, one needs to address the following problems. Most machine learning frameworks require the inputs to come from a vector space. To map the peptide into a vector space by extracting biologically meaningful features \cite{elute}, collecting general statistical entities collected from the sequences \cite{Rieck:2011ed} or using different kernels such as spectrum kernel \cite{Leslie:2002tx} or string kernel \cite{Lodhi:2002ts}. Once the feature vectors are calculated, a machine learning framework should be selected for solving the prediction problem. The choice this method can highly affect the quality of the prediction. For example in \cite{elute}, the authors have chosen Support Vector Regression (SVR) framework \cite{Bishop:2006ui} to solve the regression problem.
+In this paper, our aim is to demonstrate how obtaining the confidence for retention time prediction can provide us with more accurate predictions for a large fraction of the test data. To conduct our experiments, we are following the methodology of \cite{elude}, in which elude features are used for describing peptide and mapping them into a vector space and support vector regression (SVR) is used for predicting the retention time prediction. Since SVR framework does not directly provide us with the confidence of its predictions, we either have to use methods such as \cite{DeBrabanter:2011he} to approximate the confidence interval of predictions, or use other learning frameworks such as Gaussian Process (GP) \cite{Rasmussen:2006vza} that natively provide us with confidence estimation. In this work, we will focus on the later approach and replace SVR with GP. 
 
-In this paper, we throughly analyze the retention time prediction problem from the machine learning perspective. First, we will look at different methods that can be used for mapping the peptide sequences into vector spaces. In this process, our aim is to determine the pros and cons of different feature extraction techniques in association with large data analysis. Second, we will look at Gaussian Process (GP) \cite{Rasmussen:2006vza} as more sophisticated framework for solving the prediction task and compare its performance with the widely used SVR framework. We will also analyze how varying the size of the training set can affect the performance of both models.
+We first focus on providing a theoretical background on how GP estimates the confidences of the prediction and later focus on the experiments conducted in this paper. The role of these experiments are to both benchmark the performance of GP vs SVR as it was used in \cite{elude} and analyze how we can improve our estimation using the confidence of the predictions.
+
+This paper is organized as following : In \S\ref{sec::method}, we will describe the GP framework and describe the setting and methodology our experiments. In \S\ref{sec::results}, we present the outcome of our experiments. Finally, in \S\ref{sec::dis} and \S\ref{sec::con}, we discuss the properties of our framework and conclude the paper.
 \begin{methods}
 \section{Methods}
+\label{sec::method}
 
 
 \section{Results}
+\label{sec::results}
 
 - GPs are performing better than epsilon-SVRs (and RVMs)
 * Plot of deltaRT95 as a function of training set size
@@ -95,6 +100,7 @@ row4 & row4 & row4 & row4\\\botrule
 \end{figure}
 
 \section{Discussion}
+\label{sec::dis}
 
 
 
@@ -118,6 +124,7 @@ row4 & row4 & row4 & row4\\\botrule
 
 
 \section{Conclusion}
+\label{sec::con}
 
 
 
