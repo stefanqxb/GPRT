@@ -18,9 +18,15 @@ if __name__ == "__main__":
         benchmark = ml_tools.rt_benchmark(peptides, 'elude', 'svr', n, 5)
         res = ml_tools.parallel_cross_validataion(benchmark)
 
-        means = np.mean( res, axis=0 ).tolist()[0]
-        stds = np.std( res, axis=0 ).tolist()[0]
+        means1 = np.mean( res, axis=0 ).tolist()[0]
+        stds1 = np.std( res, axis=0 ).tolist()[0]
 
-        print n,means,stds
+        res = ml_tools.parallel_cross_validataion_multi(benchmark)
+
+        means2 = np.mean( res, axis=0 ).tolist()[0]
+        stds2 = np.std( res, axis=0 ).tolist()[0]
+
+
+        print n,means1[0],stds1[0],means2[0],stds2[0]
 
 

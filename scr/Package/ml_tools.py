@@ -21,9 +21,20 @@ def pcv_train(i, bench):
     scores = bench.eval_model(i, model)
     return scores
 
+def pcv_train_multi(i,bench):
+    models = bench.train_multi_model(i,10)
+    scores = bench.eval_multi_model(i, models)
+    return scores
+
 def parallel_cross_validataion(bench):
     num_cores = multiprocessing.cpu_count()
     results = Parallel(n_jobs=num_cores)(delayed(pcv_train)(i, bench) for i in range(bench.parts.nfolds))
+    results = np.matrix( results )
+    return results
+
+def parallel_cross_validataion_multi(bench):
+    num_cores = multiprocessing.cpu_count()
+    results = Parallel(n_jobs=num_cores)(delayed(pcv_train_multi)(i, bench) for i in range(bench.parts.nfolds))
     results = np.matrix( results )
     return results
 
@@ -132,7 +143,6 @@ class rt_model:
         elif self.model_type == 'svr':
             res = ( int(vals), 0)
         return res
-
 
 class rt_benchmark:
     def __init__(self, peptides, feature, model_type, ntrain=-1, nfolds=5):
@@ -244,12 +254,16 @@ class rt_benchmark:
             ss = [];
             for m in models :
                 v,s = m.eval(p)
-                vs.append( vs )
-                ss.append( ss )
+                vs.append( v )
+                ss.append( s )
 
-            ind = np.argmin( ss )
-            predicted.append( vs[ind] )
-            std.append( ss[ind] )
+            vs = np.array( vs )
+            ss = np.array( ss )
+
+            inds = np.argsort( ss )
+
+            predicted.append( np.mean(vs[inds[0:3]] ) )
+            std.append( np.mean(ss[inds[0:3]] ) )
         actual = np.array(actual)
         predicted = np.array(predicted)
         std = np.array(std)
@@ -312,34 +326,3 @@ class rt_benchmark:
 
             p = predicted[ inds ]
             print means[i], et.delta_t(a, p,min_v,max_v), et.mean_square_error(a,p), float(len( inds ))/len( actual )
-            
-    def other( self ):
-        actual, predicted, std = self.predict(ind, model)
-
-        std_mat = np.transpose(np.matrix(std))
-
-        nclusters = 5
-        KM = KMeans(nclusters)
-        KM.fit(std_mat)
-
-        labels = KM.labels_
-        centers = KM.cluster_centers_.squeeze()
-        et = eval_tools()
-
-        dim1 = []
-        dim2 = []
-        dim3 = []
-
-        for i in range(nclusters):
-            inds = np.where(labels == i)[0]
-            a = actual[inds]
-            p = predicted[inds]
-            s = std[inds]
-
-            dim1.append(np.mean(s))
-            dim2.append(et.delta_t(a, p))
-            dim3.append(float(len(inds)))
-
-        dim1 = np.array(dim1)
-        dim2 = np.array(dim2)
-        dim3 = np.array(dim3)/len(labels)
