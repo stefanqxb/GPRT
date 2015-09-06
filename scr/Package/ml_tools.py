@@ -75,11 +75,15 @@ class eval_tools:
         return np.sum(np.power(actual - predicted, 2)) / len(actual)
     def mean_absolute_error( self, actual, predicted ):
         return np.sum(np.abs(actual-predicted))/len(actual)
-    def delta_t(self,actual,predicted,ratio=0.95):
+    def delta_t(self,actual,predicted,min_value=-1,max_value=-1,ratio=0.95):
+        if min_value == -1 :
+            min_value = np.min( actual )
+        if max_value == -1 :
+            max_value = np.max( actual )
         abs_diff = np.abs( actual - predicted )
         abs_diff = np.sort( abs_diff )
         ind = np.round(len( abs_diff ) * ratio)
-        return 2*abs_diff[ind]
+        return 2*abs_diff[ind] / ( max_value - min_value )
     def mini_time_window(self, hist, diff, numGroup, max_total):
         max_t = max(diff)
         min_t = min(diff)
@@ -212,7 +216,7 @@ class rt_benchmark:
     def test_kmeans(self, ind, model):
         actual, predicted, std = self.predict(ind, model) 
         std_mat = np.transpose(np.matrix(std))
-        nclusters = 10;
+        nclusters = 30;
         KM = KMeans(nclusters)
         KM.fit(std_mat)
 
@@ -232,11 +236,19 @@ class rt_benchmark:
             indices.append( dummy.copy() )
 
         et = eval_tools()
+
+        min_v = np.min( actual )
+        max_v = np.max( actual )
+
         for i,s in enumerate(indices) :
             inds = list(s)
             a = actual[ inds ]
+            
+            print np.histogram(a)
+            raw_input()
+
             p = predicted[ inds ]
-            print means[i], et.delta_t(a, p), et.mean_square_error(a,p), float(len( inds ))/len( actual )
+            print means[i], et.delta_t(a, p,min_v,max_v), et.mean_square_error(a,p), float(len( inds ))/len( actual )
             
     def other( self ):
         actual, predicted, std = self.predict(ind, model)
