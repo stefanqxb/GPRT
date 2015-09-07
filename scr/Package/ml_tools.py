@@ -373,4 +373,4 @@ class rt_benchmark:
             delta_t.append( et.delta_t(a, p,min_a,max_a) )
             hists.append(h)
 
-        return np.array( fraction ), np.array( means ), np.array( delta_t ), np.matrix( hists )
+        return np.array( fraction ), np.array( means ), np.array( delta_t )
