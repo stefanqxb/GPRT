@@ -1,10 +1,6 @@
 #!/usr/bin/python
 
 import numpy as np
-from matplotlib import pyplot as pp
-
-pp.ion()
-
 import data_tools
 import ml_tools
 

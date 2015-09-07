@@ -314,8 +314,8 @@ class rt_benchmark:
 
         et = eval_tools()
 
-        min_v = np.min( actual )
-        max_v = np.max( actual )
+        min_a = np.min( actual )
+        max_a = np.max( actual )
 
         for i,s in enumerate(indices) :
             inds = list(s)
@@ -325,4 +325,52 @@ class rt_benchmark:
             raw_input()
 
             p = predicted[ inds ]
-            print means[i], et.delta_t(a, p,min_v,max_v), et.mean_square_error(a,p), float(len( inds ))/len( actual )
+            print means[i], et.delta_t(a, p,min_a,max_a), et.mean_square_error(a,p), float(len( inds ))/len( actual )
+
+    def test_sorted( self, ind, model ):
+        actual, predicted, std = self.predict(ind, model)
+        inds = np.argsort(std)
+
+        nsec = 10
+        q = len(inds)/nsec
+        r = len(inds)%nsec
+
+        pos = [];
+        v = 0;
+
+        min_a = np.min( actual )
+        max_a = np.max( actual )
+
+        et = eval_tools()
+
+        fraction = [];
+        delta_t = []
+        means = [];
+        hists = [];
+
+        hist, bin_edges = np.histogram( actual,50 )
+        o = 0
+
+        for i in range(nsec):
+            v += q;
+            if i < r :
+                v += 1;
+
+            a = actual[ inds[0:v ] ]
+            a_part = actual[ inds[o:v] ]
+            p = predicted[ inds[0:v] ]
+            s = std[ inds[0:v] ]
+
+            o = v
+
+            h, be = np.histogram( a_part, bin_edges )
+
+            h = np.array(h,dtype=np.float )
+            h /= np.sum(h)
+
+            fraction.append( float(i+1)/nsec )
+            means.append( np.mean(s) )
+            delta_t.append( et.delta_t(a, p,min_a,max_a) )
+            hists.append(h)
+
+        return np.array( fraction ), np.array( means ), np.array( delta_t ), np.matrix( hists )
