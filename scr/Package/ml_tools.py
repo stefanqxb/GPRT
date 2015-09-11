@@ -15,6 +15,9 @@ from sklearn.cluster import KMeans
 from joblib import Parallel, delayed
 import multiprocessing
 
+def train(i,bench):
+    model = bench.train_model(i)
+    return model
 
 def pcv_train(i, bench):
     model = bench.train_model(i)
@@ -25,6 +28,11 @@ def pcv_train_multi(i,bench):
     models = bench.train_multi_model(i,10)
     scores = bench.eval_multi_model(i, models)
     return scores
+
+def parallel_train(bench):
+    num_cores = multiprocessing.cpu_count()
+    models = Parallel(n_jobs=num_cores)(delayed(train)(i, bench) for i in range(bench.parts.nfolds))
+    return models
 
 def parallel_cross_validataion(bench):
     num_cores = multiprocessing.cpu_count()
