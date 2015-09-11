@@ -242,6 +242,23 @@ class rt_benchmark:
         std = np.array(std)
         return actual, predicted, std
 
+    def predict_train( self, ind, model ):
+        train_peptides = self.peptides[self.parts.get_train_part(ind)]
+        train_peptides = train_peptides[0:self.ntrain]
+        
+        actual = []
+        predicted = []
+        std = []
+        for p in train_peptides:
+            actual.append(p.rt)
+            v, s = model.eval(p)
+            predicted.append(v)
+            std.append(s)
+        actual = np.array(actual)
+        predicted = np.array(predicted)
+        std = np.array(std)
+        return actual, predicted, std
+
     def predict_multi_model( self, ind, models ):
         test_peptides = self.peptides[self.parts.get_test_part(ind)]
         actual = []
@@ -268,6 +285,50 @@ class rt_benchmark:
         predicted = np.array(predicted)
         std = np.array(std)
         return actual,predicted,std
+
+    def hist_eval( self, ind, model, pp ):
+        train_actual, train_predicted, train_std = self.predict_train(0,model)
+        test_actual, test_predicted, test_std = self.predict(0,model)
+        
+        train_f, train_m, train_d = self.test_sorted2( train_actual, train_predicted, train_std )
+        test_f, test_m, test_d = self.test_sorted2( test_actual, test_predicted, test_std )
+
+        test_abs = np.abs( test_actual - test_predicted )
+        #train_abs = np.abs( train_actual - train_predicted )
+
+        inds = np.argsort( test_std )
+
+        nsec = 5
+        q = len(inds)/nsec
+        r = len(inds)%nsec
+        o = 0
+
+        x1 = 0
+        x2 = np.max( np.log(test_std))
+        y1 = 0
+        y1 = np.max( test_abs )
+
+        #pp.figure()
+        #for i in range(nsec):
+        #    v += q;
+        #    if i < r :
+        #        v += 1;
+        #    pp.subplot(nsec,i,)   
+        #    o += v
+
+
+        pp.figure()
+        pp.plot( test_m, test_d,'.-' )
+        pp.xlabel('Predicted Standard Deviation')
+        pp.ylabel('Root Mean Square Error')
+        pp.grid()
+        #pp.hexbin( np.log( test_std ), test_abs, cmap=plt.cm.YlOrRd_r,bins='log' )
+        #pp.plot( np.log( test_std ) , test_abs, 'b.' )
+        #pp.plot( np.log( train_std ), train_abs, 'r.' )
+        #pp.plot( train_m, train_d,'r' )
+        #pp.plot( test_m, test_d,'b' )
+
+
 
     def eval_model(self, ind, model):
         actual, predicted, std = self.predict(ind, model)
@@ -326,7 +387,7 @@ class rt_benchmark:
 
             p = predicted[ inds ]
             print means[i], et.delta_t(a, p,min_a,max_a), et.mean_square_error(a,p), float(len( inds ))/len( actual )
-
+    
     def test_sorted( self, ind, model ):
         actual, predicted, std = self.predict(ind, model)
         inds = np.argsort(std)
@@ -371,6 +432,54 @@ class rt_benchmark:
             fraction.append( float(i+1)/nsec )
             means.append( np.mean(s) )
             delta_t.append( et.delta_t(a, p,min_a,max_a) )
+            hists.append(h)
+
+        return np.array( fraction ), np.array( means ), np.array( delta_t )
+
+    def test_sorted2( self, actual, predicted, std ):
+        inds = np.argsort(std)
+
+        nsec = 10
+        q = len(inds)/nsec
+        r = len(inds)%nsec
+
+        pos = [];
+        v = 0;
+
+        min_a = np.min( actual )
+        max_a = np.max( actual )
+
+        et = eval_tools()
+
+        fraction = [];
+        delta_t = []
+        means = [];
+        hists = [];
+
+        hist, bin_edges = np.histogram( actual,50 )
+        o = 0
+
+        for i in range(nsec):
+            v += q;
+            if i < r :
+                v += 1;
+
+            a = actual[ inds[o:v ] ]
+            a_part = actual[ inds[o:v] ]
+            p = predicted[ inds[o:v] ]
+            s = np.sqrt( std[ inds[o:v] ] )
+
+            o = v
+
+            h, be = np.histogram( a_part, bin_edges )
+
+            h = np.array(h,dtype=np.float )
+            h /= np.sum(h)
+
+            fraction.append( float(i+1)/nsec )
+            means.append( np.mean(s) )
+            delta_t.append( np.sqrt( et.mean_square_error(a,p) ) )
+            #delta_t.append( et.delta_t(a, p,min_a,max_a) )
             hists.append(h)
 
         return np.array( fraction ), np.array( means ), np.array( delta_t )
