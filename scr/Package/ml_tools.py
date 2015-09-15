@@ -67,7 +67,7 @@ def section_error_independent( bench, models ):
     e_m = np.squeeze( np.asarray( e_m ) )
     e_s = np.squeeze( np.asarray( e_s ) )
 
-    print m_m, e_m, e_s
+    return m_m, e_m, e_s
 
 def section_error_overall( bench, models ):
     means = []
@@ -90,7 +90,7 @@ def section_error_overall( bench, models ):
     e_m = np.squeeze( np.asarray( e_m ) )
     e_s = np.squeeze( np.asarray( e_s ) )
 
-    print m_m, e_m, e_s
+    return m_m, e_m, e_s
 
 class partitions:
     def __init__(self, ndata, nfolds):
