@@ -7,6 +7,7 @@ import GPy
 import math
 import matplotlib.pyplot as plt
 import pickle as pk
+from gp_tools import my_gp
 
 from scipy.stats.stats import pearsonr
 from sklearn import svm, grid_search
@@ -17,9 +18,7 @@ import multiprocessing
 
 def train(i,bench):
     model = bench.train_model(i)
-    X,Y = bench.train_features()
-    params = model.param_array
-    return X,Y,params
+    return model
 
 def pcv_train(i, bench):
     model = bench.train_model(i)
@@ -254,8 +253,9 @@ class rt_benchmark:
         if self.feature == "elude":
             norm.normalize_maxmin(X);
         if self.model_type == "gp":
-            m = GPy.models.GPRegression(X, Y)
-            m.optimize_restarts(num_restarts=10, verbose=False)
+            gpy_model = GPy.models.GPRegression(X, Y)
+            gpy_model.optimize_restarts(num_restarts=10, verbose=False)
+            m = my_gp(X,Y,gpy_model.param_array)
         elif self.model_type == "svr":
             m = svm.SVR(C=600, gamma=0.1, coef0=0.0, degree=3, epsilon=0.1, kernel='rbf', max_iter=-1, shrinking=True,
                         tol=0.001, verbose=False)
