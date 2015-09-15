@@ -46,6 +46,52 @@ def parallel_cross_validataion_multi(bench):
     results = np.matrix( results )
     return results
 
+def section_error_independent( bench, models ):
+    means = []
+    errs = []
+
+    for i,model in enumerate( models ):
+        print i
+        f,m,e = bench.eval_sections_independent(i,model)
+        means.append(m)
+        errs.append(e)
+
+    means = np.matrix( means )
+    errs = np.matrix( errs )
+
+    m_m = np.mean( means,axis=0 )
+    e_m = np.mean( errs, axis=0 )
+    e_s = np.std( errs, axis=0 )
+
+    m_m = np.squeeze( np.asarray( m_m ) )
+    e_m = np.squeeze( np.asarray( e_m ) )
+    e_s = np.squeeze( np.asarray( e_s ) )
+
+    print m_m, e_m, e_s
+
+def section_error_overall( bench, models ):
+    means = []
+    errs = []
+
+    for i,model in enumerate( models ):
+        print i
+        f,m,e = bench.eval_sections_overall(i,model)
+        means.append(m)
+        errs.append(e)
+
+    means = np.matrix( means )
+    errs = np.matrix( errs )
+
+    m_m = np.mean( means,axis=0 )
+    e_m = np.mean( errs, axis=0 )
+    e_s = np.std( errs, axis=0 )
+
+    m_m = np.squeeze( np.asarray( m_m ) )
+    e_m = np.squeeze( np.asarray( e_m ) )
+    e_s = np.squeeze( np.asarray( e_s ) )
+
+    print m_m, e_m, e_s
+
 class partitions:
     def __init__(self, ndata, nfolds):
         self.ndata = ndata
@@ -294,6 +340,8 @@ class rt_benchmark:
         std = np.array(std)
         return actual,predicted,std
 
+
+
     def hist_eval( self, ind, model, pp ):
         train_actual, train_predicted, train_std = self.predict_train(0,model)
         test_actual, test_predicted, test_std = self.predict(0,model)
@@ -305,18 +353,6 @@ class rt_benchmark:
         #train_abs = np.abs( train_actual - train_predicted )
 
         inds = np.argsort( test_std )
-
-        nsec = 5
-        q = len(inds)/nsec
-        r = len(inds)%nsec
-        o = 0
-
-        x1 = 0
-        x2 = np.max( np.log(test_std))
-        y1 = 0
-        y1 = np.max( test_abs )
-
-        #pp.figure()
         #for i in range(nsec):
         #    v += q;
         #    if i < r :
@@ -395,7 +431,81 @@ class rt_benchmark:
 
             p = predicted[ inds ]
             print means[i], et.delta_t(a, p,min_a,max_a), et.mean_square_error(a,p), float(len( inds ))/len( actual )
+
+    def eval_sections_independent( self, ind, model, nsec=10 ):
+        actual, predicted, std = self.predict(ind,model)
+        inds = np.argsort(std)
+        q = len(inds)/nsec
+        r = len(inds)%nsec
+
+        pos = [];
+        v = 0;
+
+        min_a = np.min( actual )
+        max_a = np.max( actual )
+
+        et = eval_tools()
+
+        fraction = [];
+        err = []
+        means = [];
+
+        o = 0
+
+        for i in range(nsec):
+            v += q;
+            if i < r :
+                v += 1;
+
+            a = actual[ inds[o:v ] ]
+            a_part = actual[ inds[o:v] ]
+            p = predicted[ inds[o:v] ]
+            s = np.sqrt( std[ inds[o:v] ] )
+
+            o = v
+
+            fraction.append( float(i+1)/nsec )
+            means.append( np.mean(s) )
+            err.append( np.sqrt( et.mean_square_error(a,p) ) )
+
+        return np.array( fraction ), np.array( means ), np.array( err )
     
+    def eval_sections_overall( self, ind, model, nsec=10 ):
+        actual, predicted, std = self.predict(ind,model)
+        inds = np.argsort(std)
+        q = len(inds)/nsec
+        r = len(inds)%nsec
+
+        pos = [];
+        v = 0;
+
+        min_a = np.min( actual )
+        max_a = np.max( actual )
+
+        et = eval_tools()
+
+        fraction = [];
+        err = []
+        means = [];
+
+        o = 0
+
+        for i in range(nsec):
+            v += q;
+            if i < r :
+                v += 1;
+
+            a = actual[ inds[0:v ] ]
+            a_part = actual[ inds[o:v] ]
+            p = predicted[ inds[0:v] ]
+            s = np.sqrt( std[ inds[0:v] ] )
+
+            fraction.append( float(i+1)/nsec )
+            means.append( np.mean(s) )
+            err.append( np.sqrt( et.mean_square_error(a,p) ) )
+
+        return np.array( fraction ), np.array( means ), np.array( err )
+ 
     def test_sorted( self, ind, model ):
         actual, predicted, std = self.predict(ind, model)
         inds = np.argsort(std)
