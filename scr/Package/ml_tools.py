@@ -17,7 +17,9 @@ import multiprocessing
 
 def train(i,bench):
     model = bench.train_model(i)
-    return model
+    X,Y = bench.train_features()
+    params = model.param_array
+    return X,Y,params
 
 def pcv_train(i, bench):
     model = bench.train_model(i)
@@ -210,6 +212,22 @@ class rt_benchmark:
 
         if ntrain < 0 or ntrain > self.parts.n_train():
             ntrain = self.parts.n_train()
+
+    def train_features( self, ind ):
+        train_peptides = self.peptides[self.parts.get_train_part(ind)]
+        Y = []
+        X = []
+        for p in train_peptides[0:self.ntrain]:
+            Y.append(p.rt)
+            if self.feature == 'bow':
+                X.append(p.bow_descriptor(voc))
+            elif self.feature == 'elude':
+                X.append(p.elude_descriptor(em))
+        X = np.matrix(X)
+        Y = np.transpose(np.matrix(Y))
+
+        return X,Y
+
 
     def train_model(self, ind):
         train_peptides = self.peptides[self.parts.get_train_part(ind)]
