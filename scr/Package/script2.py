@@ -3,9 +3,24 @@
 import numpy as np
 import data_tools
 import ml_tools
+import pickle
+import GPy
 
 
 if __name__ == "__main__":
+    n = 1000
+    models_path = "/Users/heydar/Stuff/tmp/gprt/models_ntrain_%d.pk" % ( n )
+    with open( models_path, 'r' ) as ff :
+        models = pickle.load(ff)[0]
+        ff.close();
+
+    print len( models )
+
+    raw_input()
+
+
+
+
     peptides = data_tools.read_data()
     # duplicated_message = data_tools.checked_duplicated(peptides)
     # print duplicated_message
