@@ -12,6 +12,8 @@ class my_gp:
         self.rbf_l = params[1]**2
         self.n_var = params[2]
         self.ker = self.rbf_kernel( self.X, self.X )
+        n = self.ker.shape[0]
+        self.k_inv = np.linalg.inv( self.ker + np.eye(n) * self.n_var )
 
     def rbf_kernel( self, X1, X2 ):
         ker = np.zeros( (X1.shape[0],X2.shape[0]) )
@@ -21,24 +23,21 @@ class my_gp:
                 ker[i,j] = self.rbf_var * np.exp( -(0.5*(diff/self.rbf_l) ) )
         return ker
 
-    def eval( self, x ):
+    def predict( self, x ):
         mat_x = np.matrix(x)
-        n = self.ker.shape[0]
-        k_inv = np.linalg.inv( self.ker + np.eye(n) * self.n_var )
 
         k_self = np.matrix( self.rbf_kernel( mat_x,mat_x ) )
         k_basis = np.matrix( self.rbf_kernel( self.X, mat_x ) )
 
         Y = np.matrix( self.Y ) 
-        y_bar = k_basis.T * k_inv * Y;
-        y_var = k_self - k_basis.T * k_inv * k_basis + self.n_var;
+        y_bar = k_basis.T * self.k_inv * Y;
+        y_var = k_self - k_basis.T * self.k_inv * k_basis + self.n_var;
 
         return y_bar[0,0], y_var[0,0]
 
     def eval_components( self, x ):
         mat_x = np.matrix(x)
         n = self.ker.shape[0]
-        k_inv = np.linalg.inv( self.ker + np.eye(n) * self.n_var )
 
         k_self = np.matrix( self.rbf_kernel( mat_x,mat_x ) )
         k_basis = np.matrix( self.rbf_kernel( self.X, mat_x ) )
@@ -47,7 +46,7 @@ class my_gp:
 
         m = k_basis.T * k_inv * Y
         v1 = k_self
-        v2 = k_basis.T * k_inv * k_basis
+        v2 = k_basis.T * self.k_inv * k_basis
         v3 = self.n_var
         return m[0,0], v1[0,0], v2[0,0], v3
  

@@ -194,7 +194,7 @@ class rt_model:
         vec = np.matrix(vec)
         vals = self.model.predict(np.array(vec))
         if self.model_type == 'gp':
-            res = ( vals[0][0, 0], vals[1][0, 0] )
+            res = ( vals[0], vals[1] )
         elif self.model_type == 'svr':
             res = ( int(vals), 0)
         return res
