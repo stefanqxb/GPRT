@@ -35,6 +35,14 @@ def parallel_train(bench):
     models = Parallel(n_jobs=num_cores)(delayed(train)(i, bench) for i in range(bench.parts.nfolds))
     return models
 
+def single_train(bench):
+    models = [];
+    for i in range(bench.parts.nfolds):
+        print i
+        m = train(i,bench)
+        models.append(m)
+    return models
+
 def parallel_cross_validataion(bench):
     num_cores = multiprocessing.cpu_count()
     results = Parallel(n_jobs=num_cores)(delayed(pcv_train)(i, bench) for i in range(bench.parts.nfolds))
