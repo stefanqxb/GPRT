@@ -35,11 +35,10 @@ def parallel_train(bench):
     models = Parallel(n_jobs=num_cores)(delayed(train)(i, bench) for i in range(bench.parts.nfolds))
     return models
 
-def single_train(bench):
+def single_train_gp(bench):
     models = [];
     for i in range(bench.parts.nfolds):
-        print i
-        m = train(i,bench)
+        m = bench.train_gp_model(i) 
         models.append(m)
     return models
 
@@ -235,7 +234,6 @@ class rt_benchmark:
 
         return X,Y
 
-
     def train_model(self, ind):
         train_peptides = self.peptides[self.parts.get_train_part(ind)]
         mg = feature_extraction.model_generator(train_peptides)
@@ -271,6 +269,38 @@ class rt_benchmark:
                                                         "gamma": np.linspace(0.01, 10, num=100)})
             m.fit(X, Y)
         return rt_model(self.feature, self.model_type, m, norm, voc, em)
+
+    def train_gp_model( self, ind ):
+        assert self.model_type == 'gp'
+        train_peptides = self.peptides[self.parts.get_train_part(ind)]
+        mg = feature_extraction.model_generator(train_peptides)
+        voc = mg.get_bow_voc(2)
+        em = mg.get_elude_model()
+
+        Y = [];
+        X = [];
+        for p in train_peptides[0:self.ntrain]:
+            Y.append(p.rt)
+            if self.feature == 'bow':
+                X.append(p.bow_descriptor(voc))
+            elif self.feature == 'elude':
+                X.append(p.elude_descriptor(em))
+        X = np.matrix(X)
+        if self.model_type == 'gp':
+            Y = np.transpose(np.matrix(Y))
+        elif self.model_type == 'svr':
+            Y = np.transpose(Y)
+
+        norm = feature_extraction.normalizer()
+
+        if self.feature == "elude":
+            norm.normalize_maxmin(X);
+        gpy_model = GPy.models.GPRegression(X, Y)
+        gpy_model.optimize_restarts(num_restarts=10, verbose=False)
+        pa = gpy_model.param_array
+        gpy_model = None
+
+        return [ X, Y, pa , norm ];
 
     def train_multi_model( self, ind, nmodels ):
         assert self.model_type == 'gp'
