@@ -182,6 +182,67 @@ class eval_tools:
         corrcoef = pearsonr(actual, predicted)
         return mtw
 
+def load_rt_models( path ):
+    ff = open( path, 'r' )
+    models_data = pk.load( ff )[0]
+    ff.close()
+
+    models = []
+    kernels = []
+
+    for m in models_data : 
+        feature = m[0]
+        type = m[1]
+        X = m[2]
+        Y = m[3]
+        pa = m[4]
+        norm = m[5]
+        voc = m[6]
+        em = m[7]
+
+        mgp = my_gp( X,Y,pa )
+
+        mod = rt_model( feature, type, mgp, norm,voc,em )
+        ker = rbf_kernel(X,pa)
+        models.append( mod )
+        kernels.append( ker )
+
+    return models, kernels
+
+class rbf_kernel:
+    def __init__( self, X, params ):
+        self.X = X
+        self.rbf_var = params[0]
+        self.rbf_l = params[1]
+        self.n_var = params[2]
+
+        self.train_vecs = [];
+        for i in range( self.X.shape[0] ):
+            row = np.squeeze(np.asarray(self.X[i,:]))
+            self.train_vecs.append(row)
+
+    def map( self, vec ):
+        v = [];
+        for i in range( self.X.shape[0] ):
+            row = np.squeeze( np.asarray( self.X[i,:] ) )
+            diff = np.sum(np.square(vec,row))
+            v.append( self.rbf_var * np.exp( -(0.5*(diff/self.rbf_l) ) ) + self.n_var )
+        return np.array(v)
+
+    def min_dist( self, v ):
+        values = [];
+        for t in self.train_vecs :
+            v = np.sqrt(np.sum( np.square( t-v )))
+            values.append(v)
+        values_sorted = np.sort( values )
+        return values_sorted[0]
+
+    def mean_dist( self,v ):
+        values = [];
+        for t in self.train_vecs :
+            v = np.sqrt(np.sum( np.square( t-v )))
+            values.append(v)
+        return np.mean( values )
 
 class rt_model:
     def __init__(self, feature, model_type, model, norm, voc, em):
@@ -191,6 +252,14 @@ class rt_model:
         self.norm = norm
         self.voc = voc
         self.em = em
+
+    def get_vector( self, p ):
+        if self.feature == "bow":
+            vec = p.bow_descriptor(self.voc)
+        if self.feature == "elude":
+            vec = p.elude_descriptor(self.em)
+        self.norm.normalize(vec)
+        return vec
 
     def eval(self, p):
         res = [];
@@ -561,7 +630,21 @@ class rt_benchmark:
             err.append( np.sqrt( et.mean_square_error(a,p) ) )
 
         return np.array( fraction ), np.array( means ), np.array( err )
- 
+
+    def get_test_vectors( self, ind, model, nvec=1000 ):
+        test_peptides = self.peptides[self.parts.get_test_part(ind)]
+        actual, predicted, std = self.predict(ind,model)
+        var = np.sqrt(std)
+
+        if nvec > len( test_peptides ):
+            nvec = len( test_peptides )
+
+        vectors = []
+        for i in range( nvec ):
+            vec = model.get_vector( test_peptides[i] )
+            vectors.append( [vec,actual[i],predicted[i],var[i]] )
+        return vectors
+
     def test_sorted( self, ind, model ):
         actual, predicted, std = self.predict(ind, model)
         inds = np.argsort(std)

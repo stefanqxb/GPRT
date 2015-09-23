@@ -35,6 +35,12 @@ class my_gp:
 
         return y_bar[0,0], y_var[0,0]
 
+    def map_feature( self, x ):
+        mat_x = np.matrix(x)
+        n = self.ker.shape[0]
+        k_self = np.matrix( self.rbf_kernel( mat_x,mat_x ) )
+        return k_self
+
     def eval_components( self, x ):
         mat_x = np.matrix(x)
         n = self.ker.shape[0]
