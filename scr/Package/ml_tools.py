@@ -38,6 +38,7 @@ def parallel_train(bench):
 def single_train_gp(bench):
     models = [];
     for i in range(bench.parts.nfolds):
+        print i
         m = bench.train_gp_model(i) 
         models.append(m)
     return models
@@ -297,10 +298,9 @@ class rt_benchmark:
             norm.normalize_maxmin(X);
         gpy_model = GPy.models.GPRegression(X, Y)
         gpy_model.optimize_restarts(num_restarts=10, verbose=False)
-        pa = gpy_model.param_array
+        pa = list(gpy_model.param_array)
         gpy_model = None
-
-        return [ X, Y, pa , norm ];
+        return [ self.feature, self.model_type, X, Y, pa , norm,voc,em ];
 
     def train_multi_model( self, ind, nmodels ):
         assert self.model_type == 'gp'
