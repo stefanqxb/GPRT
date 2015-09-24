@@ -56,50 +56,60 @@ def parallel_cross_validataion_multi(bench):
     return results
 
 def section_error_independent( bench, models ):
+    fracs = []
     means = []
     errs = []
 
     for i,model in enumerate( models ):
         print i
         f,m,e = bench.eval_sections_independent(i,model)
+        fracs.append(f)
         means.append(m)
         errs.append(e)
 
+    fracs = np.matrix( fracs )
     means = np.matrix( means )
     errs = np.matrix( errs )
 
+    f_m = np.mean( fracs, axis=0 )
     m_m = np.mean( means,axis=0 )
     e_m = np.mean( errs, axis=0 )
     e_s = np.std( errs, axis=0 )
 
+    f_m = np.squeeze( np.asarray( f_m ) )
     m_m = np.squeeze( np.asarray( m_m ) )
     e_m = np.squeeze( np.asarray( e_m ) )
     e_s = np.squeeze( np.asarray( e_s ) )
 
-    return m_m, e_m, e_s
+    return f_m, m_m, e_m, e_s
 
 def section_error_overall( bench, models ):
+    fracs = []
     means = []
     errs = []
 
     for i,model in enumerate( models ):
         print i
         f,m,e = bench.eval_sections_overall(i,model)
+        fracs.append(f)
         means.append(m)
         errs.append(e)
 
+    fracs = np.matrix( fracs )
     means = np.matrix( means )
     errs = np.matrix( errs )
 
-    m_m = np.mean( means,axis=0 )
+    f_m = np.mean( fracs, axis=0 )
+    m_m = np.mean( means, axis=0 )
     e_m = np.mean( errs, axis=0 )
     e_s = np.std( errs, axis=0 )
 
+    f_m = np.squeeze( np.asarray( f_m ) )
     m_m = np.squeeze( np.asarray( m_m ) )
     e_m = np.squeeze( np.asarray( e_m ) )
     e_s = np.squeeze( np.asarray( e_s ) )
 
-    return m_m, e_m, e_s
+    return f_m, m_m, e_m, e_s
 
 class partitions:
     def __init__(self, ndata, nfolds):
