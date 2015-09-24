@@ -13,7 +13,7 @@ if __name__ == "__main__":
         data_root = "/media/hdd/heydar/data/gprt"
     peptides = data_tools.read_data()
     #ntrain = [100, 200, 300, 500, 1000, 1500, 2000, 2500, 3000]#, 3500, 4000, 4500, 5000, 10000]
-    ntrain = [ 10000 ]#, 4500, 5000, 10000 ]
+    ntrain = [ 8000 ]#, 4500, 5000, 10000 ]
     for n in ntrain : 
         benchmark = ml_tools.rt_benchmark(peptides, 'elude', 'gp', n, 5)
         models = ml_tools.single_train_gp( benchmark )

@@ -211,9 +211,9 @@ def load_rt_models( path ):
         em = m[7]
 
         mgp = my_gp( X,Y,pa )
-
         mod = rt_model( feature, type, mgp, norm,voc,em )
         ker = rbf_kernel(X,pa)
+
         models.append( mod )
         kernels.append( ker )
 
