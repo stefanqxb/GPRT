@@ -1,13 +1,13 @@
 #!/usr/bin/python
 
+import matplotlib as mpl
+mpl.use('Agg')
 import platform
 import numpy as np
 import data_tools
 import pickle as pk
 import ml_tools
 import gp_tools
-import matplotlib as mpl
-mpl.use('Agg')
 from matplotlib import pyplot as pp
 pp.ion()
 
@@ -22,7 +22,7 @@ class data_plotter:
         model_tmp = "%s/models_ntrain_%d.pk"
         path = model_tmp % ( data_root, self.n )
         self.peptides = data_tools.read_data()
-        self.benchmark = ml_tools.rt_benchmark(self.peptides, 'elude', 'gp', self.n, 5)
+        self.benchmark = ml_tools.rt_benchmark(self.peptides, 'elude', 'gp', self.n, 10)
         self.models, self.kernels = ml_tools.load_rt_models( path )
 
     def dist_vs_var( self, pind=0 ):
