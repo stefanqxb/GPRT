@@ -214,7 +214,10 @@ def load_rt_models( path ):
         if len(m) > 8 :
             y_params = m[9];
 
-        mgp = my_gp( X,Y,pa )
+        mgp = GPy.models.GPRegression(X,Y)
+        mgp[:] = pa
+
+        #mgp = my_gp( X,Y,pa )
         mod = rt_model( feature, type, mgp, norm,voc,em,y_params )
         ker = rbf_kernel(X,pa)
 
