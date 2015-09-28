@@ -383,13 +383,10 @@ class rt_benchmark:
         X = np.matrix(X)
 
         Y_params = [];
-        if self.model_type == 'gp':
-            Y = np.transpose(np.matrix(Y))
-            Y_mean = np.mean(Y) 
-            Y_params.append( Y_mean )
-            Y = Y - Y_mean
-        elif self.model_type == 'svr':
-            Y = np.transpose(Y)
+        Y = np.transpose(np.matrix(Y))
+        Y_mean = np.mean(Y) 
+        Y_params.append( Y_mean )
+        Y = Y - Y_mean
  
         norm = feature_extraction.normalizer()
 
