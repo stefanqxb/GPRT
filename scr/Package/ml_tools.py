@@ -210,8 +210,12 @@ def load_rt_models( path ):
         voc = m[6]
         em = m[7]
 
+        y_params = [];
+        if len(m) > 8 :
+            y_params = m[9];
+
         mgp = my_gp( X,Y,pa )
-        mod = rt_model( feature, type, mgp, norm,voc,em )
+        mod = rt_model( feature, type, mgp, norm,voc,em,y_params )
         ker = rbf_kernel(X,pa)
 
         models.append( mod )

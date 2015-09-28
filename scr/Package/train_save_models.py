@@ -12,26 +12,14 @@ if __name__ == "__main__":
     else :
         data_root = "/media/hdd/heydar/data/gprt"
     peptides = data_tools.read_data()
-    ntrain = [100, 200, 300, 500, 1000, 1500, 2000, 2500, 3000]#, 3500, 4000, 4500, 5000, 10000]
-    #ntrain = [ 8000 ]#, 4500, 5000, 10000 ]
+    models_name = 'zero_mean'
+    ntrain = [100, 200, 300, 500, 1000, 1500, 2000, 2500, 3000]
     for n in ntrain : 
         benchmark = ml_tools.rt_benchmark(peptides, 'elude', 'gp', n, 10)
         models = ml_tools.single_train_gp( benchmark )
-        save_path = "%s/models_ntrain_%d.pk" % ( data_root, n )
+        save_path = "%s/%s/models_ntrain_%d.pk" % ( data_root, models_name, n )
         print save_path
         with open( save_path, 'w' ) as ff :
             pk.dump( [ models ], ff )
             ff.close()
-        models = None
-    #    res = ml_tools.parallel_cross_validataion(benchmark)
-
-    #    means1 = np.mean( res, axis=0 ).tolist()[0]
-    #    stds1 = np.std( res, axis=0 ).tolist()[0]
-
-    #    res = ml_tools.parallel_cross_validataion_multi(benchmark)
-
-    #    means2 = np.mean( res, axis=0 ).tolist()[0]
-    #    stds2 = np.std( res, axis=0 ).tolist()[0]
-    #    print n,means1[0],stds1[0],means2[0],stds2[0]
-
-
+        models = None 
