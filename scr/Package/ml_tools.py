@@ -255,13 +255,14 @@ class rbf_kernel:
         return np.mean( values )
 
 class rt_model:
-    def __init__(self, feature, model_type, model, norm, voc, em):
+    def __init__(self, feature, model_type, model, norm, voc, em, y_params = []):
         self.feature = feature
         self.model_type = model_type
         self.model = model
         self.norm = norm
         self.voc = voc
         self.em = em
+        self.y_params = y_params
 
     def get_vector( self, p ):
         if self.feature == "bow":
@@ -280,6 +281,11 @@ class rt_model:
         self.norm.normalize(vec)
         vec = np.matrix(vec)
         vals = self.model.predict(np.array(vec))
+        
+        if len( self.y_params ) > 0 :
+            vals[0] = vals[0] + self.y_params[0]
+
+
         if self.model_type == 'gp':
             res = ( vals[0], vals[1] )
         elif self.model_type == 'svr':
@@ -329,11 +335,16 @@ class rt_benchmark:
             elif self.feature == 'elude':
                 X.append(p.elude_descriptor(em))
         X = np.matrix(X)
+
+        Y_params = [];
         if self.model_type == 'gp':
             Y = np.transpose(np.matrix(Y))
+            Y_mean = np.mean(Y) 
+            Y_params.append( Y_mean )
+            Y = Y - Y_mean
         elif self.model_type == 'svr':
             Y = np.transpose(Y)
-
+            
         norm = feature_extraction.normalizer()
 
         if self.feature == "elude":
@@ -348,7 +359,7 @@ class rt_benchmark:
             m = grid_search.GridSearchCV(m, param_grid={"C": np.linspace(100, 1000, num=10),
                                                         "gamma": np.linspace(0.01, 10, num=100)})
             m.fit(X, Y)
-        return rt_model(self.feature, self.model_type, m, norm, voc, em)
+        return rt_model(self.feature, self.model_type, m, norm, voc, em, Y_params )
 
     def train_gp_model( self, ind ):
         assert self.model_type == 'gp'
@@ -366,11 +377,16 @@ class rt_benchmark:
             elif self.feature == 'elude':
                 X.append(p.elude_descriptor(em))
         X = np.matrix(X)
+
+        Y_params = [];
         if self.model_type == 'gp':
             Y = np.transpose(np.matrix(Y))
+            Y_mean = np.mean(Y) 
+            Y_params.append( Y_mean )
+            Y = Y - Y_mean
         elif self.model_type == 'svr':
             Y = np.transpose(Y)
-
+ 
         norm = feature_extraction.normalizer()
 
         if self.feature == "elude":
@@ -379,7 +395,7 @@ class rt_benchmark:
         gpy_model.optimize_restarts(num_restarts=10, verbose=False)
         pa = list(gpy_model.param_array)
         gpy_model = None
-        return [ self.feature, self.model_type, X, Y, pa , norm,voc,em ];
+        return [ self.feature, self.model_type, X, Y, pa , norm,voc,em, Y_params ];
 
     def train_multi_model( self, ind, nmodels ):
         assert self.model_type == 'gp'
