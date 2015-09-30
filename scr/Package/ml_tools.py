@@ -444,8 +444,9 @@ class rt_benchmark:
         for p in test_peptides:
             actual.append(p.rt)
             v, s = model.eval(p)
-            predicted.append(v)
-            std.append(s)
+
+            predicted.append(v[0,0])
+            std.append(s[0,0])
         actual = np.array(actual)
         predicted = np.array(predicted)
         std = np.array(std)
