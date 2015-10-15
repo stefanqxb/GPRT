@@ -212,7 +212,7 @@ def load_rt_models( path ):
 
         y_params = [];
         if len(m) > 8 :
-            y_params = m[9];
+            y_params = m[8];
 
         mgp = GPy.models.GPRegression(X,Y)
         mgp[:] = pa
@@ -290,6 +290,9 @@ class rt_model:
         vals = self.model.predict(np.array(vec))
         
         if len( self.y_params ) > 0 :
+            print vals[0]
+            print self.y_params[0]
+            
             vals[0] = vals[0] + self.y_params[0]
 
 
@@ -388,8 +391,8 @@ class rt_benchmark:
         Y_params = [];
         Y = np.transpose(np.matrix(Y))
         Y_mean = np.mean(Y) 
-        Y_params.append( Y_mean )
-        Y = Y - Y_mean
+        #Y_params.append( Y_mean )
+        #Y = Y - Y_mean
  
         norm = feature_extraction.normalizer()
 
@@ -495,8 +498,6 @@ class rt_benchmark:
         predicted = np.array(predicted)
         std = np.array(std)
         return actual,predicted,std
-
-
 
     def hist_eval( self, ind, model, pp ):
         train_actual, train_predicted, train_std = self.predict_train(0,model)

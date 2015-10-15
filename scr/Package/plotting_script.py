@@ -11,22 +11,17 @@ import ml_tools
 import gp_tools
 from matplotlib import pyplot as pp
 pp.ion()
-
 from sklearn.linear_model import LinearRegression
+from common import parameters
 
 class data_plotter:
-    def __init__( self, name='original' ,n=100 ):
-        self.name = name
+    def __init__( self,n=100 ):
+        self.params = parameters()
         self.n = n
     def load_data( self ):
-        if platform.system() == 'Darwin' :
-            data_root = "/Users/heydar/Stuff/tmp/gprt"
-        else :
-            data_root = "/media/hdd/heydar/data/gprt"
-        model_tmp = "%s/%s/models_ntrain_%d.pk"
-        path = model_tmp % ( data_root,self.name, self.n )
-        self.peptides = data_tools.read_data()
-        self.benchmark = ml_tools.rt_benchmark(self.peptides, 'elude', 'gp', self.n, 10)
+        path = self.params.save_tmp % ( self.params.data_root, self.params.models_tag, self.n )
+        self.peptides = data_tools.read_data( self.params.data_path )
+        self.benchmark = ml_tools.rt_benchmark(self.peptides, 'elude', 'gp', self.n, self.params.nparts, self.params.train_ratio )
         self.models, self.kernels = ml_tools.load_rt_models( path )
 
     def dist_vs_var( self, pind=0 ):
