@@ -300,13 +300,13 @@ class rt_model:
         return res
 
 class rt_benchmark:
-    def __init__(self, peptides, feature, model_type, ntrain=-1, nfolds=5):
+    def __init__(self, peptides, feature, model_type, ntrain=-1, nfolds=5,tratio=0.8):
         self.peptides = peptides
         self.feature = feature
         self.model_type = model_type
         self.ntrain = ntrain
         self.parts = partitions(len(peptides), nfolds)
-        self.parts.gen_rand_splits(0.80)
+        self.parts.gen_rand_splits(tratio)
         # self.parts.gen_cross_val();
 
         if ntrain < 0 or ntrain > self.parts.n_train():

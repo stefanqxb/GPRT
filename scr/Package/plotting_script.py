@@ -168,5 +168,12 @@ class data_plotter:
         pp.plot( base, (high_p - low_p)/4 )
         pp.plot( base, vars_gp )
         
-
         pp.grid()
+        pp.xlabel('Actual RT')
+        pp.ylabel('Variance')
+
+        pp.legend(['Overtime Variance','GP Variance'])
+
+        pp.savefig('actual_vs_predicted_variance.pdf')
+
+

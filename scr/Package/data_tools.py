@@ -5,9 +5,7 @@ from matplotlib import pyplot as pp
 import feature_extraction as extraction
 pp.ion()
 
-def read_data():
-	data_path = "./data/20121212_S25_3ug_300min_LCMS_PM3_Tryp_GRADIENT_15sec_MZ.rtimes.tsv"
-    #data_path = "./data/20120126_EXQ5_KiSh_SA_LabelFree_HeLa_Phospho_Control_rep1_Fr3.rtimes.tsv"
+def read_data( data_path ):
 	ff = open(data_path, 'r')
 	lines = ff.readlines()
 	ff.close()
