@@ -392,7 +392,7 @@ class rt_benchmark:
         Y = np.transpose(np.matrix(Y))
         Y_mean = np.mean(Y) 
         #Y_params.append( Y_mean )
-        #Y = Y - Y_mean
+        #exY = Y - Y_mean
  
         norm = feature_extraction.normalizer()
 

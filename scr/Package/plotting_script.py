@@ -154,7 +154,7 @@ class data_plotter:
         pp.grid();
         pp.xlabel('Actual RT')
         pp.ylabel('Predicted RT')
-        pp.legend()
+        pp.legend(loc=4)
 
         pp.savefig('actual_vs_predicted.pdf')
 
@@ -167,7 +167,7 @@ class data_plotter:
         pp.xlabel('Actual RT')
         pp.ylabel('Variance')
 
-        pp.legend(['Overtime Variance','GP Variance'])
+        pp.legend(['Overtime Variance','GP Variance'],loc=4)
 
         pp.savefig('actual_vs_predicted_variance.pdf')
 
