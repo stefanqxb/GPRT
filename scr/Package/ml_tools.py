@@ -390,7 +390,7 @@ class rt_benchmark:
 
         Y_params = [];
         Y = np.transpose(np.matrix(Y))
-        Y_mean = np.mean(Y) 
+        #Y_mean = np.mean(Y) 
         #Y_params.append( Y_mean )
         #exY = Y - Y_mean
  
