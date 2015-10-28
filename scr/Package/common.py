@@ -10,11 +10,14 @@ class parameters:
         else :
             self.data_root = "/media/hdd/heydar/data/gprt"
 
+        self.data_path = './data/20110922_EXQ4_NaNa_SA_YeastEasy_Labelfree_06.rtimes.tsv'
+        self.data_name = 'no_modif'
+
         #self.data_path = './data/20121212_S25_3ug_300min_LCMS_PM3_Tryp_GRADIENT_15sec_MZ.rtimes.tsv'
         #self.data_name = 'no_modif'
 
-        self.data_path = './data/20120126_EXQ5_KiSh_SA_LabelFree_HeLa_Phospho_Control_rep1_Fr3.rtimes.tsv'
-        self.data_name = 'ptm_modif'
+        #self.data_path = './data/20120126_EXQ5_KiSh_SA_LabelFree_HeLa_Phospho_Control_rep1_Fr3.rtimes.tsv'
+        #self.data_name = 'ptm_modif'
 
         self.models_name = 'original'
         self.models_tag = '%s_%s' % ( self.models_name, self.data_name )
