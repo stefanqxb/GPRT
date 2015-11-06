@@ -10,8 +10,9 @@ class parameters:
         else :
             self.data_root = "/media/hdd/heydar/data/gprt"
 
-        self.base = "20110922_EXQ4_NaNa_SA_YeastEasy_Labelfree_06"
-        self.data_path = './data/%s.rtimes.tsv' % ( self.base )
+        #self.base = "20110922_EXQ4_NaNa_SA_YeastEasy_Labelfree_06"
+        self.base = "20110922_EXQ4_NaNa_SA_YeastEasy_Labelfree_06.rtimes_q_0.001"
+        self.data_path = './data/%s.tsv' % ( self.base )
         self.data_name = '%s_no_modif' % ( self.base )
 
         #self.data_path = './data/20121212_S25_3ug_300min_LCMS_PM3_Tryp_GRADIENT_15sec_MZ.rtimes.tsv'
@@ -29,6 +30,6 @@ class parameters:
             os.mkdir( self.models_path )
 
         self.save_tmp = '%s/%s/models_ntrain_%d.pk'
-        self.ntrain = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000 ];
+        self.ntrain = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000 ];
         self.nparts = 10
         self.train_ratio = 0.5
