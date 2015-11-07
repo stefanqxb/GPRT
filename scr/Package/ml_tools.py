@@ -213,6 +213,8 @@ class partitions:
 class eval_tools:
     def mean_square_error(self, actual, predicted):
         return np.sum(np.power(actual - predicted, 2)) / len(actual)
+    def root_mean_square_error(self, actual, predicted ):
+        return np.sqrt( np.sum(np.power(actual - predicted, 2)) / len(actual) )
     def mean_absolute_error( self, actual, predicted ):
         return np.sum(np.abs(actual-predicted))/len(actual)
     def delta_t(self,actual,predicted,min_value=-1,max_value=-1,ratio=0.95):
@@ -355,7 +357,7 @@ class rt_model:
         if self.model_type == 'gp':
             res = ( vals[0], vals[1] )
         elif self.model_type == 'svr':
-            res = ( int(vals), 0)
+            res = ( vals[0], 0)
         return res
 
 class rt_benchmark:
@@ -504,8 +506,8 @@ class rt_benchmark:
             actual.append(p.rt)
             v, s = model.eval(p)
 
-            predicted.append(v[0,0])
-            std.append(s[0,0])
+            predicted.append(v)
+            std.append(s)
         actual = np.array(actual)
         predicted = np.array(predicted)
         std = np.array(std)
@@ -590,7 +592,7 @@ class rt_benchmark:
     def eval_model(self, ind, model):
         actual, predicted, std = self.predict(ind, model)
         et = eval_tools()
-        return et.delta_t(actual, predicted),et.mean_square_error(actual,predicted),et.mean_absolute_error(actual,predicted)
+        return et.delta_t(actual, predicted),et.root_mean_square_error(actual,predicted)
 
     def eval_multi_model(self,ind, model ):
         actual, predicted, std = self.predict_multi_model(ind,model)
