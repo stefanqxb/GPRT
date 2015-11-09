@@ -30,6 +30,6 @@ if __name__ == "__main__":
 
         values.append( [ n, dt_array, rmse_array ] )
 
-    f = open('svr_bench.pk','w');
+    f = open('svr_bench2.pk','w');
     pk.dump( [ values ], f )
     f.close()

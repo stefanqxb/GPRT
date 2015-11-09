@@ -30,6 +30,7 @@ class parameters:
             os.mkdir( self.models_path )
 
         self.save_tmp = '%s/%s/models_ntrain_%d.pk'
-        self.ntrain = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000 ];
+        #self.ntrain = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000 ];
+        self.ntrain = [ 4000, 5000 ];
         self.nparts = 10
         self.train_ratio = 0.5
