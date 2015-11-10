@@ -28,6 +28,22 @@ class data_plotter:
         for p in self.peptides : 
             rt.append( p.rt )
         return np.min( rt ), np.max( rt )
+    def benchmark_gp( self ):
+        drt_values = []
+        rmse_values = []
+
+        for pind in range( self.benchmark.parts.nfolds ):
+            [ drt, rmse ] = self.benchmark.eval_model(pind,self.models[pind])
+            drt_values.append( drt )
+            rmse_values.append( rmse )
+        
+        #drt_mean = np.mean( drt_values )
+        #drt_std = np.std( drt_values )
+        #rmse_mean = np.mean( rmse_values )
+        #rmse_std = np.std( rmse_values )
+
+        return [ self.n, drt_values, rmse_values ];
+
     def dist_vs_var( self, pind=0 ):
         test_vectors = self.benchmark.get_test_vectors(pind,self.models[pind])
         dist = [];

@@ -355,7 +355,7 @@ class rt_model:
 
 
         if self.model_type == 'gp':
-            res = ( vals[0], vals[1] )
+            res = ( vals[0][0][0], vals[1][0][0] )
         elif self.model_type == 'svr':
             res = ( vals[0], 0)
         return res
@@ -505,7 +505,6 @@ class rt_benchmark:
         for p in test_peptides:
             actual.append(p.rt)
             v, s = model.eval(p)
-
             predicted.append(v)
             std.append(s)
         actual = np.array(actual)

@@ -25,12 +25,12 @@ class parameters:
         self.models_tag = '%s_%s' % ( self.models_name, self.data_name )
         self.models_path = '%s/%s' % ( self.data_root, self.models_tag )
     
-        print self.models_path
+        #print self.models_path
         if not os.path.isdir( self.models_path ) : 
             os.mkdir( self.models_path )
 
         self.save_tmp = '%s/%s/models_ntrain_%d.pk'
-        #self.ntrain = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000 ];
-        self.ntrain = [ 4000, 5000 ];
+        self.ntrain = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000 ];
+        #self.ntrain = [ 4000, 5000 ];
         self.nparts = 10
         self.train_ratio = 0.5
