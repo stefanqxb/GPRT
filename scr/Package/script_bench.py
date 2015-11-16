@@ -16,13 +16,14 @@ def bench_svr():
         print n, np.mean( drt ), np.std( drt )
 
 def save_bench_gp():
-   ntrain = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000 ] 
+    ntrain = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000 ] 
 
-   values = [];
-   for n in ntrain :
-       dp = plotting_script.data_plotter( n )
-       dp.load_data();
-       values.append( dp.benchmark_gp() )
+    values = [];
+    for n in ntrain :
+        print n
+        dp = plotting_script.data_plotter( n )
+        dp.load_data();
+        values.append( dp.benchmark_gp() )
     f = open('gp_bench.pk','w')
     pk.dump( [ values ], f )
 
