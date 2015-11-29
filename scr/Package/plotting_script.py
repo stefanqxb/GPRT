@@ -28,6 +28,13 @@ class data_plotter:
         for p in self.peptides : 
             rt.append( p.rt )
         return np.min( rt ), np.max( rt )
+    def get_test_data( self, pind=0 ):
+        test_peptides = self.peptides[ self.benchmark.parts.get_test_part(pind) ]
+
+        for i in range( 1000 ):
+            print test_peptides[i].sequence
+
+
     def benchmark_gp( self ):
         drt_values = []
         rmse_values = []
@@ -44,26 +51,44 @@ class data_plotter:
 
         return [ self.n, drt_values, rmse_values ];
 
-    def dist_vs_var( self, pind=0 ):
+    def svr_vs_gp( self ):
+        n = [ 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000 ];
+        svr_m = [0.3386, 0.2953, 0.2846, 0.2725, 0.2606, 0.2551, 0.2510, 0.2472, 0.2459, 0.2427, 0.2283, 0.2212];
+        svr_s = [0.0140, 0.0082, 0.00973, 0.0085, 0.0045, 0.0040, 0.0067, 0.0064, 0.0049, 0.0044, 0.0053,0.0036 ];
+        gp_m = [0.3382, 0.3030, 0.2875, 0.2755, 0.2668, 0.2605, 0.2537, 0.2509, 0.2481, 0.2443, 0.2265, 0.2188 ];
+
+        pp.figure()
+
+        pp.plot( n,svr_m, 'r-' )
+        pp.plot( n,gp_m, 'b-' )
+
+        pp.legend(['Support Vector Regression','Gaussian Process'])
+        pp.xlabel('Size of training set')
+        pp.ylabel('Delta RT 0.95')
+        pp.title('GP vs. SVR')
+        pp.grid()
+        pp.savefig('gp_vs_svr.pdf')
+
+    def dist_vs_std( self, pind=0 ):
         test_vectors = self.benchmark.get_test_vectors(pind,self.models[pind])
         dist = [];
-        var = [];
+        std = [];
 
         for t in test_vectors : 
             d = self.kernels[pind].min_dist( t[0] )
             dist.append( d )
-            var.append(t[3])
+            std.append(np.sqrt(t[3]))
 
         dist = np.array( dist )
-        var = np.array( var )
+        std = np.array( std )
 
         pp.figure()
-        pp.plot( dist, var, 'r.')
+        pp.plot( dist, std, 'r.')
         pp.grid()
         pp.xlabel('Distance From Training Data')
-        pp.ylabel('Predicted Variance')
-        pp.title('Distance vs. Variance')
-        pp.savefig('dist_vs_var.pdf')
+        pp.ylabel('Predicted Standard Deviation')
+        pp.title('Distance vs. Standard Deviation')
+        pp.savefig('dist_vs_std.pdf')
 
     def section_error_independent( self ):
         f_m, m_m, e_m, e_v = ml_tools.section_error_independent( self.benchmark, self.models )
@@ -97,7 +122,74 @@ class data_plotter:
         pp.grid()
         pp.savefig('cum_overall.pdf')
 
-    def actual_vs_predicitive_variance( self ):
+    def actual_vs_predicted( self, pind=0 ):
+        a,p,v = self.benchmark.predict( pind, self.models[pind] )
+        s = np.sqrt(v)
+        rt_min,rt_max = self.rt_range()
+        base, means_p,low_p, high_p = ml_tools.actual_vs_predictive_bounds(a,p,s,rt_min,rt_max,50)
+
+        pp.figure()
+        pp.plot(a,p,'r.')
+        pp.plot(base,means_p,'k-',linewidth=2.0)
+        pp.plot(base,low_p,'k--',linewidth=2.0)
+        pp.plot(base,high_p,'k--',linewidth=2.0)
+        pp.xlabel('Actual RT')
+        pp.ylabel('Predicted RT')
+        pp.title('Actual vs Predicted RT')
+        pp.grid()
+        pp.savefig('actual_vs_predicted.pdf')
+
+    def std_histogram( self, pind=0 ):
+        a,p,v = self.benchmark.predict( pind, self.models[pind] )
+        rt_min,rt_max = self.rt_range()
+        s = np.sqrt(v)
+        inds = np.argsort( s )
+        
+        nsec=50
+        nbins=49
+
+        sec = len( inds )/nsec
+        chunks = zip( *[iter(inds)]*sec )
+
+        loc_bins = [];
+        rt_sec = (rt_max - rt_min)/(nbins+1)
+
+        for i in range( nbins+1 ):
+            loc_bins.append( i*rt_sec + rt_min + rt_sec/2 ) 
+
+        mat = np.zeros((nsec,nbins+1)) 
+
+        std_bins = [];
+
+        for i,c in enumerate( chunks ) :
+            inds = []
+            for j in c : 
+                inds.append(j)
+            a_sec = a[ inds ]
+            s_sec = s[ inds ]
+
+            std_bins.append( np.mean( s_sec ) )
+
+            h = np.histogram( a_sec, loc_bins );
+            h = np.array( h[0],dtype=float )
+            h = h / np.sum(h)
+
+            for j,v in enumerate( h ) :
+                mat[i,j] = v
+
+        print len(loc_bins)
+        print len(std_bins)
+        print mat.shape
+
+        np.savetxt('x_loc_bins.txt',loc_bins)
+        np.savetxt('y_std_bins.txt',std_bins)
+        np.savetxt('mat.txt',mat)
+
+        #pp.matshow( mat )# interpolation='nearest', extent=[xmin, xmax, ymin, ymax],origin='lower' )
+        #pp.ylabel('Predictive STD')
+        #pp.xlabel('Retention Time')
+
+    def actual_vs_predicitive_std( self ):
         rt_min,rt_max = self.rt_range()
 
         base = [];
@@ -107,13 +199,13 @@ class data_plotter:
     
         for pind in range( self.benchmark.parts.nfolds ):
             print pind
-            a,p,s = self.benchmark.predict( pind, self.models[pind] )
-            v = np.sqrt(s)
-            b, av, pv  = ml_tools.actual_vs_predictive_variance( a,p,v,rt_min,rt_max,50 )
+            a,p,v = self.benchmark.predict( pind, self.models[pind] )
+            s = np.sqrt(v)
+            b, a_std, p_std  = ml_tools.actual_vs_predictive_variance( a,p,s,rt_min,rt_max,50 )
 
             base = b;
-            actual.append( av )
-            predicitive.append( pv )
+            actual.append( a_std )
+            predicitive.append( p_std )
             
 
         actual = np.matrix( actual )
@@ -147,101 +239,3 @@ class data_plotter:
         pp.legend(['Actual Variance','Predicitive Variance'],loc=4)
 
         pp.savefig('actual_vs_predicted_variance.pdf')
-
-
-
-    def dummy():
-        a,p,s = self.benchmark.predict( pind, self.models[pind] ) 
-        var = np.sqrt(s)
-
-        min_a = np.min(a)
-        max_a = np.max(a)
-
-        n = 50
-
-        print min_a, max_a
-
-        s = ( max_a - min_a )/(n-1)
-
-        base = [];
-        means = [];
-        vars_gp = [];
-        vars_dist = []
-        low = [];
-        high = [];
-
-        
-        base_pol = [];
-
-        for i in range(n-2):
-            
-            ii = i+1
-
-            b0 = (ii-1)*s+min_a
-            b1 = (ii+1)*s+min_a
-            c = (ii)*s+min_a 
-            inds = np.where( (a >= b0) & (a<=b1) )[0]
-
-            p_sub = p[inds]
-            v_sub = var[inds] 
-
-            m = np.mean( p_sub )
-            v = np.std( p_sub )
-
-            pol = [];
-
-            for j in range(4):
-                pol.append( c ** j );
-
-            base.append( c )
-            base_pol.append( pol )
-            means.append(m)
-            vars_gp.append( np.mean( v_sub ))
-            vars_dist.append( v ) 
-            low.append( m-2*v )
-            high.append( m+2*v )
-
-        base_pol = np.matrix( base_pol )
-
-        base_mat = np.matrix(base).T
-        LR_mean = LinearRegression()
-        LR_mean.fit( base_pol,means )
-        means_p = LR_mean.predict( base_pol )
-
-        LR_low = LinearRegression()
-        LR_low.fit( base_pol, low )
-        low_p = LR_low.predict( base_pol )
-
-        LR_high = LinearRegression()
-        LR_high.fit( base_pol, high )
-        high_p = LR_high.predict( base_pol ) 
-
-        pp.figure()
-
-        pp.plot( a,p,'r.')
-
-        plt1 = pp.plot( base, means_p,linewidth=2,label='Local Mean' )
-        plt2 = pp.plot( base, low_p,'k',linewidth=2,label='Local Mean + 2*variance' )
-        plt3 = pp.plot( base, high_p,'g',linewidth=2, label='Local Up - 2*variance' )
-
-        pp.grid();
-        pp.xlabel('Actual RT')
-        pp.ylabel('Predicted RT')
-        pp.legend(loc=4)
-
-        pp.savefig('actual_vs_predicted.pdf')
-
-        pp.figure()
-
-        pp.plot( base, (high_p - low_p)/4 )
-        pp.plot( base, vars_gp )
-        
-        pp.grid()
-        pp.xlabel('Actual RT')
-        pp.ylabel('Variance')
-
-        pp.legend(['Overtime Variance','GP Variance'],loc=4)
-
-        pp.savefig('actual_vs_predicted_variance.pdf')
-
-

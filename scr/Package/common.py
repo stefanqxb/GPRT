@@ -11,8 +11,8 @@ class parameters:
             self.data_root = "/media/hdd/heydar/data/gprt"
 
         #self.base = "20110922_EXQ4_NaNa_SA_YeastEasy_Labelfree_06"
-        #self.base = "20110922_EXQ4_NaNa_SA_YeastEasy_Labelfree_04.rtimes_q_0.001"
-        self.base = "20120126_EXQ5_KiSh_SA_LabelFree_HeLa_Phospho_Control_rep1_Fr3.rtimes"
+        self.base = "20110922_EXQ4_NaNa_SA_YeastEasy_Labelfree_06.rtimes_q_0.001"
+        #self.base = "20120126_EXQ5_KiSh_SA_LabelFree_HeLa_Phospho_Control_rep1_Fr3.rtimes"
         self.data_path = './data/%s.tsv' % ( self.base )
         self.data_name = '%s_no_modif' % ( self.base )
 

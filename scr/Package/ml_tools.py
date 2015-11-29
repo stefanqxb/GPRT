@@ -111,16 +111,15 @@ def section_error_overall( bench, models ):
     e_s = np.squeeze( np.asarray( e_s ) )
 
     return f_m, m_m, e_m, e_s
-
-def actual_vs_predictive_variance( a, p, var, min_a, max_a ,n ):
+def actual_vs_predictive_bounds( a, p, std, min_a, max_a ,n ):
     s = ( max_a - min_a ) / (n-1)
 
     base = []
     base_pol = [];
 
     means = [];
-    vars_gp = [];
-    vars_dist = []
+    std_gp = [];
+    std_dist = []
     low = [];
     high = [];
 
@@ -132,10 +131,10 @@ def actual_vs_predictive_variance( a, p, var, min_a, max_a ,n ):
         inds = np.where( (a >= b0) & (a<=b1) )[0]
 
         p_sub = p[inds]
-        v_sub = var[inds]
+        s_sub = std[inds]
 
         m = np.mean( p_sub )
-        v = np.std( p_sub )
+        ss = np.std( p_sub )
 
         pol = [];
 
@@ -145,10 +144,10 @@ def actual_vs_predictive_variance( a, p, var, min_a, max_a ,n ):
         base.append( c )
         base_pol.append( pol )
         means.append(m)
-        vars_gp.append( np.mean( v_sub ))
-        vars_dist.append( v ) 
-        low.append( m-2*v )
-        high.append( m+2*v )
+        std_gp.append( np.mean( s_sub ))
+        std_dist.append( ss ) 
+        low.append( m-2*ss )
+        high.append( m+2*ss )
 
     base_pol = np.matrix( base_pol )
 
@@ -165,7 +164,63 @@ def actual_vs_predictive_variance( a, p, var, min_a, max_a ,n ):
     LR_high.fit( base_pol, high )
     high_p = LR_high.predict( base_pol )
 
-    return base, (high_p - low_p)/4, vars_gp
+    return base, means_p, low_p, high_p
+    
+
+def actual_vs_predictive_std( a, p, std, min_a, max_a ,n ):
+    s = ( max_a - min_a ) / (n-1)
+
+    base = []
+    base_pol = [];
+
+    means = [];
+    std_gp = [];
+    std_dist = []
+    low = [];
+    high = [];
+
+    for i in range( n-2 ):
+        ii = i+1
+        b0 = (ii-1)*s+min_a
+        b1 = (ii+1)*s+min_a
+        c = (ii)*s+min_a
+        inds = np.where( (a >= b0) & (a<=b1) )[0]
+
+        p_sub = p[inds]
+        s_sub = std[inds]
+
+        m = np.mean( p_sub )
+        ss = np.std( p_sub )
+
+        pol = [];
+
+        for j in range(4):
+            pol.append( c ** j );
+
+        base.append( c )
+        base_pol.append( pol )
+        means.append(m)
+        std_gp.append( np.mean( s_sub ))
+        std_dist.append( ss ) 
+        low.append( m-2*ss )
+        high.append( m+2*ss )
+
+    base_pol = np.matrix( base_pol )
+
+    base_mat = np.matrix(base).T
+    LR_mean = LinearRegression()
+    LR_mean.fit( base_pol,means )
+    means_p = LR_mean.predict( base_pol )
+
+    LR_low = LinearRegression()
+    LR_low.fit( base_pol, low )
+    low_p = LR_low.predict( base_pol )
+
+    LR_high = LinearRegression()
+    LR_high.fit( base_pol, high )
+    high_p = LR_high.predict( base_pol )
+
+    return base, (high_p - low_p)/4, std_gp
 
 class partitions:
     def __init__(self, ndata, nfolds):
@@ -355,10 +410,45 @@ class rt_model:
 
 
         if self.model_type == 'gp':
-            res = ( vals[0][0][0], vals[1][0][0] )
+            res = ( vals[0][0][0], vals[1][0][0] ) # Mean, Variance
         elif self.model_type == 'svr':
             res = ( vals[0], 0)
         return res
+
+class rt_trainer:
+    def __init__(self, peptides, feature, model_type, ntrain ):
+        self.peptides = peptides
+        self.feature = feature
+        self.model_type = model_type
+        self.ntrain = ntrain
+
+    def train_model( self ):
+        train_peptides = self.peptides[:self.ntrain]
+        mg = feature_extraction.model_generator(train_peptides)
+        voc = mg.get_bow_voc(2)
+        em = mg.get_elude_model()
+
+        Y = [];
+        X = [];
+        for p in train_peptides[0:self.ntrain]:
+            Y.append(p.rt)
+            if self.feature == 'bow':
+                X.append(p.bow_descriptor(voc))
+            elif self.feature == 'elude':
+                X.append(p.elude_descriptor(em))
+        X = np.matrix(X)
+
+        Y_params = [];
+        Y = np.transpose(np.matrix(Y))
+        norm = feature_extraction.normalizer()
+
+        if self.feature == "elude":
+            norm.normalize_maxmin(X);
+        gpy_model = GPy.models.GPRegression(X, Y)
+        gpy_model.optimize_restarts(num_restarts=10, verbose=False)
+        pa = list(gpy_model.param_array)
+        gpy_model = None
+        return [ self.feature, self.model_type, X, Y, pa , norm,voc,em, Y_params ];
 
 class rt_benchmark:
     def __init__(self, peptides, feature, model_type, ntrain=-1, nfolds=5,tratio=0.8):
@@ -501,16 +591,16 @@ class rt_benchmark:
         test_peptides = self.peptides[self.parts.get_test_part(ind)]
         actual = []
         predicted = []
-        std = []
+        var = []
         for p in test_peptides:
             actual.append(p.rt)
-            v, s = model.eval(p)
-            predicted.append(v)
-            std.append(s)
+            m, v = model.eval(p) # This predicts the mean and the variance
+            predicted.append(m)
+            var.append(v)
         actual = np.array(actual)
         predicted = np.array(predicted)
-        std = np.array(std)
-        return actual, predicted, std
+        var = np.array(var)
+        return actual, predicted, var
 
     def predict_train( self, ind, model ):
         train_peptides = self.peptides[self.parts.get_train_part(ind)]
@@ -586,8 +676,6 @@ class rt_benchmark:
         #pp.plot( train_m, train_d,'r' )
         #pp.plot( test_m, test_d,'b' )
 
-
-
     def eval_model(self, ind, model):
         actual, predicted, std = self.predict(ind, model)
         et = eval_tools()
@@ -608,43 +696,6 @@ class rt_benchmark:
         with open('scores.pk','w') as ff :
             pk.dump( [ actual, predicted, std ], ff )
             ff.close()
-
-    def test_kmeans(self, ind, model):
-        actual, predicted, std = self.predict(ind, model) 
-        std_mat = np.transpose(np.matrix(std))
-        nclusters = 30;
-        KM = KMeans(nclusters)
-        KM.fit(std_mat)
-
-        labels = KM.labels_
-        centers = KM.cluster_centers_.squeeze()
-        order = np.argsort( centers )
-
-        dummy = set()
-        indices = []
-        means = []
-
-        for o in order :
-            means.append( centers[o] )
-            inds = np.where( labels == o )[0]
-            inds = set(inds)
-            dummy = dummy.union( set(inds) ) 
-            indices.append( dummy.copy() )
-
-        et = eval_tools()
-
-        min_a = np.min( actual )
-        max_a = np.max( actual )
-
-        for i,s in enumerate(indices) :
-            inds = list(s)
-            a = actual[ inds ]
-            
-            print np.histogram(a)
-            raw_input()
-
-            p = predicted[ inds ]
-            print means[i], et.delta_t(a, p,min_a,max_a), et.mean_square_error(a,p), float(len( inds ))/len( actual )
 
     def eval_sections_independent( self, ind, model, nsec=10 ):
         actual, predicted, std = self.predict(ind,model)
@@ -722,8 +773,7 @@ class rt_benchmark:
 
     def get_test_vectors( self, ind, model, nvec=1000 ):
         test_peptides = self.peptides[self.parts.get_test_part(ind)]
-        actual, predicted, std = self.predict(ind,model)
-        var = np.sqrt(std)
+        actual, predicted, var = self.predict(ind,model)
 
         if nvec > len( test_peptides ):
             nvec = len( test_peptides )
